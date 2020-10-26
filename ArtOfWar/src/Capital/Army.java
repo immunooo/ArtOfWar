@@ -13,7 +13,7 @@ public class Army {
 		morale = 100;
 		formation = 100;
 		r = new Resources();
-	}
+	} 
 	/**
 	 * Constructor with set values;
 	 * @param size

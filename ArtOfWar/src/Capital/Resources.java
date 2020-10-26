@@ -12,7 +12,7 @@ int gold, food;
 	}
 	/**
 	 * Constructor with set values 
-	 * @param gold
+	 * @param gold 
 	 * @param food
 	 */
 	public Resources(int gold, int food) {
