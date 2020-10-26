@@ -10,7 +10,7 @@ public class Army {
 	 */
 	public Army() {
 		size = 100;
-		morale = 100;
+		morale = 100; 
 		formation = 100;
 		r = new Resources();
 	} 

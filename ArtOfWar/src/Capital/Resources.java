@@ -21,7 +21,7 @@ int gold, food;
 	}
 	/**
 	 * This method returns the gold
-	 * @return gold
+	 * @return gold 
 	 */ 
 	public int getGold() {
 		return gold;
