@@ -9,7 +9,7 @@ public class Army {
 	 * Default constructor
 	 */ 
 	public Army() {
-		size = 100;
+		size = 0;
 		morale = 100; 
 		formation = 100; 
 		r = new Resources();
