@@ -56,6 +56,15 @@ public class Army {
 		return morale;
 	}
 	
+	/** 
+	 * This method sets a new value for morale
+	 * @param morale 
+	 */
+	public void setMorale(int morale) {
+		this.morale = morale;
+		
+	}
+	
 	/**
 	 * This method returns the formation of the army
 	 * @return formation
