@@ -1,7 +1,7 @@
 package Capital;
 
 public class Resources {
-int gold, food;
+	private int gold, food;
 	
 	/**
 	 * Default constructor sets gold and food to 100
