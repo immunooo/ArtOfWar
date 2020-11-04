@@ -1,9 +1,8 @@
 package Capital;
 
 public class Army {
-	int size, morale, formation;
-	Resources r;
-	
+	private int size, morale, formation;
+	private Resources r;
 	
 	/**
 	 * Default constructor
@@ -26,8 +25,7 @@ public class Army {
 		this.size = size;
 		this.morale = morale;
 		this.formation = formation;
-		r.gold = gold;
-		r.food = food;
+		r = new Resources(gold,food);
 	}
 	/**
 	 * This method returns the size of the army
