@@ -44,14 +44,14 @@ public class GUIMain extends JFrame{
 		//c.weighty=1;
 		
 		//+pixels
-		c.ipadx = 574;
+		c.ipadx = 600;
 		c.ipady = 380;
 		
 		//amount of columns
 		c.gridwidth = 2;
 		//c.gridheight = 3;
 		
-		c.fill = GridBagConstraints.HORIZONTAL;
+		//c.fill = GridBagConstraints.HORIZONTAL;
 		//c.fill = GridBagConstraints.VERTICAL;
 		//c.anchor = GridBagConstraints.PAGE_END;
 		
@@ -64,13 +64,13 @@ public class GUIMain extends JFrame{
 		c.gridy = 1;
 				
 		//+pixels
-		c.ipadx = 260;
+		c.ipadx = 290;
 		c.ipady = 420;
 				
 		//amount of columns
 		c.gridwidth = 1;
 		//c.gridheight = 1;
-		c.fill = GridBagConstraints.HORIZONTAL;
+		//c.fill = GridBagConstraints.HORIZONTAL;
 		//c.fill = GridBagConstraints.VERTICAL;
 		
 		button.setBackground(Color.yellow);
@@ -82,13 +82,13 @@ public class GUIMain extends JFrame{
 		c.gridy = 1;
 		
 		//+pixels
-		c.ipadx = 260;
+		c.ipadx = 299;
 		c.ipady = 420;
 		
 		//amount of columns
 		c.gridwidth = 1;
 		//c.gridheight = 1;
-		c.fill = GridBagConstraints.HORIZONTAL;
+		//c.fill = GridBagConstraints.HORIZONTAL;
 		//c.fill = GridBagConstraints.VERTICAL;
 		
 		button.setBackground(Color.green);
