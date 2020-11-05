@@ -31,33 +31,71 @@ public class GUIMain extends JFrame{
 		JButton button;
 		pane.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
-		c.fill = GridBagConstraints.HORIZONTAL;
+		//c.fill = GridBagConstraints.HORIZONTAL;
 
-		button = new JButton("Button 1");
-		c.weightx = 0.5;
+		button = new JButton("Image");
+		//position
 		c.gridx = 0;
 		c.gridy = 0;
+		
+		//weight
+		//c.weightx=1;
+		//c.weighty=1;
+		
+		//+pixels
+		//c.ipady = 380;
+		//c.ipadx = 600;
+		
+		//amount of columns
+		c.gridwidth = 3;
+		//c.gridheight = 3;
+		
+		c.fill = GridBagConstraints.HORIZONTAL;
+		//c.fill = GridBagConstraints.VERTICAL;
+		//c.anchor = GridBagConstraints.PAGE_END;
 		pane.add(button, c);
 
 		button = new JButton("Button 2");
+		//position
 		c.gridx = 1;
-		c.gridy = 0;
+		c.gridy = 1;
+				
+		//+pixels
+		//c.ipadx = 300;
+		//c.ipady = 420;
+				
+		//amount of columns
+		c.gridwidth = 1;
+		c.gridheight = 1;
+		//c.fill = GridBagConstraints.HORIZONTAL;
+		//c.fill = GridBagConstraints.VERTICAL;
 		pane.add(button, c);
 
 		button = new JButton("Button 3");
+		//position
 		c.gridx = 2;
-		c.gridy = 0;
+		c.gridy = 2;
+		
+		//+pixels
+		//c.ipadx = 300;
+		//c.ipady = 420;
+		
+		//amount of columns
+		c.gridwidth = 1;
+		c.gridheight = 1;
+		//c.fill = GridBagConstraints.HORIZONTAL;
+		//c.fill = GridBagConstraints.VERTICAL;
 		pane.add(button, c);
 
-		button = new JButton("Long-Named Button 4");
+		/*button = new JButton("Long-Named Button 4");
 		c.ipady = 40;      //make this component tall
 		c.weightx = 0.0;
-		c.gridwidth = 3;
+		//c.gridwidth = 3;
 		c.gridx = 0;
-		c.gridy = 1;
-		pane.add(button, c);
+		c.gridy = 3;
+		pane.add(button, c);*/
 
-		button = new JButton("5");
+		/*button = new JButton("5");
 		c.ipady = 0;       //reset to default
 		c.weighty = 1.0;   //request any extra vertical space
 		c.anchor = GridBagConstraints.PAGE_END; //bottom of space
@@ -65,7 +103,7 @@ public class GUIMain extends JFrame{
 		c.gridx = 1;       //aligned with button 2
 		c.gridwidth = 2;   //2 columns wide
 		c.gridy = 2;       //third row
-		pane.add(button, c);
+		pane.add(button, c);*/
 		
 		add(pane);
 	    setVisible(true);
