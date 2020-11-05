@@ -1,5 +1,6 @@
 package GUI;
 
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -28,12 +29,12 @@ public class GUIMain extends JFrame{
 		//GridBagConstraints c = new GridBagConstraints();
 		
 		//some rabdom example, I am trying to understand how this layout wroks
-		JButton button;
+		JPanel button;
 		pane.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		//c.fill = GridBagConstraints.HORIZONTAL;
 
-		button = new JButton("");
+		button = new JPanel();
 		//position
 		c.gridx = 0;
 		c.gridy = 0;
@@ -43,7 +44,7 @@ public class GUIMain extends JFrame{
 		//c.weighty=1;
 		
 		//+pixels
-		c.ipadx = 550;
+		c.ipadx = 574;
 		c.ipady = 380;
 		
 		//amount of columns
@@ -53,15 +54,17 @@ public class GUIMain extends JFrame{
 		c.fill = GridBagConstraints.HORIZONTAL;
 		//c.fill = GridBagConstraints.VERTICAL;
 		//c.anchor = GridBagConstraints.PAGE_END;
+		
+		button.setBackground(Color.blue);
 		pane.add(button, c);
 
-		button = new JButton("");
+		button = new JPanel();
 		//position
 		c.gridx = 0;
 		c.gridy = 1;
 				
 		//+pixels
-		c.ipadx = 250;
+		c.ipadx = 260;
 		c.ipady = 420;
 				
 		//amount of columns
@@ -69,15 +72,17 @@ public class GUIMain extends JFrame{
 		//c.gridheight = 1;
 		c.fill = GridBagConstraints.HORIZONTAL;
 		//c.fill = GridBagConstraints.VERTICAL;
+		
+		button.setBackground(Color.yellow);
 		pane.add(button, c);
 
-		button = new JButton("");
+		button = new JPanel();
 		//position
 		c.gridx = 1;
 		c.gridy = 1;
 		
 		//+pixels
-		c.ipadx = 250;
+		c.ipadx = 260;
 		c.ipady = 420;
 		
 		//amount of columns
@@ -85,6 +90,8 @@ public class GUIMain extends JFrame{
 		//c.gridheight = 1;
 		c.fill = GridBagConstraints.HORIZONTAL;
 		//c.fill = GridBagConstraints.VERTICAL;
+		
+		button.setBackground(Color.green);
 		pane.add(button, c);
 
 		/*button = new JButton("Long-Named Button 4");
