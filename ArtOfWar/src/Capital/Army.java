@@ -1,5 +1,7 @@
 package Capital;
-
+/*
+ * Author Elijah Pichler
+ */
 public class Army {
 	int size, morale, formation;
 	Resources r;

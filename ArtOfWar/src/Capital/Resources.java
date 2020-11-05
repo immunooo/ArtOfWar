@@ -1,5 +1,7 @@
 package Capital;
-
+/*
+ * Author Elijah Pichler
+ */
 public class Resources {
 int gold, food;
 	
