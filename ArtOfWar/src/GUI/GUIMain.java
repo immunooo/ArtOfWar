@@ -33,7 +33,7 @@ public class GUIMain extends JFrame{
 		GridBagConstraints c = new GridBagConstraints();
 		//c.fill = GridBagConstraints.HORIZONTAL;
 
-		button = new JButton("Image");
+		button = new JButton("");
 		//position
 		c.gridx = 0;
 		c.gridy = 0;
@@ -43,11 +43,11 @@ public class GUIMain extends JFrame{
 		//c.weighty=1;
 		
 		//+pixels
-		//c.ipady = 380;
-		//c.ipadx = 600;
+		c.ipadx = 550;
+		c.ipady = 380;
 		
 		//amount of columns
-		c.gridwidth = 3;
+		c.gridwidth = 2;
 		//c.gridheight = 3;
 		
 		c.fill = GridBagConstraints.HORIZONTAL;
@@ -55,35 +55,35 @@ public class GUIMain extends JFrame{
 		//c.anchor = GridBagConstraints.PAGE_END;
 		pane.add(button, c);
 
-		button = new JButton("Button 2");
+		button = new JButton("");
 		//position
-		c.gridx = 1;
+		c.gridx = 0;
 		c.gridy = 1;
 				
 		//+pixels
-		//c.ipadx = 300;
-		//c.ipady = 420;
+		c.ipadx = 250;
+		c.ipady = 420;
 				
 		//amount of columns
 		c.gridwidth = 1;
-		c.gridheight = 1;
-		//c.fill = GridBagConstraints.HORIZONTAL;
+		//c.gridheight = 1;
+		c.fill = GridBagConstraints.HORIZONTAL;
 		//c.fill = GridBagConstraints.VERTICAL;
 		pane.add(button, c);
 
-		button = new JButton("Button 3");
+		button = new JButton("");
 		//position
-		c.gridx = 2;
-		c.gridy = 2;
+		c.gridx = 1;
+		c.gridy = 1;
 		
 		//+pixels
-		//c.ipadx = 300;
-		//c.ipady = 420;
+		c.ipadx = 250;
+		c.ipady = 420;
 		
 		//amount of columns
 		c.gridwidth = 1;
-		c.gridheight = 1;
-		//c.fill = GridBagConstraints.HORIZONTAL;
+		//c.gridheight = 1;
+		c.fill = GridBagConstraints.HORIZONTAL;
 		//c.fill = GridBagConstraints.VERTICAL;
 		pane.add(button, c);
 
