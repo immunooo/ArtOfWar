@@ -6,8 +6,10 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class GUIMain extends JFrame{
@@ -15,6 +17,7 @@ public class GUIMain extends JFrame{
 	//height and width
 	private static final int WIDTH = 600;
 	private static final int HEIGHT = 800;
+	private ImageIcon treePic = new ImageIcon("Picture1.jpg");
 	
 	public GUIMain()
 	{
@@ -24,6 +27,7 @@ public class GUIMain extends JFrame{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(WIDTH, HEIGHT);
 		setLayout(new GridBagLayout());
+		setResizable(false);
 		
 		JPanel pane = new JPanel(new GridBagLayout());
 		//GridBagConstraints c = new GridBagConstraints();
@@ -55,7 +59,11 @@ public class GUIMain extends JFrame{
 		//c.fill = GridBagConstraints.VERTICAL;
 		//c.anchor = GridBagConstraints.PAGE_END;
 		
-		button.setBackground(Color.blue);
+		JLabel label = new JLabel("");
+		label.setIcon(treePic);
+		label.setVisible(true);
+		button.add(label);
+		button.setVisible(true);
 		pane.add(button, c);
 
 		button = new JPanel();
