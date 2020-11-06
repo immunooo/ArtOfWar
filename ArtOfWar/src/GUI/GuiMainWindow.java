@@ -1,6 +1,8 @@
 package GUI;
 
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -31,8 +33,35 @@ public class GuiMainWindow extends Application{
 		// Component Setting
 		titleImage.setImage(new Image("Assets/title.jpg"));
 		start.setMinSize(150,30);
+		start.setOnAction(new EventHandler<ActionEvent>()
+		{
+			GuiEventWindow event = new GuiEventWindow();
+			
+			public void handle(ActionEvent actionEvent)
+			{
+				try 
+				{
+					event.start(primaryStage);
+				}
+				catch (Exception e)
+				{
+					System.out.println("");
+				}
+			}
+		});
 		credit.setMinSize(150,30);
+		
 		quit.setMinSize(150,30);
+		
+		quit.setOnAction(new EventHandler<ActionEvent>()
+		{
+			public void handle(ActionEvent actionEvent)
+			{
+			primaryStage.hide();
+			primaryStage.close();
+			}
+		});
+		
 
 		// Pane Setting
 		menuPane.add(start,1,0);
