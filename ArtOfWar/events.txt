@@ -1,0 +1,20 @@
+Template: //Data goes in between the quotations
+/~/
+name: ""
+description: ""
+difficulty: ""
+reward: ""
+completed: ""
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/~/
+name: "Event Name"
+description: "This is a dialog"
+difficulty: "2"
+reward: "Sword"
+completed: "true"
+/~/
+name: "Event 2"
+description: "Anaother dis"
+difficulty: "2"
+reward: "Not a sword"
+completed: "false"
