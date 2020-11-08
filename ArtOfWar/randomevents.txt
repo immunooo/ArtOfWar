@@ -1,0 +1,8 @@
+Template: //Data goes in between the quotations. Dialog/Choices/choicesMap may have more, may have less
+/~/
+dialog: "", "", "", "", ""
+choicesMap: "", "", ""
+choices: "", "", ""
+difficulty: ""
+location: ""
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

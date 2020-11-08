@@ -90,6 +90,8 @@ public class RandomEventList {
      */
     public void inputEventData(String command) {
         //Grabs the String that is inside of the quotations
+        //Add if statement for dialog and possibly choices since they're going to have multiple inputs
+
         String data = currentLine.substring(currentLine.indexOf('"')+1, currentLine.length()-1);
         //System.out.println("Command: " + command + ", Data: " + data); //For Testing
 
@@ -99,6 +101,7 @@ public class RandomEventList {
                 break;
             case "description":
                 currentEvent.setDescription(data);
+
                 break;
             case "difficulty":
                 int difficulty = Integer.parseInt(data);
