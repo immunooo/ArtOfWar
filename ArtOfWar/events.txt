@@ -1,7 +1,7 @@
 Template: //Data goes in between the quotations
 /~/
 name: ""
-description: ""
+description: "", "", ""
 difficulty: ""
 reward: ""
 completed: ""
