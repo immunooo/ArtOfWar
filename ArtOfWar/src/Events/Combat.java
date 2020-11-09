@@ -14,26 +14,26 @@ import java.util.Scanner;
 
 public class Combat {
 
-    private Army playerArmy;
-    private Enemy enemyArmy;
-    private int playerSize;
-    private int enemySize;
-    private int playerAS; // 0: Melee, 1: Archery, 2: Cavalry, 3: Full Block
-    private int enemyAS;
-    private int attackLevel;
-    private int defenseLevel;
+    private Army playerArmy; //The player army
+    private Enemy enemyArmy; //The enemy army
+    private int playerSize; //The number of troops in the player army
+    private int enemySize; // The number of troops in the enemy army
+    private int playerAS; //Player's current attack style. 0: Melee, 1: Archery, 2: Cavalry, 3: Full Block
+    private int enemyAS; //The enemies current attack style
+    private int attackLevel; //The number of troops being used for attacking
+    private int defenseLevel; //The number of troops being used for defending
     private int terrain; //0: Plains, 1: Valley, 2: Hill
     private boolean hasCover = false; //True allows army to ambush, False prevents it
-    private boolean inCover = false;
-    private boolean failedCover = false;
-    private int ambushTreshhold;
+    private boolean inCover = false; //True if army is attempting ambush
+    private boolean failedCover = false; //True if army fails the ambush
+    private int ambushThreshold; //The number the player army needs to be under in order for a successful ambush
 
-    public Combat(Army playerArmy, Enemy enemyArmy, int terrain, boolean hasCover, int ambushTreshhold) {
+    public Combat(Army playerArmy, Enemy enemyArmy, int terrain, boolean hasCover, int ambushThreshold) {
         this.playerArmy = playerArmy;
         this.enemyArmy = enemyArmy;
         this.terrain = terrain;
         this.hasCover = hasCover;
-        this.ambushTreshhold = ambushTreshhold;
+        this.ambushThreshold = ambushThreshold;
         playerSize = playerArmy.getSize();
         enemySize = enemyArmy.size;
 
@@ -78,7 +78,7 @@ public class Combat {
                 System.out.println("You order your troops to take cover in the bushes and wait to strike the enemy " +
                         "as they pass");
                 //If the player tries to ambush, but army is too big
-                if(playerArmy.getSize() > ambushTreshhold)
+                if(playerSize > ambushThreshold)
                     failedCover = true;
                 else
                     inCover = true;
@@ -427,11 +427,11 @@ public class Combat {
                 case 1:
                 case 2:
                     System.out.println("Enemy uses Archers");
-                    return attack1; //Returns attack 1 if rolls 1;
+                    return attack1; //Returns attack 1 if rolls 1 or 2
                 case 3:
                 case 4:
                     System.out.println("Enemy uses Cavalry");
-                    return attack2; //Returns attack2 if rolls 2
+                    return attack2; //Returns attack2 if rolls 3 or 4
                 default:
                     System.out.println("Enemy uses Melee");
                     return attackStyle; //Returns default attack style if rolls 5, 6, 7, 8, or 9
