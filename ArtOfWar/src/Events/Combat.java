@@ -221,7 +221,7 @@ public class Combat {
         playerArmy.setSize(playerSize);
 
         if(playerSize == 0)
-            System.out.println(generalName + "'s army has defeated you in battle. You suck");
+            System.out.println(generalName + "'s army has defeated you in battle. You big dumb idiot!");
         else if(enemySize == 0)
             System.out.println("You have defeated " + generalName + " and his army in battle. Congratulations!");
 
@@ -422,16 +422,16 @@ public class Combat {
 
             switch(dice) {
                 case 0:
-                case 1:
                     System.out.println("Enemy uses Block");
-                    return 3; //Returns 'All Block' if dice is 0 or 2
+                    return 3; //Returns 'All Block' if dice is 0
+                case 1:
                 case 2:
-                case 3:
                     System.out.println("Enemy uses Archers");
-                    return attack1; //Returns attack 1 if rolls 2 or 3;
+                    return attack1; //Returns attack 1 if rolls 1;
+                case 3:
                 case 4:
                     System.out.println("Enemy uses Cavalry");
-                    return attack2; //Returns attack2 if rolls 4
+                    return attack2; //Returns attack2 if rolls 2
                 default:
                     System.out.println("Enemy uses Melee");
                     return attackStyle; //Returns default attack style if rolls 5, 6, 7, 8, or 9
@@ -445,7 +445,7 @@ public class Combat {
         Enemy enemy = new Enemy(100, 0, "Nathan");
         Army player = new Army(100, 100, 0, 0);
 
-        Combat combat = new Combat(player, enemy, 0, true, 50);
+        Combat combat = new Combat(player, enemy, 1, true, 50);
         combat.battle();
 
     }
