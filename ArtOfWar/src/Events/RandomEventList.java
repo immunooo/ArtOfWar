@@ -1,5 +1,5 @@
 package Events;
-//Hello
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -14,6 +14,7 @@ import java.util.Scanner;
  */
 public class RandomEventList {
     private ArrayList<TestEvent> EventList = new ArrayList<>();
+    private ArrayList<String> dataList = new ArrayList<>();
     private Scanner inputFile;
     private String currentLine;
     private TestEvent currentEvent = new TestEvent();
@@ -91,8 +92,44 @@ public class RandomEventList {
     public void inputEventData(String command) {
         //Grabs the String that is inside of the quotations
         //Add if statement for dialog and possibly choices since they're going to have multiple inputs
-
-        String data = currentLine.substring(currentLine.indexOf('"')+1, currentLine.length()-1);
+    	
+    	String data = "";
+    	
+    	//If command is equal to dialog, choice map, or choices 
+    	if(command.equals("description")) {
+    		boolean flag = true;
+    		
+    		
+    		// currentLine = (dialog: "hi", "hello", "bye") ~~~ word =("hi", "hello", "bye")
+			
+    		String word = currentLine.substring(currentLine.indexOf(":")+1, currentLine.length()); 
+			word = word.replaceAll("\"", ""); //word = hi, hello, bye
+			
+    		while(flag) {
+    			if(word.indexOf(",") != -1) {
+    				dataList.add(word.substring(0,word.indexOf(",")));
+    				word = word.substring(word.indexOf(","));
+    			} else {
+    				dataList.add(word);
+    				flag = false;
+    			}
+    			
+    				
+    		}
+    		
+    		//Making data equal to the items within the arraylist
+    		 data = "[";
+    		for(int i = 0; i < dataList.size(); i++) {
+    			if( i == dataList.size() - 1) 
+    				data += dataList.get(i) + "]";
+    			 else
+    				data += dataList.get(i) + ",";
+    		}
+    	} else { //command is equal difficulty or location
+    			data = currentLine.substring(currentLine.indexOf('"')+1, currentLine.length()-1);
+    	}
+    	
+        
         //System.out.println("Command: " + command + ", Data: " + data); //For Testing
 
         switch(command) {
