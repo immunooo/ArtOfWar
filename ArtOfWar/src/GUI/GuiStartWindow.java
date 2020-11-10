@@ -51,12 +51,6 @@ public class GuiStartWindow extends Application{
         });
 
         credit.setMinSize(buttonWidth,buttonHeight);
-        credit.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                titleImage.setImage(new Image("Assets/test.png"));
-            }
-        });
 
         quit.setMinSize(buttonWidth,buttonHeight);
         quit.setOnAction(new EventHandler<ActionEvent>() {
