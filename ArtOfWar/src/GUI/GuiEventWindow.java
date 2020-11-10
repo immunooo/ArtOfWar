@@ -95,7 +95,8 @@ public class GuiEventWindow extends Application {
         buttonShort3.setMinSize(BUTTON_SHORT_SIZE[0],BUTTON_SHORT_SIZE[1]);
         buttonShort4.setMinSize(BUTTON_SHORT_SIZE[0],BUTTON_SHORT_SIZE[1]);
 
-        eventNarrative = new Label("Test Text, Long Sentence Testing ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n~\n~\n~\n~\n~\n~\n~\n~\n~\n~\n~\n~\n~");
+        eventNarrative = new Label();
+        eventNarrative.setText("Test Text, Long Sentence Testing ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n~\n~\n~\n~\n~\n~\n~\n~\n~\n~\n~\n~\n~");
         eventNarrative.setFont(Font.font("Verdana",12));
         eventNarrative.setTextFill(Color.WHITE);
         eventNarrative.setWrapText(true);
