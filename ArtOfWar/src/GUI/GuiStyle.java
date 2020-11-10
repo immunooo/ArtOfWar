@@ -5,9 +5,9 @@ package GUI;
  *
  * @author <Xiaoyue Zhang>
  * @since <pre>Nov 9 2020</pre>
- * @version 1.5
+ * @version 1.3
  */
-public class GUIStyle {
+public class GuiStyle {
 
     enum COLOR{ red, pink, black, white, brown, dark_blue, light_gray}
     enum TYPE{ solid}

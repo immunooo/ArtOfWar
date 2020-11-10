@@ -11,13 +11,13 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import static GUI.GUIStyle.*;
+import static GUI.GuiStyle.*;
 /**
  * The window for title menu
  *
  * @author <Xiaoyue Zhang>
  * @since <pre>Nov 9 2020</pre>
- * @version 1.5
+ * @version 1.5.1
  */
 public class GuiStartWindow extends Application{
 //check
@@ -45,7 +45,7 @@ public class GuiStartWindow extends Application{
         start.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                GUIController controller = new GUIController();
+                GuiController controller = new GuiController();
                 controller.start(primaryStage);
             }
         });

@@ -1,5 +1,5 @@
 package GUI;
-import GUI.GUIEventWindow;
+import GUI.GuiEventWindow;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
@@ -8,14 +8,14 @@ import javafx.stage.Stage;
  *
  * @author <Xiaoyue Zhang>
  * @since <pre>Nov 9 2020</pre>
- * @version 1.0
+ * @version 0.8
  */
-public class GUIController {
+public class GuiController {
 
-    GUIEventWindow eventWindow;
+    GuiEventWindow eventWindow;
 
     public void start(Stage stage){
-        eventWindow = new GUIEventWindow();
+        eventWindow = new GuiEventWindow();
         try {
             eventWindow.start(stage);
         }catch (Exception e){

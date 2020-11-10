@@ -14,7 +14,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
-import static GUI.GUIStyle.*;
+import static GUI.GuiStyle.*;
 
 /**
  * the event window for user
@@ -23,7 +23,7 @@ import static GUI.GUIStyle.*;
  * @since <pre>Nov 9 2020</pre>
  * @version 1.2
  */
-public class GUIEventWindow extends Application {
+public class GuiEventWindow extends Application {
     /** Scene Construction */
     Scene scene;
 
