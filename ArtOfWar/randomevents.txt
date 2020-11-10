@@ -1,9 +1,11 @@
 Template: //Data goes in between the quotations. Dialog/Choices/choicesMap may have more, may have less
 /~/
 dialog: "", "", "", "", ""
-choicesMap: "", "", ""
+picture: "", "", "", "", ""
 choices: "", "", ""
+resource1: "", "", ""
+resource2: "", "", ""
+resource3: "", "", ""
 difficulty: ""
 location: ""
-resources:"", "", "", ""
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
