@@ -3,9 +3,9 @@ Template: //Data goes in between the quotations. Dialog/Choices/choicesMap may h
 dialog: "", "", "", "", ""
 picture: "", "", "", "", ""
 choices: "", "", ""
-resource1: "", "", ""
-resource2: "", "", ""
-resource3: "", "", ""
+resource1: "", "", "", ""
+resource2: "", "", "", ""
+resource3: "", "", "", ""
 difficulty: ""
 location: ""
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
