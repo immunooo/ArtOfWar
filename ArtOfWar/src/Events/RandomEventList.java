@@ -1,7 +1,9 @@
 package Events;
 
+import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Scanner;
 /**
@@ -14,7 +16,6 @@ import java.util.Scanner;
  */
 public class RandomEventList {
     private ArrayList<TestEvent> EventList = new ArrayList<>();
-    private ArrayList<String> dataList = new ArrayList<>();
     private Scanner inputFile;
     private String currentLine;
     private TestEvent currentEvent = new TestEvent();
@@ -94,42 +95,9 @@ public class RandomEventList {
         //Add if statement for dialog and possibly choices since they're going to have multiple inputs
     	
     	String data = "";
-    	
-    	//If command is equal to dialog, choice map, or choices 
-    	if(command.equals("description")) {
-    		boolean flag = true;
-    		
-    		
-    		// currentLine = (dialog: "hi", "hello", "bye") ~~~ word =("hi", "hello", "bye")
-			
-    		String word = currentLine.substring(currentLine.indexOf(":")+1, currentLine.length()); 
-			word = word.replaceAll("\"", ""); //word = hi, hello, bye
-			
-    		while(flag) {
-    			if(word.indexOf(",") != -1) {
-    				dataList.add(word.substring(0,word.indexOf(",")));
-    				word = word.substring(word.indexOf(","));
-    			} else {
-    				dataList.add(word);
-    				flag = false;
-    			}
-    			
-    				
-    		}
-    		
-    		//Making data equal to the items within the arraylist
-    		 data = "[";
-    		for(int i = 0; i < dataList.size(); i++) {
-    			if( i == dataList.size() - 1) 
-    				data += dataList.get(i) + "]";
-    			 else
-    				data += dataList.get(i) + ",";
-    		}
-    	} else { //command is equal difficulty or location
-    			data = currentLine.substring(currentLine.indexOf('"')+1, currentLine.length()-1);
-    	}
-    	
-        
+    	if(!command.equals("description"))
+            data = currentLine.substring(currentLine.indexOf('"')+1, currentLine.length()-1);
+
         //System.out.println("Command: " + command + ", Data: " + data); //For Testing
 
         switch(command) {
@@ -137,7 +105,36 @@ public class RandomEventList {
                 currentEvent.setName(data);
                 break;
             case "description":
-                currentEvent.setDescription(data);
+                ArrayList<String> dataList = new ArrayList<>();
+                boolean flag = true;
+
+                // currentLine = (dialog: "hi", "hello", "bye") ~~~ word =("hi", "hello", "bye")
+
+                String word = currentLine.substring(currentLine.indexOf(":")+2);
+                word = word.replaceAll("\"", ""); //word = hi, hello, bye
+
+                while(flag) {
+                    if(word.indexOf(",") != -1) {
+                        dataList.add(word.substring(0,word.indexOf(",")));
+                        word = word.substring(word.indexOf(",")+2);
+                    } else {
+                        dataList.add(word);
+                        flag = false;
+                    }
+
+
+                }
+
+                //Making data equal to the items within the arraylist
+                data = "[";
+                for(int i = 0; i < dataList.size(); i++) {
+                    if (i == dataList.size() - 1)
+                        data += dataList.get(i) + "]";
+                    else
+                        data += dataList.get(i) + ",";
+                }
+
+                currentEvent.setDescription(dataList);
 
                 break;
             case "difficulty":
@@ -181,12 +178,12 @@ public class RandomEventList {
      */
     public class TestEvent {
         private String mName;
-        private String mDescription;
+        private ArrayList<String> mDescription;
         private int mDifficulty;
         private String mReward;
         private boolean mCompleted;
 
-        public TestEvent(String name, String description, int difficulty, String reward, boolean completed) {
+        public TestEvent(String name, ArrayList<String> description, int difficulty, String reward, boolean completed) {
             mName = name;
             mDescription = description;
             mDifficulty = difficulty;
@@ -205,11 +202,11 @@ public class RandomEventList {
             mName = name;
         }
 
-        public String getDescription() {
+        public ArrayList<String> getDescription() {
             return mDescription;
         }
 
-        public void setDescription(String description) {
+        public void setDescription(ArrayList<String> description) {
             mDescription = description;
         }
 
