@@ -1,6 +1,8 @@
 package GUI;
 
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -90,12 +92,41 @@ public class GuiEventWindow extends Application {
         buttonShort3 = new Button("");
         buttonShort4 = new Button("");
         buttonShort1.setMinSize(BUTTON_SHORT_SIZE[0],BUTTON_SHORT_SIZE[1]);
+        //here
+        buttonShort1.setOnAction(new EventHandler<ActionEvent>() {
+        	
+        	int count=0;
+        	@Override
+            public void handle(ActionEvent actionEvent) {
+            	if (count%2==1)
+            	{
+            		count++;
+            		
+            		narrativePane.getChildren().clear();
+            		narrativePane.getChildren().add(eventNarrative);
+            		//narrativePane.setMinSize(400,260);
+                    //narrativePane.setMaxSize(400,260);
+                    //narrativePane.setAlignment(Pos.TOP_LEFT);
+                    //narrativePane.setMargin(eventNarrative,new Insets(10));
+            	    narrativePane.setStyle(backgroundColor(COLOR.red)
+            	    		+ borderlineSet(2,COLOR.black,TYPE.solid,7));
+            	}
+            	else	
+            	{
+                count++;
+                pullInventory();
+            	}
+            }
+        });
+        
         buttonShort2.setMinSize(BUTTON_SHORT_SIZE[0],BUTTON_SHORT_SIZE[1]);
         buttonShort3.setMinSize(BUTTON_SHORT_SIZE[0],BUTTON_SHORT_SIZE[1]);
         buttonShort4.setMinSize(BUTTON_SHORT_SIZE[0],BUTTON_SHORT_SIZE[1]);
 
         eventNarrative = new Label();
-        eventNarrative.setText("Test Text, Long Sentence Testing ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n~\n~\n~\n~\n~\n~\n~\n~\n~\n~\n~\n~\n~");
+        eventNarrative.setText("Test Text, Long Sentence "
+        		+ "Testing ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+        		+ "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n~\n~\n~\n~\n~\n~\n~\n~\n~\n~\n~\n~\n~");
         eventNarrative.setFont(Font.font("Verdana",12));
         eventNarrative.setTextFill(Color.BLACK);
         eventNarrative.setWrapText(true);
@@ -116,7 +147,8 @@ public class GuiEventWindow extends Application {
         narrativePane.setMaxSize(400,260);
         narrativePane.setAlignment(Pos.TOP_LEFT);
         narrativePane.setMargin(eventNarrative,new Insets(10));
-        narrativePane.setStyle(backgroundColor(COLOR.warm_yellow) + borderlineSet(2,COLOR.black,TYPE.solid,7));
+        narrativePane.setStyle(backgroundColor(COLOR.warm_yellow) 
+        		+ borderlineSet(2,COLOR.black,TYPE.solid,7));
 
         controlPane.add(buttonLongPane,0,0);
         controlPane.setValignment(buttonLongPane, VPos.TOP);
@@ -134,13 +166,15 @@ public class GuiEventWindow extends Application {
         buttonLongPane.setAlignment(Pos.CENTER);
         buttonLongPane.setMaxSize(200,150);
         buttonLongPane.setMinSize(200,150);
-        buttonLongPane.setStyle(backgroundColor(COLOR.warm_yellow) + borderlineSet(2,COLOR.black,TYPE.solid,7));
+        buttonLongPane.setStyle(backgroundColor(COLOR.warm_yellow) 
+        		+ borderlineSet(2,COLOR.black,TYPE.solid,7));
 
         buttonShortBox.getChildren().addAll(buttonShortPane,moralePane);
         buttonShortBox.setAlignment(Pos.CENTER);
         buttonShortBox.setMaxSize(200,100);
         buttonShortBox.setMinSize(200,100);
-        buttonShortBox.setStyle(backgroundColor(COLOR.warm_yellow) + borderlineSet(2,COLOR.black,TYPE.solid,7));
+        buttonShortBox.setStyle(backgroundColor(COLOR.warm_yellow) 
+        		+ borderlineSet(2,COLOR.black,TYPE.solid,7));
 
         buttonShortPane.setHgap(10);
         buttonShortPane.setVgap(10);
@@ -153,7 +187,8 @@ public class GuiEventWindow extends Application {
         buttonShortPane.setMaxSize(100,100);
 
         moralePane.getChildren().add(morale);
-        moralePane.setStyle(backgroundColor(COLOR.white) + borderlineSet(2,COLOR.black,TYPE.solid,5));
+        moralePane.setStyle(backgroundColor(COLOR.white) 
+        		+ borderlineSet(2,COLOR.black,TYPE.solid,5));
         moralePane.setAlignment(Pos.CENTER);
         moralePane.setMaxSize(75,75);
         moralePane.setMinSize(75,75);
@@ -163,7 +198,8 @@ public class GuiEventWindow extends Application {
         resourcePane.setAlignment(Pos.CENTER);
         resourcePane.setMaxSize(120,260);
         resourcePane.setMinSize(120,260);
-        resourcePane.setStyle(backgroundColor(COLOR.warm_yellow) + borderlineSet(2,COLOR.black,TYPE.solid,7));
+        resourcePane.setStyle(backgroundColor(COLOR.warm_yellow) 
+        		+ borderlineSet(2,COLOR.black,TYPE.solid,7));
 
         // Scene Initialize
         scene = new Scene(rootPane,800,600);
@@ -175,6 +211,37 @@ public class GuiEventWindow extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
     }
+    
+ //method that will change the narrative with the inventory
+ public void pullInventory()
+ {
+	 final int[] SPACE_SIZE = new int[]{60,60};
+	 
+	 GridPane bottomPane = new GridPane();
+	 
+	 // GridPane for slots
+	 GridPane[][] space = new GridPane[6][3];
+	 
+	 narrativePane.getChildren().clear();
+	 narrativePane.setStyle(backgroundColor(COLOR.brown) 
+			 + borderlineSet(2,COLOR.black,TYPE.solid,7));
+	 
+	 
+	 // making the slots
+	 for (int i=0;i<6;i++)
+	 {
+		 for (int j=0;j<3;j++)
+		 {
+			 space[i][j] = new GridPane();
+			 space[i][j].setMaxSize(SPACE_SIZE[0],SPACE_SIZE[1]);
+			 space[i][j].setMinSize(SPACE_SIZE[0], SPACE_SIZE[1]);
+			 space[i][j].setStyle(backgroundColor(COLOR.white) 
+					 + borderlineSet(2,COLOR.black,TYPE.solid,7));
+			 narrativePane.add(space[i][j], i, j);
+		 }
+	 }
+	 
 
+ }
 
 }
