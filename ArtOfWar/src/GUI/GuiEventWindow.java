@@ -11,7 +11,6 @@ import javafx.scene.image.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import static GUI.GuiStyle.*;
@@ -70,9 +69,9 @@ public class GuiEventWindow extends Application {
         eventImage = new ImageView(new Image("Assets/eventImage_1.jpg"));
 
         morale = new ImageView(new Image("Assets/StatusBars/Morale/morale_0.png"));
-        army = new ImageView(new Image("Assets/StatusBars/Army/Army_2/Army-Size-0.png"));
-        gold = new ImageView(new Image("Assets/StatusBars/Army/Army_2/Army-Size-0.png"));
-        food  = new ImageView(new Image("Assets/StatusBars/Army/Army_2/Army-Size-0.png"));
+        army = new ImageView(new Image("Assets/StatusBars/Army/Army_1/Army-Size-4.png"));
+        gold = new ImageView(new Image("Assets/StatusBars/Army/Army_1/Army-Size-4.png"));
+        food  = new ImageView(new Image("Assets/StatusBars/Army/Army_1/Army-Size-4.png"));
 
         //buttonLong = new ImageView(new Image("Assets/GUI/Button_Long.png"));
         //buttonShort = new ImageView(new Image("Assets/GUI/Button_Short.png"));
@@ -98,7 +97,7 @@ public class GuiEventWindow extends Application {
         eventNarrative = new Label();
         eventNarrative.setText("Test Text, Long Sentence Testing ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n~\n~\n~\n~\n~\n~\n~\n~\n~\n~\n~\n~\n~");
         eventNarrative.setFont(Font.font("Verdana",12));
-        eventNarrative.setTextFill(Color.WHITE);
+        eventNarrative.setTextFill(Color.BLACK);
         eventNarrative.setWrapText(true);
         eventNarrative.setTextAlignment(TextAlignment.LEFT);
 
@@ -117,30 +116,31 @@ public class GuiEventWindow extends Application {
         narrativePane.setMaxSize(400,260);
         narrativePane.setAlignment(Pos.TOP_LEFT);
         narrativePane.setMargin(eventNarrative,new Insets(10));
-        narrativePane.setStyle(backgroundColor(COLOR.dark_blue) + borderlineSet(2,COLOR.light_gray,TYPE.solid,7));
+        narrativePane.setStyle(backgroundColor(COLOR.warm_yellow) + borderlineSet(2,COLOR.black,TYPE.solid,7));
 
         controlPane.add(buttonLongPane,0,0);
         controlPane.setValignment(buttonLongPane, VPos.TOP);
         controlPane.add(buttonShortBox,0,0);
         controlPane.setValignment(buttonShortBox, VPos.BOTTOM);
         controlPane.add(resourcePane,1,0);
-        controlPane.setHgap(20);
-        controlPane.setAlignment(Pos.CENTER);
-        controlPane.setMaxSize(340,260);
-        controlPane.setMinSize(340,260);
+        controlPane.setHgap(10);
+        controlPane.setAlignment(Pos.CENTER_LEFT);
+        controlPane.setMaxSize(350,260);
+        controlPane.setMinSize(350,260);
+        //controlPane.setStyle(borderlineSet(1,COLOR.black,TYPE.solid));
 
         buttonLongPane.addColumn(0,buttonLong1,buttonLong2,buttonLong3,buttonLong4);
         buttonLongPane.setVgap(12);
         buttonLongPane.setAlignment(Pos.CENTER);
         buttonLongPane.setMaxSize(200,150);
         buttonLongPane.setMinSize(200,150);
-        buttonLongPane.setStyle(backgroundColor(COLOR.dark_blue) + borderlineSet(2,COLOR.light_gray,TYPE.solid,7));
+        buttonLongPane.setStyle(backgroundColor(COLOR.warm_yellow) + borderlineSet(2,COLOR.black,TYPE.solid,7));
 
         buttonShortBox.getChildren().addAll(buttonShortPane,moralePane);
         buttonShortBox.setAlignment(Pos.CENTER);
         buttonShortBox.setMaxSize(200,100);
         buttonShortBox.setMinSize(200,100);
-        buttonShortBox.setStyle(backgroundColor(COLOR.dark_blue) + borderlineSet(2,COLOR.light_gray,TYPE.solid,7));
+        buttonShortBox.setStyle(backgroundColor(COLOR.warm_yellow) + borderlineSet(2,COLOR.black,TYPE.solid,7));
 
         buttonShortPane.setHgap(10);
         buttonShortPane.setVgap(10);
@@ -153,7 +153,7 @@ public class GuiEventWindow extends Application {
         buttonShortPane.setMaxSize(100,100);
 
         moralePane.getChildren().add(morale);
-        moralePane.setStyle(backgroundColor(COLOR.white) + borderlineSet(2,COLOR.light_gray,TYPE.solid,5));
+        moralePane.setStyle(backgroundColor(COLOR.white) + borderlineSet(2,COLOR.black,TYPE.solid,5));
         moralePane.setAlignment(Pos.CENTER);
         moralePane.setMaxSize(75,75);
         moralePane.setMinSize(75,75);
@@ -163,12 +163,14 @@ public class GuiEventWindow extends Application {
         resourcePane.setAlignment(Pos.CENTER);
         resourcePane.setMaxSize(120,260);
         resourcePane.setMinSize(120,260);
-        resourcePane.setStyle(backgroundColor(COLOR.dark_blue) + borderlineSet(2,COLOR.light_gray,TYPE.solid,7));
+        resourcePane.setStyle(backgroundColor(COLOR.warm_yellow) + borderlineSet(2,COLOR.black,TYPE.solid,7));
 
         // Scene Initialize
         scene = new Scene(rootPane,800,600);
 
         // Stage Initialize
+        primaryStage.setHeight(640);
+        primaryStage.setWidth(800);
         primaryStage.setResizable(false);
         primaryStage.setScene(scene);
         primaryStage.show();

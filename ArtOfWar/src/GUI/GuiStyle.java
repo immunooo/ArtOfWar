@@ -4,13 +4,14 @@ package GUI;
  * Easy tool to help set the style of pane
  *
  * @author <Xiaoyue Zhang>
- * @since <pre>Nov 9 2020</pre>
- * @version 1.3
+ * @since <pre>Nov 11 2020</pre>
+ * @version 1.4
  */
 public class GuiStyle {
 
-    enum COLOR{ red, pink, black, white, brown, dark_blue, light_gray}
+    enum COLOR{ red, pink, black, white, brown, dark_blue, light_gray, warm_yellow}
     enum TYPE{ solid}
+    enum FONT{}
 
     /**
      * color pattern for other method
@@ -18,23 +19,34 @@ public class GuiStyle {
      * @param color the name of color
      * */
     public static String colorString(COLOR color){
-        if(color.equals(COLOR.red))
-            return "#C6584B";
-        else if(color.equals(COLOR.pink))
-            return "#D3876F";
-        else if(color.equals(COLOR.black))
-            return "#000000";
-        else if(color.equals(COLOR.white))
-            return "#FFFFFF";
-        else if(color.equals(COLOR.brown))
-            return "#554336";
-        else if(color.equals(COLOR.dark_blue))
-            return "#2F2F44";
-        else if(color.equals(COLOR.light_gray))
-            return "#595350";
-        else
-            return "";
+
+        switch (color){
+            default:
+            case black:
+                return "#000000";
+            case red:
+                return "#C6584B";
+            case pink:
+                return "#D3876F";
+            case white:
+                return "#FFFFFF";
+            case brown:
+                return "#554336";
+            case dark_blue:
+                return "#2F2F44";
+            case light_gray:
+                return "#595350";
+            case warm_yellow:
+                return "#EADBB1";
+        }
     }
+
+    /**
+     * Font output for other method
+     *
+     * @param
+     * */
+    
 
     /**
      * background color quick setter
@@ -43,6 +55,17 @@ public class GuiStyle {
      * */
     public static String backgroundColor(COLOR color){
         return "-fx-background-color: "+colorString(color)+";\n";
+    }
+
+    /**
+     *
+     * */
+    public static String fontSet(int size, COLOR color, FONT font){
+        String style = "-fx-font-size: " +size + "px;\n";
+
+        style += "-fx-font-color: " + colorString(color) +";\n";
+
+        return style;
     }
 
     /**

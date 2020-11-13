@@ -45,8 +45,11 @@ public class GuiStartWindow extends Application{
         start.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                GuiController controller = new GuiController();
-                controller.start(primaryStage);
+                GuiEventWindow eventWindow= new GuiEventWindow();
+                try {
+                    eventWindow.start(primaryStage);
+                }
+                catch(Exception e){ System.out.println("Initial Failed");}
             }
         });
 
@@ -76,7 +79,7 @@ public class GuiStartWindow extends Application{
         rootPane.setHalignment(menuPane, HPos.CENTER);
 
         // Scene Setting
-        Scene scene = new Scene(rootPane, 800, 640);
+        Scene scene = new Scene(rootPane, 800, 600);
 
         // Stage Setting
         primaryStage.setResizable(false);
