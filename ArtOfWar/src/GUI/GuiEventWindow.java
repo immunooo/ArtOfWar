@@ -20,9 +20,9 @@ import static GUI.GuiStyle.*;
 /**
  * the event window for user
  *
- * @author <Xiaoyue Zhang>
+ * @authors <Xiaoyue Zhang>,<Askar Bashirov>
  * @since <pre>Nov 9 2020</pre>
- * @version 1.2
+ * @version 1.3
  */
 public class GuiEventWindow extends Application {
     /** Scene Construction */
@@ -63,6 +63,9 @@ public class GuiEventWindow extends Application {
     Button buttonShort4;
 
     Label eventNarrative;
+    
+    //inventory opening variable
+    int inventoryCount=0;
 
     //check
     @Override
@@ -95,12 +98,11 @@ public class GuiEventWindow extends Application {
         //here
         buttonShort1.setOnAction(new EventHandler<ActionEvent>() {
         	
-        	int count=0;
         	@Override
             public void handle(ActionEvent actionEvent) {
-            	if (count%2==1)
+            	if (inventoryCount%2==1)
             	{
-            		count++;
+            		inventoryCount++;
             		
             		narrativePane.getChildren().clear();
             		narrativePane.getChildren().add(eventNarrative);
@@ -109,7 +111,7 @@ public class GuiEventWindow extends Application {
             	}
             	else	
             	{
-                count++;
+            	inventoryCount++;
                 pullInventory();
             	}
             }
@@ -211,32 +213,43 @@ public class GuiEventWindow extends Application {
  //method that will change the narrative with the inventory
  public void pullInventory()
  {
+	 //variables for different things
 	 final int[] SPACE_SIZE = new int[]{66,66};
 	 final int[] SPACE_BUTTON_SIZE = new int[] {60,60};
-	 final int[] BOTTOM_SIZE = new int[]{400,80};
+	 final int[] BOTTOM_SIZE = new int[]{396,60};
+	 final int[] UP_SIZE = new int[]{400, 198};
 	 
+	 //grid panels constructors
 	 GridPane bottomPane = new GridPane();
+	 GridPane buttonPane = new GridPane();
 	 GridPane[][] space = new GridPane[6][3];
+	 GridPane exitPane = new GridPane();
 	 
+	 //buttons constructor
 	 Button[][] spaceButton = new Button[6][3];
+	 Button exitButton = new Button("Back");
 	 
+	 //preparing narrative pane
 	 narrativePane.getChildren().clear();
 	 narrativePane.setStyle(backgroundColor(COLOR.brown) 
 			 + borderlineSet(2,COLOR.black,TYPE.solid,7));
 	 
+	 //preparing button pane
+	 buttonPane.setMaxSize(UP_SIZE[0], UP_SIZE[1]);
+	 buttonPane.setMinSize(UP_SIZE[0], UP_SIZE[1]);
 	 
-	 // making the slots
+	 // making the slots and buttons
 	 for (int i=0;i<6;i++)
 	 {
 		 for (int j=0;j<3;j++)
 		 {
+			 //buttons
 			 spaceButton[i][j] = new Button();
 			 spaceButton[i][j].setMaxSize(SPACE_BUTTON_SIZE[0],SPACE_BUTTON_SIZE[1]);
 			 spaceButton[i][j].setMinSize(SPACE_BUTTON_SIZE[0],SPACE_BUTTON_SIZE[1]);
 			 
+			 //slots
 			 space[i][j] = new GridPane();
-			 space[i][j].setVgap(6);
-			 space[i][j].setHgap(6);
 			 space[i][j].setAlignment(Pos.CENTER);
 			 space[i][j].add(spaceButton[i][j],0,0);
 			 space[i][j].setMaxSize(SPACE_SIZE[0],SPACE_SIZE[1]);
@@ -244,11 +257,54 @@ public class GuiEventWindow extends Application {
 			 space[i][j].setStyle(backgroundColor(COLOR.white) 
 					 + borderlineSet(2,COLOR.black,TYPE.solid,7));
 			 
-			 narrativePane.add(space[i][j], i, j);
+			 //adding to button pane
+			 buttonPane.add(space[i][j], i, j);
 		 }
 	 }
 	 
+	 //making bottom pane
+	 bottomPane.setMaxSize(BOTTOM_SIZE[0], BOTTOM_SIZE[1]);
+	 bottomPane.setMinSize(BOTTOM_SIZE[0], BOTTOM_SIZE[1]);
+	 bottomPane.setStyle(backgroundColor(COLOR.warm_yellow) 
+			 + borderlineSet(2,COLOR.black,TYPE.solid,7));
 	 
+	 //working with exit button and pane
+	 exitButton.setMaxSize(100, 40);
+	 exitButton.setMinSize(100, 40);
+	 exitButton.setOnAction(new EventHandler<ActionEvent>() {	
+     	@Override
+         public void handle(ActionEvent actionEvent) 
+     	{
+         		inventoryCount++;
+         		
+         		narrativePane.getChildren().clear();
+         		narrativePane.getChildren().add(eventNarrative);
+         	    narrativePane.setStyle(backgroundColor(COLOR.warm_yellow)
+         	    		+ borderlineSet(2,COLOR.black,TYPE.solid,7));
+        }
+     });
+	 
+	 GridPane support = new GridPane();
+	 support.setMaxSize(400, 0);
+	 support.setMinSize(400, 0);
+	 support.setStyle(backgroundColor(COLOR.warm_yellow) 
+			 + borderlineSet(2,COLOR.black,TYPE.solid,7));
+	 
+	 exitPane.setMaxSize(100, 40);
+	 exitPane.setMinSize(100, 40);
+	 exitPane.add(exitButton, 0, 0);
+	 exitPane.setAlignment(Pos.CENTER);
+	 //exitPane.setVgap(10);
+	 exitPane.setStyle(backgroundColor(COLOR.warm_yellow) 
+			 + borderlineSet(2,COLOR.black,TYPE.solid,7));
+	 
+	 bottomPane.add(support, 0, 0);
+	 bottomPane.add(exitPane, 0, 1);
+	 bottomPane.setVgap(8);
+	 
+	 //adding to narrative pane button and bottom panes;
+	 narrativePane.add(buttonPane, 0, 0);
+	 narrativePane.add(bottomPane, 0, 1);
 
  }
 
