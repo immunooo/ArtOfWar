@@ -104,11 +104,7 @@ public class GuiEventWindow extends Application {
             		
             		narrativePane.getChildren().clear();
             		narrativePane.getChildren().add(eventNarrative);
-            		//narrativePane.setMinSize(400,260);
-                    //narrativePane.setMaxSize(400,260);
-                    //narrativePane.setAlignment(Pos.TOP_LEFT);
-                    //narrativePane.setMargin(eventNarrative,new Insets(10));
-            	    narrativePane.setStyle(backgroundColor(COLOR.red)
+            	    narrativePane.setStyle(backgroundColor(COLOR.warm_yellow)
             	    		+ borderlineSet(2,COLOR.black,TYPE.solid,7));
             	}
             	else	
@@ -215,12 +211,14 @@ public class GuiEventWindow extends Application {
  //method that will change the narrative with the inventory
  public void pullInventory()
  {
-	 final int[] SPACE_SIZE = new int[]{60,60};
+	 final int[] SPACE_SIZE = new int[]{66,66};
+	 final int[] SPACE_BUTTON_SIZE = new int[] {60,60};
+	 final int[] BOTTOM_SIZE = new int[]{400,80};
 	 
 	 GridPane bottomPane = new GridPane();
-	 
-	 // GridPane for slots
 	 GridPane[][] space = new GridPane[6][3];
+	 
+	 Button[][] spaceButton = new Button[6][3];
 	 
 	 narrativePane.getChildren().clear();
 	 narrativePane.setStyle(backgroundColor(COLOR.brown) 
@@ -232,14 +230,24 @@ public class GuiEventWindow extends Application {
 	 {
 		 for (int j=0;j<3;j++)
 		 {
+			 spaceButton[i][j] = new Button();
+			 spaceButton[i][j].setMaxSize(SPACE_BUTTON_SIZE[0],SPACE_BUTTON_SIZE[1]);
+			 spaceButton[i][j].setMinSize(SPACE_BUTTON_SIZE[0],SPACE_BUTTON_SIZE[1]);
+			 
 			 space[i][j] = new GridPane();
+			 space[i][j].setVgap(6);
+			 space[i][j].setHgap(6);
+			 space[i][j].setAlignment(Pos.CENTER);
+			 space[i][j].add(spaceButton[i][j],0,0);
 			 space[i][j].setMaxSize(SPACE_SIZE[0],SPACE_SIZE[1]);
 			 space[i][j].setMinSize(SPACE_SIZE[0], SPACE_SIZE[1]);
 			 space[i][j].setStyle(backgroundColor(COLOR.white) 
 					 + borderlineSet(2,COLOR.black,TYPE.solid,7));
+			 
 			 narrativePane.add(space[i][j], i, j);
 		 }
 	 }
+	 
 	 
 
  }
