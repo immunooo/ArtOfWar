@@ -22,7 +22,7 @@ public class Combat {
     private int enemyAS; //The enemies current attack style
     private int attackLevel; //The number of troops being used for attacking
     private int defenseLevel; //The number of troops being used for defending
-    private int terrain; //0: Plains, 1: Valley, 2: Hill
+    private int terrain; //0: Plains, 1: Valley, 2: Hill, 3: Wetlands (avoid the word swamp)
     private boolean hasCover = false; //True allows army to ambush, False prevents it
     private boolean inCover = false; //True if army is attempting ambush
     private boolean failedCover = false; //True if army fails the ambush
@@ -292,7 +292,7 @@ public class Combat {
             modifier -= 10;
 
         total = dice + modifier;
-        ;
+
         if(enemyAS == 3) { //If enemy uses a 'full block' the damage you do is halved
             System.out.println("Before block: " + total);
             total /= 2;
@@ -422,18 +422,18 @@ public class Combat {
 
             switch(dice) {
                 case 0:
-                    System.out.println("Enemy uses Block");
+                    //System.out.println("Enemy uses Block");
                     return 3; //Returns 'All Block' if dice is 0
                 case 1:
                 case 2:
-                    System.out.println("Enemy uses Archers");
+                    //System.out.println("Enemy uses Archers");
                     return attack1; //Returns attack 1 if rolls 1 or 2
                 case 3:
                 case 4:
-                    System.out.println("Enemy uses Cavalry");
+                    //System.out.println("Enemy uses Cavalry");
                     return attack2; //Returns attack2 if rolls 3 or 4
                 default:
-                    System.out.println("Enemy uses Melee");
+                    //System.out.println("Enemy uses Melee");
                     return attackStyle; //Returns default attack style if rolls 5, 6, 7, 8, or 9
             }
         }
