@@ -163,7 +163,7 @@ public class RandomEventList {
             if(word.indexOf(",") != -1) {
                 list.add(word.substring(0,word.indexOf(",")));
                 word = word.substring(word.indexOf(",")+2);
-            } else {
+            } else { 
                 list.add(word);
                 flag = false;
             }
