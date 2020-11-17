@@ -1,0 +1,21 @@
+Template: //Data goes in between the quotations. Dialog/Choices/choicesMap may have more, may have less
+/~/
+dialog: "dialog1", "dialog2", "dialog3"
+picture: "picture1", "picture2", "picture3"
+choices: "choice1", "choice2", "choice3"
+resource1: "resources1", "resources1", "resources1"
+resource2: "resources2", "resources2", "resources2"
+resource3: "resources3", "resources3", "resources3"
+difficulty: "difficulty"
+location: "location"
+======= 
+dialog: "", "", "", "", ""
+picture: "", "", "", "", ""
+choices: "", "", ""
+resource1: "", "", "", ""
+resource2: "", "", "", ""
+resource3: "", "", "", ""
+difficulty: ""
+location: ""
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 

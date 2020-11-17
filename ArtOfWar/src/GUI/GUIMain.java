@@ -1,7 +1,7 @@
 package GUI;
 
 public class GUIMain {
-//asdadasdasda
+//check
 	
 	public GUIMain()
 	{
