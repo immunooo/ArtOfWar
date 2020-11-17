@@ -159,7 +159,7 @@ public class RandomEventList {
         String word = currentLine.substring(currentLine.indexOf(":")+2);
         word = word.replaceAll("\"", ""); //word = hi, hello, bye
 
-        while(flag) {
+        while(flag) { 
             if(word.indexOf(",") != -1) {
                 list.add(word.substring(0,word.indexOf(",")));
                 word = word.substring(word.indexOf(",")+2);
@@ -167,7 +167,7 @@ public class RandomEventList {
                 list.add(word);
                 flag = false;
             }
-
+ 
 
         }
         
