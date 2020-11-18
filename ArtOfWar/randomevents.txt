@@ -9,7 +9,7 @@ resource3: Army Size, Morale, Food, Gold
 difficulty: "difficulty"
 location: "location"
 ====================================================================================
-dialog: "First", "Second", "Third", "Fourth", "Fifth"
+dialog: "Never Going to Give You Up", "Never Gonna Let You Down", "Never Going to Turn Around", "And", "Desert You"
 picture: "a", "b", "c", "d", "e"
 choices: "1", "2", "3"
 resource1: 9, 8, 7, 6
