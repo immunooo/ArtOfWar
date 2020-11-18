@@ -3,19 +3,27 @@ Template: //Data goes in between the quotations. Dialog/Choices/choicesMap may h
 dialog: "dialog1", "dialog2", "dialog3"
 picture: "picture1", "picture2", "picture3"
 choices: "choice1", "choice2", "choice3"
-resource1: "resources1", "resources1", "resources1"
-resource2: "resources2", "resources2", "resources2"
-resource3: "resources3", "resources3", "resources3"
+resource1: Army Size, Morale, Food, Gold
+resource2: Army Size, Morale, Food, Gold
+resource3: Army Size, Morale, Food, Gold
 difficulty: "difficulty"
 location: "location"
 ======= 
-dialog: "", "", "", "", ""
-picture: "", "", "", "", ""
-choices: "", "", ""
-resource1: "", "", "", ""
-resource2: "", "", "", ""
-resource3: "", "", "", ""
-difficulty: ""
-location: ""
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+dialog: "First", "Second", "Third", "Fourth", "Fifth"
+picture: "a", "b", "c", "d", "e"
+choices: "1", "2", "3"
+resource1: 9, 8, 7, 6
+resource2: 11, 12, 13, 14
+resource3: 20, 21, 22, 23
+difficulty: "0"
+location: "My swamp"
+/~/
+dialog: "dialog1", "dialog2", "dialog3"
+picture: "picture1", "picture2", "picture3"
+choices: "choice1", "choice2", "choice3"
+resource1: 1, 2, 3, 4
+resource2: 5, 6, 7, 8
+resource3: 9, 10, 11, 12
+difficulty: "0"
+location: "location"
  
