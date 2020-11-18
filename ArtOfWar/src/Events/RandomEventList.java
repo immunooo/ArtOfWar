@@ -285,26 +285,26 @@ public class RandomEventList {
         @Override
         public String toString() {
         	//Making mResouces[][] into a String
-        	String resources = "[[";
+        	String resources = "{[";
         	for(int i = 0; i < mResources.size(); i++) {
-                for (int j = 0; j < 4; j++) {
-                    if (i == 2 && j == 3)
-                        resources += mResources.get(i)[j] + "]";
-                    else
-                        resources += mResources.get(i)[j] + ", ";
+        	    resources += mResources.get(i)[0];
+                for (int j = 1; j < 4; j++) {
+                    resources += ", " + mResources.get(i)[j];
                 }
-                resources += "] [";
+                if(i != 2)
+                    resources += "], [";
             }
+        	resources += "]}";
         		
         	
-            return "[" +
+            return "{" +
                     mDialog.toString() +
                     ", " + mPicture.toString() +
                     ", " + mChoices.toString() +
                     ", " + resources +
                     ", " + mDifficulty +
                     ", " + mLocation +
-                    ']';
+                    "}";
         }
     }
     //For testing the object builder
