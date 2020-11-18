@@ -73,18 +73,18 @@ public class GuiEventWindow extends Application {
         // Component Initialize
         eventImage = new ImageView(new Image("Assets/eventImage_1.jpg"));
 
-        morale = new ImageView(new Image("Assets/StatusBars/Morale/morale_0.png"));
-        army = new ImageView(new Image("Assets/StatusBars/Army/Army_1/Army-Size-4.png"));
-        gold = new ImageView(new Image("Assets/StatusBars/Army/Army_1/Army-Size-4.png"));
-        food  = new ImageView(new Image("Assets/StatusBars/Army/Army_1/Army-Size-4.png"));
+        morale = new ImageView(new Image("Assets/Chill.png"));
+        army = new ImageView(new Image("Assets/Army-Size-4.png"));
+        gold = new ImageView(new Image("Assets/Half-Full-Chest-4.png"));
+        food  = new ImageView(new Image("Assets/HalfBasket-4.png"));
 
         //buttonLong = new ImageView(new Image("Assets/GUI/Button_Long.png"));
         //buttonShort = new ImageView(new Image("Assets/GUI/Button_Short.png"));
 
-        buttonLong1 = new Button("");
-        buttonLong2 = new Button("");
-        buttonLong3 = new Button("");
-        buttonLong4 = new Button("");
+        buttonLong1 = new Button("Fight");
+        buttonLong2 = new Button("Retreat");
+        buttonLong3 = new Button("Concede");
+        buttonLong4 = new Button("Betray");
         buttonLong1.setMinSize(BUTTON_LONG_SIZE[0],BUTTON_LONG_SIZE[1]);
         buttonLong2.setMinSize(BUTTON_LONG_SIZE[0],BUTTON_LONG_SIZE[1]);
         buttonLong3.setMinSize(BUTTON_LONG_SIZE[0],BUTTON_LONG_SIZE[1]);
@@ -284,11 +284,11 @@ public class GuiEventWindow extends Application {
         }
      });
 	 
-	 GridPane support = new GridPane();
+	 /*GridPane support = new GridPane();
 	 support.setMaxSize(400, 0);
 	 support.setMinSize(400, 0);
 	 support.setStyle(backgroundColor(COLOR.warm_yellow) 
-			 + borderlineSet(2,COLOR.black,TYPE.solid,7));
+			 + borderlineSet(2,COLOR.black,TYPE.solid,7));*/
 	 
 	 exitPane.setMaxSize(100, 40);
 	 exitPane.setMinSize(100, 40);
@@ -298,8 +298,9 @@ public class GuiEventWindow extends Application {
 	 exitPane.setStyle(backgroundColor(COLOR.warm_yellow) 
 			 + borderlineSet(2,COLOR.black,TYPE.solid,7));
 	 
-	 bottomPane.add(support, 0, 0);
-	 bottomPane.add(exitPane, 0, 1);
+	 //bottomPane.add(support, 0, 0);
+	 bottomPane.setMargin(exitPane,new Insets(8));
+	 bottomPane.add(exitPane, 0, 0);
 	 bottomPane.setVgap(8);
 	 
 	 //adding to narrative pane button and bottom panes;
