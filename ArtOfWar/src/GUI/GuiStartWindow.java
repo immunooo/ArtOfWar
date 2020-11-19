@@ -17,7 +17,7 @@ import static GUI.GuiStyle.*;
  *
  * @author <Xiaoyue Zhang>
  * @since <pre>Nov 9 2020</pre>
- * @version 1.5.1
+ * @version 1.2.1
  */
 public class GuiStartWindow extends Application{
 //check

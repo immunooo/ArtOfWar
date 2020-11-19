@@ -7,6 +7,7 @@ import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.*;
@@ -22,7 +23,7 @@ import static GUI.GuiStyle.*;
  *
  * @authors <Xiaoyue Zhang>,<Askar Bashirov>
  * @since <pre>Nov 9 2020</pre>
- * @version 1.3
+ * @version 1.3.1
  */
 public class GuiEventWindow extends Application {
     /** Scene Construction */
@@ -46,30 +47,29 @@ public class GuiEventWindow extends Application {
     ImageView gold;
     ImageView food;
 
-    ImageView buttonLong;
-    ImageView buttonShort;
-
     final int[] BUTTON_LONG_SIZE = new int[]{120,20};
     final int[] BUTTON_SHORT_SIZE = new int[]{30,30};
 
-    Button buttonLong1;
-    Button buttonLong2;
-    Button buttonLong3;
-    Button buttonLong4;
+    Button buttonLong1 = buttonSet(NODE.button,"Fight");
+    Button buttonLong2 = buttonSet(NODE.button,"Retreat");
+    Button buttonLong3 = buttonSet(NODE.submenu,"Concede", "example text");
+    Button buttonLong4 = buttonSet(NODE.submenu,"Betray", "example text");
 
-    Button buttonShort1;
+    Button inventoryButton;
     Button buttonShort2;
     Button buttonShort3;
-    Button buttonShort4;
+    Button exitButton;
 
     Label eventNarrative;
     
     //inventory opening variable
-    int inventoryCount=0;
+    boolean inventoryOpen = false;
 
     //check
     @Override
     public void start(Stage primaryStage) throws Exception {
+        // Special Function Test
+
         // Component Initialize
         eventImage = new ImageView(new Image("Assets/Scenery-From-Old-Concept.png"));
 
@@ -78,55 +78,50 @@ public class GuiEventWindow extends Application {
         gold = new ImageView(new Image("Assets/Half-Full-Chest-4.png"));
         food  = new ImageView(new Image("Assets/HalfBasket-4.png"));
 
-        //buttonLong = new ImageView(new Image("Assets/GUI/Button_Long.png"));
-        //buttonShort = new ImageView(new Image("Assets/GUI/Button_Short.png"));
+        // Button Short Setting
+        inventoryButton = new Button("");
+        inventoryButton.setBackground(new Background(new BackgroundImage(new Image("Assets/Icons/Bag.png"),
+                null,null,null,null)));
+        inventoryButton.setMaxSize(BUTTON_SHORT_SIZE[0],BUTTON_SHORT_SIZE[1]);
+        inventoryButton.setOnAction(new EventHandler<ActionEvent>() {
 
-        buttonLong1 = new Button("Fight");
-        buttonLong2 = new Button("Retreat");
-        buttonLong3 = new Button("Concede");
-        buttonLong4 = new Button("Betray");
-        buttonLong1.setMinSize(BUTTON_LONG_SIZE[0],BUTTON_LONG_SIZE[1]);
-        buttonLong2.setMinSize(BUTTON_LONG_SIZE[0],BUTTON_LONG_SIZE[1]);
-        buttonLong3.setMinSize(BUTTON_LONG_SIZE[0],BUTTON_LONG_SIZE[1]);
-        buttonLong4.setMinSize(BUTTON_LONG_SIZE[0],BUTTON_LONG_SIZE[1]);
-
-        buttonShort1 = new Button("I");
-        buttonShort2 = new Button("");
-        buttonShort3 = new Button("");
-        buttonShort4 = new Button("E");
-        buttonShort1.setMinSize(BUTTON_SHORT_SIZE[0],BUTTON_SHORT_SIZE[1]);
-        //here
-        buttonShort1.setOnAction(new EventHandler<ActionEvent>() {
-        	
-        	@Override
+            @Override
             public void handle(ActionEvent actionEvent) {
-            	if (inventoryCount%2==1)
-            	{
-            		inventoryCount++;
-            		
-            		narrativePane.getChildren().clear();
-            		narrativePane.getChildren().add(eventNarrative);
-            	    narrativePane.setStyle(backgroundColor(COLOR.warm_yellow)
-            	    		+ borderlineSet(2,COLOR.black,TYPE.solid,7));
-            	}
-            	else	
-            	{
-            	inventoryCount++;
-                pullInventory();
-            	}
+                if (inventoryOpen)
+                {
+                    inventoryOpen = false;
+
+                    narrativePane.getChildren().clear();
+                    narrativePane.getChildren().add(eventNarrative);
+                    narrativePane.setStyle(backgroundColor(COLOR.warm_yellow)
+                            + borderlineSet(2,COLOR.black,TYPE.solid,7));
+                }
+                else
+                {
+                    inventoryOpen = true;
+                    pullInventory();
+                }
             }
         });
-        
+
+        buttonShort2 = new Button("");
         buttonShort2.setMinSize(BUTTON_SHORT_SIZE[0],BUTTON_SHORT_SIZE[1]);
+
+        buttonShort3 = new Button("");
         buttonShort3.setMinSize(BUTTON_SHORT_SIZE[0],BUTTON_SHORT_SIZE[1]);
-        buttonShort4.setMinSize(BUTTON_SHORT_SIZE[0],BUTTON_SHORT_SIZE[1]);
-        buttonShort4.setOnAction(new EventHandler<ActionEvent>() {
+
+        exitButton = new Button("");
+        exitButton.setBackground(new Background(new BackgroundImage(new Image("Assets/Icons/Door.png"),
+                null,null,null,null)));
+        exitButton.setMaxSize(BUTTON_SHORT_SIZE[0],BUTTON_SHORT_SIZE[1]);
+        exitButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
                 primaryStage.close();
             }
         });
 
+        // Narrative Text Setting
         eventNarrative = new Label();
         eventNarrative.setText("Test Text, Long Sentence "
         		+ "Testing ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
@@ -167,7 +162,8 @@ public class GuiEventWindow extends Application {
 
         buttonLongPane.addColumn(0,buttonLong1,buttonLong2,buttonLong3,buttonLong4);
         buttonLongPane.setVgap(12);
-        buttonLongPane.setAlignment(Pos.CENTER);
+        buttonLongPane.setAlignment(Pos.TOP_CENTER);
+        buttonLongPane.setPadding(new Insets(15));
         buttonLongPane.setMaxSize(200,150);
         buttonLongPane.setMinSize(200,150);
         buttonLongPane.setStyle(backgroundColor(COLOR.warm_yellow) 
@@ -177,22 +173,22 @@ public class GuiEventWindow extends Application {
         buttonShortBox.setAlignment(Pos.CENTER);
         buttonShortBox.setMaxSize(200,100);
         buttonShortBox.setMinSize(200,100);
-        buttonShortBox.setStyle(backgroundColor(COLOR.warm_yellow) 
-        		+ borderlineSet(2,COLOR.black,TYPE.solid,7));
+        buttonShortBox.setStyle(backgroundColor(COLOR.warm_yellow) +
+                                borderlineSet(2,COLOR.black,TYPE.solid,7));
 
         buttonShortPane.setHgap(10);
         buttonShortPane.setVgap(10);
-        buttonShortPane.add(buttonShort1,0,0);
+        buttonShortPane.add(inventoryButton,0,0);
         buttonShortPane.add(buttonShort2,1,0);
         buttonShortPane.add(buttonShort3,0,1);
-        buttonShortPane.add(buttonShort4,1,1);
+        buttonShortPane.add(exitButton,1,1);
         buttonShortPane.setAlignment(Pos.CENTER);
         buttonShortPane.setMinSize(100,100);
         buttonShortPane.setMaxSize(100,100);
 
         moralePane.getChildren().add(morale);
-        moralePane.setStyle(backgroundColor(COLOR.white) 
-        		+ borderlineSet(2,COLOR.black,TYPE.solid,5));
+        moralePane.setStyle(backgroundColor(COLOR.white) +
+                            borderlineSet(2,COLOR.light_gray,TYPE.solid,5));
         moralePane.setAlignment(Pos.CENTER);
         moralePane.setMaxSize(75,75);
         moralePane.setMinSize(75,75);
@@ -202,8 +198,8 @@ public class GuiEventWindow extends Application {
         resourcePane.setAlignment(Pos.CENTER);
         resourcePane.setMaxSize(120,260);
         resourcePane.setMinSize(120,260);
-        resourcePane.setStyle(backgroundColor(COLOR.warm_yellow) 
-        		+ borderlineSet(2,COLOR.black,TYPE.solid,7));
+        resourcePane.setStyle(  backgroundColor(COLOR.warm_yellow) +
+                                borderlineSet(2,COLOR.black,TYPE.solid,7));
 
         // Scene Initialize
         scene = new Scene(rootPane,800,600);
@@ -237,8 +233,8 @@ public class GuiEventWindow extends Application {
 	 
 	 //preparing narrative pane
 	 narrativePane.getChildren().clear();
-	 narrativePane.setStyle(backgroundColor(COLOR.brown) 
-			 + borderlineSet(2,COLOR.black,TYPE.solid,7));
+	 narrativePane.setStyle(backgroundColor(COLOR.brown) +
+                            borderlineSet(2,COLOR.light_gray,TYPE.solid,7));
 	 
 	 //preparing button pane
 	 buttonPane.setMaxSize(UP_SIZE[0], UP_SIZE[1]);
@@ -281,7 +277,7 @@ public class GuiEventWindow extends Application {
      	@Override
          public void handle(ActionEvent actionEvent) 
      	{
-         		inventoryCount++;
+         		inventoryOpen = false;
          		
          		narrativePane.getChildren().clear();
          		narrativePane.getChildren().add(eventNarrative);
@@ -300,7 +296,7 @@ public class GuiEventWindow extends Application {
 	 exitPane.setMinSize(100, 40);
 	 exitPane.add(exitButton, 0, 0);
 	 exitPane.setAlignment(Pos.CENTER);
-	 //exitPane.setVgap(10);
+	 exitPane.setPadding(new Insets(15));
 	 exitPane.setStyle(backgroundColor(COLOR.warm_yellow) 
 			 + borderlineSet(2,COLOR.black,TYPE.solid,7));
 	 
