@@ -1,6 +1,7 @@
 package GUI;
 
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Side;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
@@ -78,6 +79,7 @@ public class GuiStyle {
      * */
     public static Button buttonSet(NODE node, String text){
         Button button = new Button(text);
+        button.setPadding(new Insets(0));
         button.setMaxSize(120,20);
         button.setMinSize(120,20);
         return button;
