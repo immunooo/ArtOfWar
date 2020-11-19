@@ -71,7 +71,7 @@ public class GuiEventWindow extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         // Component Initialize
-        eventImage = new ImageView(new Image("Assets/eventImage_1.jpg"));
+        eventImage = new ImageView(new Image("Assets/Scenery-From-Old-Concept.png"));
 
         morale = new ImageView(new Image("Assets/Chill.png"));
         army = new ImageView(new Image("Assets/Army-Size-4.png"));
@@ -90,10 +90,10 @@ public class GuiEventWindow extends Application {
         buttonLong3.setMinSize(BUTTON_LONG_SIZE[0],BUTTON_LONG_SIZE[1]);
         buttonLong4.setMinSize(BUTTON_LONG_SIZE[0],BUTTON_LONG_SIZE[1]);
 
-        buttonShort1 = new Button("");
+        buttonShort1 = new Button("I");
         buttonShort2 = new Button("");
         buttonShort3 = new Button("");
-        buttonShort4 = new Button("");
+        buttonShort4 = new Button("E");
         buttonShort1.setMinSize(BUTTON_SHORT_SIZE[0],BUTTON_SHORT_SIZE[1]);
         //here
         buttonShort1.setOnAction(new EventHandler<ActionEvent>() {
@@ -120,6 +120,12 @@ public class GuiEventWindow extends Application {
         buttonShort2.setMinSize(BUTTON_SHORT_SIZE[0],BUTTON_SHORT_SIZE[1]);
         buttonShort3.setMinSize(BUTTON_SHORT_SIZE[0],BUTTON_SHORT_SIZE[1]);
         buttonShort4.setMinSize(BUTTON_SHORT_SIZE[0],BUTTON_SHORT_SIZE[1]);
+        buttonShort4.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                primaryStage.close();
+            }
+        });
 
         eventNarrative = new Label();
         eventNarrative.setText("Test Text, Long Sentence "
