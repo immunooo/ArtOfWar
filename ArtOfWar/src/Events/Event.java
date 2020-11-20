@@ -16,6 +16,8 @@ public class Event {
 	private int difficulty;
 	private String location;
 	
+	private boolean eventComplete;
+	
 	/**
 	 * Constructor method of the Events class
 	 * 
@@ -33,6 +35,7 @@ public class Event {
 		this.difficulty = difficulty;
 		this.location = location;
 		this.choicesMap = new HashMap<String, Integer[]>();
+		this.eventComplete = false;
 		
 		if(choices.length != resourceModifiers.length) {
 			throw new Error("Choices and resource modifier have different lengths.");
@@ -49,7 +52,7 @@ public class Event {
 		}
 		
 	}
-	
+
 	/**
 	 * Returns the choices of the event.
 	 * @return choices for the event.
@@ -102,9 +105,13 @@ public class Event {
 		army.setMorale(army.getMorale() + modifiers[1]);
 		army.getResources().setFood(army.getResources().getFood() +  modifiers[2]);
 		army.getResources().setGold(army.getResources().getGold() +  modifiers[3]);
-		
+		eventComplete = true;
 		return true;
 		
+	}
+	
+	public boolean isEventComplete() {
+		return eventComplete;
 	}
 	
 	
