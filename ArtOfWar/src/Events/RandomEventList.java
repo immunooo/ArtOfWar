@@ -71,7 +71,7 @@ public class RandomEventList {
     public boolean hasMoreCommands()  {
         return inputFile.hasNextLine();
     }
-
+    
     /**
      * Returns the line that is currently being parsed
      * @return the Line in the file
@@ -204,6 +204,10 @@ public class RandomEventList {
         }
 
         return output;
+    }
+    
+    public Event getRandomEvent(String location) {
+    	return null;
     }
 
     /**

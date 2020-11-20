@@ -54,6 +54,22 @@ public class Event {
 		}
 		
 	}
+	
+	public Event clone() {
+		Dialogue dialogueClone = d.clone();
+		
+		ArrayList<String> choicesClone = new ArrayList<>();
+		ArrayList<Integer[]> resourceModifiersClone = new ArrayList<>();
+		for(String s: choices) {
+			choices.add(s.toString());
+			resourceModifiersClone.add(choicesMap.get(s));
+		}
+		
+		return new Event(dialogueClone, choicesClone, resourceModifiersClone, difficulty, location.toString());
+		
+		
+		
+	}
 
 	/**
 	 * Returns the choices of the event.

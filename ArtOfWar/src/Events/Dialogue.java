@@ -23,12 +23,21 @@ public class Dialogue {
 		picture = new ArrayList<String>();
 	}
 	
+	public Dialogue clone() {
+		Dialogue newD = new Dialogue();
+		for(int i = 0; i < text.size(); i++) {
+			newD.offer(text.get(i).toString(), picture.get(i).toString());
+		}
+		return newD;
+		
+ 	}
+	
 	/**
 	 * Inserts new dialogue into the queue 
 	 * @param text of the dialogue
 	 * @param picture of the dialogue
 	 */
-	public void Offer(String text, String picture) {
+	public void offer(String text, String picture) {
 		this.text.add(text);
 		this.picture.add(picture);
 	}
