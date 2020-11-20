@@ -1,5 +1,7 @@
 package Events;
 import Capital.Army;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 /**
  * Event : a class responsible holding data used through an event.
@@ -11,7 +13,7 @@ public class Event {
 	
 	private Dialogue d;
 	private HashMap<String, Integer[]> choicesMap;
-	private String[] choices;
+	private ArrayList<String> choices;
  	
 	private int difficulty;
 	private String location;
@@ -29,7 +31,7 @@ public class Event {
 	 * 
 	 * @throws Error if choices and resource modifier have different lengths or resource modifiers has incorrect amount of values
 	 */
-	public Event(Dialogue d, String[] choices, Integer[][] resourceModifiers, int difficulty, String location) {
+	public Event(Dialogue d, ArrayList<String> choices, ArrayList<Integer[]> resourceModifiers, int difficulty, String location) {
 		this.d = d;
 		this.choices= choices;
 		this.difficulty = difficulty;
@@ -37,18 +39,18 @@ public class Event {
 		this.choicesMap = new HashMap<String, Integer[]>();
 		this.eventComplete = false;
 		
-		if(choices.length != resourceModifiers.length) {
+		if(choices.size() != resourceModifiers.size()) {
 			throw new Error("Choices and resource modifier have different lengths.");
 		}
 		
 		//Loads the hash map with choice text as key and the resource modifiers as the value
-		for(int i = 0; i < choices.length; i++) {
+		for(int i = 0; i < choices.size(); i++) {
 			//Throws error if resource modifiers doesnt have a size of 4
-			if(resourceModifiers[i].length != 4) {
+			if(resourceModifiers.get(i).length != 4) {
 				throw new Error("Resources modifiers has incorrect amount of values.");
 			}
 			
-			choicesMap.put(choices[i], resourceModifiers[i]);
+			choicesMap.put(choices.get(i), resourceModifiers.get(i));
 		}
 		
 	}
@@ -57,7 +59,7 @@ public class Event {
 	 * Returns the choices of the event.
 	 * @return choices for the event.
 	 */
-	public String[] getChoices() {
+	public ArrayList<String> getChoices() {
 		return choices;
 	}
 	

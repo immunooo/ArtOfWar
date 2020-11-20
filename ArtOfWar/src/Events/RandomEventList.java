@@ -35,11 +35,9 @@ public class RandomEventList {
         } catch(FileNotFoundException e) { //Throws FileNotFound if the file cannot be found
             System.out.println("File does not Exist!");
         }
-//        for(int i = 0; i < 9; i++)
-//            nextLine(); //Skips the template of the text file
-        
-        // skips the first line 
-        nextLine();
+        for(int i = 0; i < 11; i++)
+            nextLine(); //Skips the template of the text file
+
         int lineNumber = 0; //For testing
         String command; //The command of the line so the Event data is added correctly
         int colonIndex;
@@ -54,15 +52,16 @@ public class RandomEventList {
                 //System.out.println(currentEvent); //For Testing
             } else { //Still in the process of creating an Event
                 colonIndex = currentLine.indexOf(':'); //Checks the index of the command colon
-
+                if(colonIndex == -1)
+                    break;
                 command = currentLine.substring(0, colonIndex); //Grabs the data type;
                 inputEventData(command);
             }
             //System.out.println("Command: " + command); //For Testing
         }
         EventList.add(currentEvent); //Adds the final event to the EventList
-        System.out.println(currentEvent + "\n"); //For Testing
-        System.out.println(EventList); //For Testing
+       // System.out.println(currentEvent + "\n"); //For Testing
+       // System.out.println(EventList); //For Testing
     }
 
     /**
@@ -97,6 +96,7 @@ public class RandomEventList {
         //Add if statement for dialog and possibly choices since they're going to have multiple inputs
     	
     	String data = "";
+    	//ArrayList<Integer[]> resources = new ArrayList<>();
     	if(command.equals("difficulty") || command.equals("location"))
             data = currentLine.substring(currentLine.indexOf('"')+1, currentLine.length()-1);
 
@@ -119,19 +119,20 @@ public class RandomEventList {
                 currentEvent.setChoices(choiceList);
                 break;
             case "resource1":
-            	String[] resources1 = new String[3];
+            	Integer[] resources1 = new Integer[4];
             	resourceParsing(resources1,currentLine);
             	currentEvent.mResources.add(resources1);
                 break;
             case "resource2":
-            	String[] resources2 = new String[3];
+            	Integer[] resources2 = new Integer[4];
             	resourceParsing(resources2,currentLine);
-            	currentEvent.mResources.add(resources2);
+                currentEvent.mResources.add(resources2);
                 break;
             case "resource3":
-            	String[] resources3 = new String[3];
+            	Integer[] resources3 = new Integer[4];
             	resourceParsing(resources3,currentLine);
-            	currentEvent.mResources.add(resources3);
+                currentEvent.mResources.add(resources3);
+
                 break;
             case "difficulty":
             	currentEvent.setDifficulty(data);
@@ -149,7 +150,6 @@ public class RandomEventList {
     /**
      * This method is a helper method for parsing
      * @param list The arraylist for current command
-     * @param line current line of code
      */
     public void parsingLogic(ArrayList<String> list, String currentLine, String data) {
     	boolean flag = true;
@@ -183,21 +183,14 @@ public class RandomEventList {
     	
     }
     
-    public void resourceParsing(String[] list, String currentLine) {
+    public void resourceParsing(Integer[] list, String currentLine) {
     	int indexTracker = 0;
-    	boolean flag = true;
-    	String word = currentLine.substring(currentLine.indexOf(":")+2);
-        word = word.replaceAll("\"", ""); //word = hi, hello, bye
+    	Scanner resourceString;
+    	String word = currentLine.substring(currentLine.indexOf(":")+2).replaceAll(",", ""); //word = hi, hello, bye;
+        resourceString = new Scanner(word);
         
-    	while(flag) {
-            if(word.indexOf(",") != -1) {
-                list[indexTracker++] = word.substring(0,word.indexOf(","));
-                word = word.substring(word.indexOf(",")+2);
-                
-            } else {
-                list[indexTracker] = word;
-                flag = false;
-            }
+    	while(resourceString.hasNextInt()) {
+            list[indexTracker++] = resourceString.nextInt();
     	}
     }
 
@@ -221,11 +214,11 @@ public class RandomEventList {
         private ArrayList<String> mDialog;
         private ArrayList<String> mPicture;
         private ArrayList<String> mChoices;
-        private ArrayList<String[]> mResources;
+        private ArrayList<Integer[]> mResources;
         private String mDifficulty;
         private String mLocation;
 
-        public TestEvent(ArrayList<String> dialog, ArrayList<String> picture, ArrayList<String> choices,  ArrayList<String[]> resources, String difficulty, String location) {
+        public TestEvent(ArrayList<String> dialog, ArrayList<String> picture, ArrayList<String> choices, ArrayList<Integer[]> resources, String difficulty, String location) {
             mDialog = dialog;
             mPicture = picture;
             mChoices = choices;
@@ -234,7 +227,7 @@ public class RandomEventList {
             mLocation = location;
         }
         public TestEvent() {
-            this(null, null, null, null, null, null);
+            this(null, null, null, new ArrayList<>(), null, null);
         }
 
         public ArrayList<String> getDialog() {
@@ -263,11 +256,11 @@ public class RandomEventList {
         }
 
 
-        public ArrayList<String[]> getResources() {
+        public ArrayList<Integer[]> getResources() {
             return mResources;
         }
 
-        public void setResources(ArrayList<String[]> resources) {
+        public void setResources(ArrayList<Integer[]> resources) {
             mResources = resources;
         }
         
@@ -292,24 +285,26 @@ public class RandomEventList {
         @Override
         public String toString() {
         	//Making mResouces[][] into a String
-        	String resources = "[";
-        	for(int i = 0; i < mResources.size(); i++) 
-        		for(int j = 0; j <3; j++) {
-        			if(i == 2 && j == 2) 
-        				resources += mResources.get(i)[j] + "]";
-        			resources += mResources.get(i)[j] + ", ";
-        		}
+        	String resources = "{[";
+        	for(int i = 0; i < mResources.size(); i++) {
+        	    resources += mResources.get(i)[0];
+                for (int j = 1; j < 4; j++) {
+                    resources += ", " + mResources.get(i)[j];
+                }
+                if(i != 2)
+                    resources += "], [";
+            }
+        	resources += "]}";
         		
         	
-            return "[" +
+            return "{" +
                     mDialog.toString() +
                     ", " + mPicture.toString() +
                     ", " + mChoices.toString() +
-                    ", " + mChoices +
                     ", " + resources +
                     ", " + mDifficulty +
                     ", " + mLocation +
-                    ']';
+                    "}";
         }
     }
     //For testing the object builder
