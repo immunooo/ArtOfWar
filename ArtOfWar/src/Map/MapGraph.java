@@ -151,7 +151,7 @@ public class MapGraph {
 		MapNode current = currentNode.getFirst();
 		ArrayList<Event> rndEvents = new ArrayList<>();
 		for(int i = 0; i < current.getEventCount(); i++) {
-			rndEvents.get(i);
+			current.getEvent(i);
 		}
 		return rndEvents;
 	}
