@@ -17,12 +17,3 @@ resource2: 0, -10, 0, 0
 resource3: 0, 0, 0, 0
 difficulty: "2"
 location: "Kaiski"
- /~/
- dialog: "dialog1", "dialog2", "dialog3", ...
- picture: "picture1", "picture2", "picture3", ...
- choices: "choice1", "choice2", "choice3"
- resource1: Army Size, Morale, Food, Gold
- resource2: Army Size, Morale, Food, Gold
- resource3: Army Size, Morale, Food, Gold
- difficulty: "difficulty"
- location: "location"

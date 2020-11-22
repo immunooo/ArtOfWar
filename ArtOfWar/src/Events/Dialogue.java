@@ -23,6 +23,19 @@ public class Dialogue {
 		picture = new ArrayList<String>();
 	}
 	
+	
+	public Dialogue(ArrayList<String> text, ArrayList<String> picture) {
+		this.text = text;
+		this.picture = picture;
+	}
+	
+	public ArrayList<String> getText() {
+		return text;
+	}
+	
+	public ArrayList<String> getPicture() {
+		return picture;
+	}
 	/**
 	 * Inserts new dialogue into the queue 
 	 * @param text of the dialogue

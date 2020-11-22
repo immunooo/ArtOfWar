@@ -16,6 +16,8 @@ import java.util.Scanner;
  */
 public class RandomEventList {
     private ArrayList<TestEvent> EventList = new ArrayList<>();
+    private ArrayList<String> textList = new ArrayList<>();
+    private ArrayList<String> pictureList = new ArrayList<>();
     private Scanner inputFile;
     private String currentLine;
     private TestEvent currentEvent = new TestEvent();
@@ -103,15 +105,13 @@ public class RandomEventList {
         //System.out.println("Command: " + command + ", Data: " + data); //For Testing
 
         switch(command) {
-            case "dialog":
-            	ArrayList<String> dialogList = new ArrayList<>(); //list of all dialogs
-            	parsingLogic(dialogList, currentLine, data);
-            	currentEvent.setDialog(dialogList);
+            case "dialog":      	
+            	parsingLogic(textList, currentLine, data);
                 break;
             case "picture":
-                ArrayList<String> pictureList = new ArrayList<>();
                 parsingLogic(pictureList, currentLine, data);
-                currentEvent.setPicture(pictureList);
+                Dialogue dialogue = new Dialogue(textList, pictureList);
+                currentEvent.setDialogue(dialogue);
                 break;
             case "choices":
             	ArrayList<String> choiceList = new ArrayList<>();
@@ -211,40 +211,33 @@ public class RandomEventList {
      * final product
      */
     public class TestEvent {
-        private ArrayList<String> mDialog;
-        private ArrayList<String> mPicture;
+        private Dialogue mDialogue;
         private ArrayList<String> mChoices;
         private ArrayList<Integer[]> mResources;
         private String mDifficulty;
         private String mLocation;
 
-        public TestEvent(ArrayList<String> dialog, ArrayList<String> picture, ArrayList<String> choices, ArrayList<Integer[]> resources, String difficulty, String location) {
-            mDialog = dialog;
-            mPicture = picture;
+        public TestEvent( Dialogue dialogue,  ArrayList<String> choices, ArrayList<Integer[]> resources, String difficulty, String location) {
+            mDialogue = dialogue;
+            
             mChoices = choices;
             mResources = resources;
             mDifficulty = difficulty;
             mLocation = location;
         }
         public TestEvent() {
-            this(null, null, null, new ArrayList<>(), null, null);
+            this(null, null, new ArrayList<>(), null, null);
         }
 
-        public ArrayList<String> getDialog() {
-            return mDialog;
+        public  Dialogue getDialogue() {
+            return mDialogue;
         }
 
-        public void setDialog(ArrayList<String> dialog) {
-            mDialog = dialog;
+        public void setDialogue( Dialogue dialogue) {
+            mDialogue = dialogue;
         }
 
-        public ArrayList<String> getPicture() {
-            return mPicture;
-        }
-
-        public void setPicture(ArrayList<String> picture) {
-            mPicture = picture;
-        }
+        
 
 
         public ArrayList<String> getChoices() {
@@ -295,11 +288,23 @@ public class RandomEventList {
                     resources += "], [";
             }
         	resources += "]}";
+        	
+        	//Making mDialogue into a String
+        	String dialogue = "[";
+        	for(String s : mDialogue.getText()) {
+        		dialogue += s + ", ";
+        	}
+        	for(int i = 0; i < mDialogue.getPicture().size(); i++) {
+        		if(i == mDialogue.getPicture().size() - 1)
+        			dialogue += mDialogue.getPicture().get(i) + "]";
+        		else 
+        			dialogue += mDialogue.getPicture().get(i) + ", ";
+        	}
         		
         	
             return "{" +
-                    mDialog.toString() +
-                    ", " + mPicture.toString() +
+                    dialogue +
+                    
                     ", " + mChoices.toString() +
                     ", " + resources +
                     ", " + mDifficulty +
