@@ -16,17 +16,24 @@ public class Combat {
 
     private Army playerArmy; //The player army
     private Enemy enemyArmy; //The enemy army
+    private int morale; //The Army's morale;
+    private String moraleLevel;
     private int playerSize; //The number of troops in the player army
     private int enemySize; // The number of troops in the enemy army
     private int playerAS; //Player's current attack style. 0: Melee, 1: Archery, 2: Cavalry, 3: Full Block
     private int enemyAS; //The enemies current attack style
-    private int attackLevel; //The number of troops being used for attacking
-    private int defenseLevel; //The number of troops being used for defending
+    private int playerFormation; //0: Melee Attack, 1: Archer Attack, 2: Calvery Attack 3: Defence Stance
     private int terrain; //0: Plains, 1: Valley, 2: Hill, 3: Wetlands (avoid the word swamp)
     private boolean hasCover = false; //True allows army to ambush, False prevents it
     private boolean inCover = false; //True if army is attempting ambush
     private boolean failedCover = false; //True if army fails the ambush
-    private int ambushThreshold; //The number the player army needs to be under in order for a successful ambush
+    private int ambushThreshold; //The number the player army needs to be under in order for a successful
+    private Scanner kb = new Scanner(System.in); //Keyboard scanner
+    private int userInput = -1; //The current input of the user
+    private String generalName; //The name of the General of the Enemy Army
+    private int playerAttack = 0; //Damage player will do
+    private int enemyAttack = 0; //Damage enemy will do
+    private boolean hasFled = false;
 
     public Combat(Army playerArmy, Enemy enemyArmy, int terrain, boolean hasCover, int ambushThreshold) {
         this.playerArmy = playerArmy;
@@ -35,20 +42,12 @@ public class Combat {
         this.hasCover = hasCover;
         this.ambushThreshold = ambushThreshold;
         playerSize = playerArmy.getSize();
+        morale = playerArmy.getMorale();
         enemySize = enemyArmy.size;
-
-        //Default values of attack and defense should be 50-50
-        attackLevel = playerSize / 2;
-        defenseLevel = playerSize - attackLevel;
+        generalName = "General " + enemyArmy.general;
     }
 
     public void battle() {
-        Scanner kb = new Scanner(System.in);
-        int userInput = -1;
-        String generalName = "General " + enemyArmy.general;
-        int playerAttack = 0;
-        int enemyAttack = 0;
-
         switch(terrain) {
             case 0:
                 System.out.println("Your army arrives to the plains. The ground is very leveled, with hardly any " +
@@ -64,6 +63,32 @@ public class Combat {
                 break;
         }
 
+        playerMorale();
+        ambush();
+
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+
+        while(playerSize > 0 && enemySize > 0 && !hasFled) {
+            playRound();
+        }
+
+        if(hasFled)
+            return;
+
+        playerArmy.setSize(playerSize);
+        playerArmy.setMorale(morale);
+
+        if(playerSize <= 0)
+            System.out.println(generalName + "'s army has defeated you in battle. He had the high ground!");
+        else if(enemySize <= 0)
+            System.out.println("You have defeated " + generalName + " and his army in battle. Congratulations!");
+        else { //Both army = 0. Tie goes to player
+            System.out.println("Your army is lost, but you miraculously by the skin of your teeth!");
+        }
+
+    }
+
+    public void ambush() {
         if(hasCover) {
             System.out.println("You see bushes and trees throughout the region, perfect for a small army to prepare" +
                     " an ambush. ");
@@ -72,6 +97,7 @@ public class Combat {
             System.out.println("\n1. Attempt to set up an Ambush");
             System.out.println("2. Stand your ground and fight the enemy head on");
             System.out.print(">>> ");
+
             userInput = kb.nextInt();
 
             if(userInput == 1) {
@@ -95,136 +121,131 @@ public class Combat {
         if(userInput == 1) {
             if (failedCover) {
                 System.out.println(generalName + " has spotted your troops and swiftly gives an attack order!");
-                int troopsLost;
-                troopsLost = enemyAttack();
-                playerSize -= troopsLost;
-                System.out.println("You loose " + troopsLost + " from the failed ambush!");
-                attackLevel = playerSize / 2;
-                defenseLevel = playerSize - attackLevel;
+
+                enemyAttack = enemyAttack();
+                playerSize -= enemyAttack;
+                playerMorale();
+                System.out.println("Enemy Attack for Ambush: " + enemyAttack);
+
+                System.out.println("You loose " + enemyAttack + " from the failed ambush!");
             } else {
                 System.out.println(generalName + " doesn't notice your soldiers in the thicket. A perfect " +
                         "opportunity for an attack!");
-                enemySize -= playerAttack();
+
+                playerAttack = playerAttack();
+                enemySize -= playerAttack;
+                playerMorale();
+                System.out.println("Your troops take out " + playerAttack + " in the ambush!");
             }
         }
-        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+    }
 
-        while(playerSize > 0 && enemySize > 0) {
+    public void playRound() {
+        do {
+            System.out.println("\n==================================");
+            System.out.println("Your army size: " + playerSize);
+            System.out.println(generalName + "'s army size: " + enemySize);
+            System.out.println(moraleLevel + " (" + morale + ")");
+            System.out.println("==================================");
 
-            do {
-                System.out.println("\n==================================");
-                System.out.println("Your army size: " + playerSize);
-                System.out.println(generalName + "'s army size: " + enemySize);
-                System.out.println("==================================");
+            System.out.println("\nWhat would you like to do?");
+            System.out.println("1. Attack enemy army");
+            System.out.println("2. Command your army");
+            System.out.println("3. Flee");
+            System.out.print(">>> ");
+            userInput = kb.nextInt();
 
-                System.out.println("\nWhat would you like to do?");
-                System.out.println("1. Attack enemy army");
-                System.out.println("2. Command your army");
-                System.out.println("3. Flee");
-                System.out.print(">>> ");
-                userInput = kb.nextInt();
+            switch (userInput) {
+                case 1:
+                    chooseAttack();
+                    break;
+                case 2: //Formation Menu
+                    changeFormation();
+                    userInput = 4;
+                    break;
+                case 3:
+                    flee();
+            }
 
-                switch (userInput) {
-                    case 1:
-                        System.out.println("\nHow would you like to attack?");
-                        System.out.println("1. Warriors");
-                        System.out.println("2. Archers");
-                        System.out.println("3. Cavalry");
-                        System.out.println("4. Full Defensive");
-                        System.out.println("\n5. Go Back");
-                        System.out.print(">>> ");
-                        userInput = kb.nextInt();
+        }while(userInput > 3);
 
-                        switch(userInput) {
-                            case 1:
-                                playerAS = 0;
-                                break;
-                            case 2:
-                                playerAS = 1;
-                                break;
-                            case 3:
-                                playerAS = 2;
-                                break;
-                            case 4:
-                                playerAS = 3;
-                                break;
-                            default:
-                                userInput = 5;
-                                break;
-                        }
-                        break;
-                    case 2:
-                        System.out.println("Current Army Setup:      Attacking: " + attackLevel + "       Defending: " + defenseLevel);
-                        System.out.println("\n1. Change Attackers");
-                        System.out.println("2. Change Defenders");
-                        System.out.println("\n5. Go Back");
-                        System.out.print(">>> ");
-                        userInput = kb.nextInt();
+        if(userInput == 3)
+            return;
 
-                        switch(userInput) {
-                            case 1:
-                                System.out.println("How many troops would you like to allocate to attacking?");
-                                System.out.print(">>> ");
-                                userInput = kb.nextInt();
+        enemyAS = enemyArmy.setNextAttack();
 
-                                if(userInput > playerSize)
-                                    System.out.println("You don't have the necessary number of troops!");
-                                else {
-                                    attackLevel = userInput;
-                                    defenseLevel = playerSize - attackLevel;
-                                }
+        playerAttack = playerAttack();
+        enemyAttack = enemyAttack();
 
-                                userInput = 5;
-                                break;
-                            case 2:
-                                System.out.println("How many troops would you like to allocate to defending?");
-                                System.out.print(">>> ");
-                                userInput = kb.nextInt();
+        if(playerAttack > enemySize)
+            playerAttack = enemySize;
+        if(enemyAttack > playerSize)
+            enemyAttack = playerSize;
 
-                                if(userInput > playerSize)
-                                    System.out.println("You don't have the necessary number of troops!");
-                                else {
-                                    defenseLevel = userInput;
-                                    attackLevel = playerSize - defenseLevel;
-                                }
+        playerMorale();
 
-                                userInput = 5;
-                                break;
-                            default:
-                                userInput = 5;
-                                break;
-                        }
-                        break;
-                    case 3:
-                        System.out.println("You have cowardly fled from battle!");
-                        playerArmy.setSize(playerSize);
-                        return;
-                }
-            }while(userInput == 5);
-            enemyAS = enemyArmy.setNextAttack();
+        playerSize -= enemyAttack;
+        enemySize -= playerAttack;
 
-            playerAttack = playerAttack();
-            enemyAttack = enemyAttack();
+        System.out.println("Your army defeats " + playerAttack + " opponents! Although, " + enemyAttack + " " +
+                "of your own troops have fallen!");
+        //System.out.println("Your troops morale are at: " + morale + "%"); //For Testing
+    }
 
-            if(playerAttack > enemySize)
-                playerAttack = enemySize;
-            if(enemyAttack > playerSize)
-                enemyAttack = playerSize;
+    public void chooseAttack() {
+        System.out.println("\nWhat attack would you like to do?");
+        System.out.println("1. Melee");
+        System.out.println("2. Archery");
+        System.out.println("3. Calvary");
+        System.out.println("\n5. Go Back");
+        System.out.print(">>> ");
+        playerAS = kb.nextInt() - 1;
+    }
 
-            playerSize -= enemyAttack;
-            enemySize -= playerAttack;
+    public void changeFormation() {
+        System.out.println("What formation would you like your troops to take?");
+        System.out.println("1. Melee Attack Formation");
+        System.out.println("2. Archery Bombardment Formation");
+        System.out.println("3. Cavalry Charge Formation");
+        System.out.println("4. Defensive Stance");
+        System.out.println("\n5. Go Back");
+        System.out.print(">>> ");
+        userInput = kb.nextInt();
 
-            System.out.println("Your army defeats " + playerAttack + " opponents! Although, " + enemyAttack + " " +
-                    "of your own troops have fallen!");
+        switch(userInput) {
+            case 1:
+                System.out.println("Your troops are now in the Melee Attack Formation!");
+                playerFormation = 0;
+                userInput = 5;
+                break;
+            case 2:
+                System.out.println("Your troops are now in the Archery Bombardment Formation!");
+                playerFormation = 1;
+                userInput = 5;
+                break;
+            case 3:
+                System.out.println("Your troops are now in the Cavalry Charge Formation!");
+                playerFormation = 2;
+                userInput = 5;
+                break;
+            case 4:
+                System.out.println("Your troops have taken a Defensive Stance!");
+                playerFormation = 3;
+                userInput = 5;
+                break;
+            default:
+                userInput = 5;
+                break;
         }
+    }
 
+
+
+    public void flee() {
+        System.out.println("You have cowardly fled from battle!");
+        userInput = 3; //To ensure that the playRound() method is stopped if the player flees
+        hasFled = true;
         playerArmy.setSize(playerSize);
-
-        if(playerSize == 0)
-            System.out.println(generalName + "'s army has defeated you in battle. You big dumb idiot!");
-        else if(enemySize == 0)
-            System.out.println("You have defeated " + generalName + " and his army in battle. Congratulations!");
-
     }
 
     public int roll() {
@@ -261,8 +282,6 @@ public class Combat {
                 else if(enemyAS == 1) //Cavalry has 'advantage' against Archers
                     modifier += 5;
                 break;
-            case 3: //full block
-                return 0;
         }
 
         switch(terrain) {
@@ -286,22 +305,78 @@ public class Combat {
                 break;
         }
 
-        if(attackLevel >= (playerSize * .75))
-            modifier += 5;
-        else if(attackLevel <= (playerSize *.25))
-            modifier -= 10;
+        switch(playerFormation) {
+            case 0: //Melee Formation
+                if(playerAS == 0)
+                    modifier += 5; //Plus 5 to Melee attacks if in Melee Form
+                break;
+            case 1:
+                if(playerAS == 1)
+                    modifier += 5; //Plus 5 to Archery attacks if in Archery Form
+                break;
+            case 2:
+                if(playerAS == 2)
+                    modifier += 5; //Plus 5 to Cavalry attacks if in Cavalry Form
+                break;
+            case 3:
+                modifier = 0; //If in Defense Stance, No modifier
+                dice -= 5; //Max of 15 damage in Defensive stance
+                break;
+            default:
+                break;
+        }
 
         total = dice + modifier;
 
         if(enemyAS == 3) { //If enemy uses a 'full block' the damage you do is halved
-            System.out.println("Before block: " + total);
             total /= 2;
-            System.out.println("After Block: " + total);
         }
         if(total < 0)
             total = 0;
 
         return total;
+    }
+
+    public void playerMorale() {
+        if(enemyAttack > 30)
+            morale -= 20;
+        else if(enemyAttack > 20)
+            morale -= 15;
+        else if(enemyAttack > 10)
+            morale -= 5;
+        else if(enemyAttack == 0)
+            morale += 1;
+
+        if(playerAttack > 30)
+            morale += 15;
+        else if(playerAttack > 20)
+            morale += 5;
+        else if(playerAttack == 0)
+            morale -= 1;
+
+        if(morale > 100)
+            morale = 100;
+        if(morale < 0)
+            morale = 0;
+
+        if(morale >= 90)
+            moraleLevel = "Your troops are in high hopes, they seem eager to engage in combat!";
+        else if(morale > 75)
+            moraleLevel = "Your troops are in good spirits, they stand firm!";
+        else if(morale > 50)
+            moraleLevel = "Your troops look uneasy, murmurs begin to formulate throughout them.";
+        else if(morale > 25)
+            moraleLevel = "Your troops are growing angry at your leadership";
+        else if(morale == 0) {
+            System.out.println("Battered and beaten, your remaining troops throw down there armaments and abandon the battle.");
+            playerAttack = 0;
+            enemyAttack = 0;
+            playerSize = 0;
+        }
+        else
+            moraleLevel = "Your troops are becoming discouraged in the battlefield. You can tell that they won't remain loyal if the tide of battle doesn't turn!";
+
+        System.out.println("End of Morale method");
     }
 
     public int enemyAttack() {
@@ -357,17 +432,30 @@ public class Combat {
                 break;
         }
 
-        if(defenseLevel >= (playerSize * .75))
-            modifier -= 5;
-        else if(defenseLevel < (playerSize *.25))
-            modifier += 10;
-        else
-            modifier += 5; //Just because I think the player would be incredibly overpowered otherwise
+        switch(playerFormation) {
+            case 0: //Melee Formation
+                if(enemyAS == 1)
+                    modifier += 10; //Plus 10 to Player if Player is in Archery Form
+                break;
+            case 1:
+                if(enemyAS == 2)
+                    modifier += 10; //Plus 10 to Player if Player is in Archery Form
+                break;
+            case 2:
+                if(enemyAS == 0)
+                    modifier += 10; //Plus 10 to Player if Player is in Cavalry Form
+                break;
+            case 3:
+                //Half damage if the player is in defensive stance
+                modifier /= 2;
+                dice /= 2;
+                break;
+            default:
+                break;
+        }
 
         total = dice + modifier;
 
-        if(playerAS == 3) //If player uses a 'full block' the damage the enemy does is halved
-            total /= 2;
         if(total < 0)
             total = 0;
 
@@ -440,10 +528,10 @@ public class Combat {
     }
 
     public static void main(String[] args) {
-        //0: Flat, 1: Valley, 2: Hills
+        //0: Flat, 1: Valley, 2: Hills, 3: Wetlands
         // 0: Melee, 1: Archery, 2: Cavalry, 3: Full Block
-        Enemy enemy = new Enemy(100, 0, "Nathan");
-        Army player = new Army(100, 100, 0, 0);
+        Enemy enemy = new Enemy(100, 0, "Kenobi");
+        Army player = new Army(25, 100, 0, 0);
 
         Combat combat = new Combat(player, enemy, 1, true, 50);
         combat.battle();
