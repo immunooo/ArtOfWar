@@ -19,8 +19,6 @@ public class GuiStyle {
 
     enum COLOR{ red, pink, black, white, brown, dark_blue, light_gray, warm_yellow}
     enum TYPE{ solid}
-    enum FONT{}
-    enum NODE{ button, submenu}
 
     /**
      * color pattern for other method
@@ -50,62 +48,6 @@ public class GuiStyle {
         }
     }
 
-    /**
-     * Font output for other method
-     *
-     * @param
-     * */
-
-    // Component Style Setting
-    /**
-     * Font quick builder
-     *
-     * @param size the size of text
-     * @param color the color of text
-     * @param font the font of text
-     * */
-    public static String fontSet(int size, COLOR color, FONT font){
-        String style = "-fx-font-size: " +size + "px;\n";
-
-        style += "-fx-font-color: " + colorString(color) +";\n";
-
-        return style;
-    }
-
-    /**
-     * Button and Submenu quick setter
-     *
-     * @param node the object that contains function and style of button
-     * */
-    public static Button buttonSet(NODE node, String text){
-        Button button = new Button(text);
-        button.setPadding(new Insets(0));
-        button.setMaxSize(120,20);
-        button.setMinSize(120,20);
-        return button;
-    }
-
-    public static Button buttonSet(NODE node, String text, String subText){
-        Button button = buttonSet(node,text);
-
-        ContextMenu contextMenu = new ContextMenu();
-        MenuItem item1 = new MenuItem(subText);
-        MenuItem item2 = new MenuItem(subText);
-        MenuItem item3 = new MenuItem(subText);
-        contextMenu.getItems().addAll(item1, item2, item3);
-        button.setContextMenu(contextMenu);
-
-        button.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                contextMenu.show(button, Side.LEFT,0,0);
-            }
-        });
-
-        return button;
-    }
-
-    // Pane Style Setting
     /**
      * background color quick setter
      *

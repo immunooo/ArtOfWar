@@ -3,13 +3,11 @@ package GUI;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.HPos;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.geometry.VPos;
+import javafx.geometry.*;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -46,18 +44,18 @@ public class GuiEventWindow extends Application {
     ImageView gold;
     ImageView food;
 
-    final int[] BUTTON_LONG_SIZE = new int[]{120,20};
     final int[] BUTTON_SHORT_SIZE = new int[]{30,30};
 
-    Button buttonLong1 = buttonSet(NODE.button,"Fight");
-    Button buttonLong2 = buttonSet(NODE.button,"Retreat");
-    Button buttonLong3 = buttonSet(NODE.submenu,"Concede", "example text");
-    Button buttonLong4 = buttonSet(NODE.submenu,"Betray", "example text");
+    Button combatButton;
+    Button actionButton;
 
     Button inventoryButton;
-    Button buttonShort2;
+    Button mapButton;
     Button buttonShort3;
     Button exitButton;
+
+    Button nextPageButton;
+    Button prevPageButton;
 
     Label eventNarrative;
     
@@ -77,10 +75,23 @@ public class GuiEventWindow extends Application {
         gold = new ImageView(new Image("Assets/Half-Full-Chest-4.png"));
         food  = new ImageView(new Image("Assets/HalfBasket-4.png"));
 
+        // Button Long Setting
+        final int BUTTON_LONG_SIZE[] = new int[]{120,25};
+        combatButton= new Button("Combat");
+        combatButton.setMaxSize(BUTTON_LONG_SIZE[0],BUTTON_LONG_SIZE[1]);
+        combatButton.setMinSize(BUTTON_LONG_SIZE[0],BUTTON_LONG_SIZE[1]);
+        buttonSetting(combatButton);
+
+        actionButton = new Button("Action");
+        actionButton.setMaxSize(BUTTON_LONG_SIZE[0],BUTTON_LONG_SIZE[1]);
+        actionButton.setMinSize(BUTTON_LONG_SIZE[0],BUTTON_LONG_SIZE[1]);
+        buttonSetting(actionButton);
+
         // Button Short Setting
         inventoryButton = new Button("");
         inventoryButton.setBackground(new Background(new BackgroundImage(new Image("Assets/Icons/Bag.png"),
                 null,null,null,null)));
+        inventoryButton.setMinSize(BUTTON_SHORT_SIZE[0],BUTTON_SHORT_SIZE[1]);
         inventoryButton.setMaxSize(BUTTON_SHORT_SIZE[0],BUTTON_SHORT_SIZE[1]);
         inventoryButton.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -103,15 +114,20 @@ public class GuiEventWindow extends Application {
             }
         });
 
-        buttonShort2 = new Button("");
-        buttonShort2.setMinSize(BUTTON_SHORT_SIZE[0],BUTTON_SHORT_SIZE[1]);
+        mapButton = new Button("");
+        mapButton.setMinSize(BUTTON_SHORT_SIZE[0],BUTTON_SHORT_SIZE[1]);
+        mapButton.setMaxSize(BUTTON_SHORT_SIZE[0],BUTTON_SHORT_SIZE[1]);
+        mapButton.setBackground(new Background(new BackgroundImage(new Image("Assets/Icons/Map.png"),
+                null,null,null,null)));
 
         buttonShort3 = new Button("");
         buttonShort3.setMinSize(BUTTON_SHORT_SIZE[0],BUTTON_SHORT_SIZE[1]);
+        buttonShort3.setMaxSize(BUTTON_SHORT_SIZE[0],BUTTON_SHORT_SIZE[1]);
 
         exitButton = new Button("");
         exitButton.setBackground(new Background(new BackgroundImage(new Image("Assets/Icons/Door.png"),
                 null,null,null,null)));
+        exitButton.setMinSize(BUTTON_SHORT_SIZE[0],BUTTON_SHORT_SIZE[1]);
         exitButton.setMaxSize(BUTTON_SHORT_SIZE[0],BUTTON_SHORT_SIZE[1]);
         exitButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -119,6 +135,19 @@ public class GuiEventWindow extends Application {
                 primaryStage.close();
             }
         });
+
+        // Page Button Setting
+        nextPageButton = new Button();
+        nextPageButton.setMaxSize(25,25);
+        nextPageButton.setMinSize(25,25);
+        nextPageButton.setBackground(new Background(new BackgroundImage(new Image("Assets/Icons/RightArrow.png"),
+                null,null,null,null)));
+
+        prevPageButton = new Button();
+        prevPageButton.setMaxSize(25,25);
+        prevPageButton.setMinSize(25,25);
+        prevPageButton.setBackground(new Background(new BackgroundImage(new Image("Assets/Icons/LeftArrow.png"),
+                null,null,null,null)));
 
         // Narrative Text Setting
         eventNarrative = new Label();
@@ -140,13 +169,17 @@ public class GuiEventWindow extends Application {
         rootPane.setMargin(controlPane,new Insets(20));
         rootPane.setStyle(backgroundColor(COLOR.brown));
 
-        narrativePane.getChildren().add(eventNarrative);
+        narrativePane.add(eventNarrative,0,0);
+        narrativePane.add(nextPageButton,0,1);
+        narrativePane.add(prevPageButton,0,1);
         narrativePane.setMinSize(400,260);
         narrativePane.setMaxSize(400,260);
         narrativePane.setAlignment(Pos.TOP_LEFT);
-        narrativePane.setMargin(eventNarrative,new Insets(10));
+        narrativePane.setPadding(new Insets(10));
         narrativePane.setStyle(backgroundColor(COLOR.warm_yellow) 
         		+ borderlineSet(2,COLOR.black,TYPE.solid,7));
+        narrativePane.setHalignment(nextPageButton, HPos.RIGHT);
+        narrativePane.setHalignment(prevPageButton, HPos.LEFT);
 
         controlPane.add(buttonLongPane,0,0);
         controlPane.setValignment(buttonLongPane, VPos.TOP);
@@ -159,7 +192,7 @@ public class GuiEventWindow extends Application {
         controlPane.setMinSize(350,260);
         //controlPane.setStyle(borderlineSet(1,COLOR.black,TYPE.solid));
 
-        buttonLongPane.addColumn(0,buttonLong1,buttonLong2,buttonLong3,buttonLong4);
+        buttonLongPane.addColumn(0,combatButton,actionButton);
         buttonLongPane.setVgap(12);
         buttonLongPane.setAlignment(Pos.TOP_CENTER);
         buttonLongPane.setPadding(new Insets(15));
@@ -178,7 +211,7 @@ public class GuiEventWindow extends Application {
         buttonShortPane.setHgap(10);
         buttonShortPane.setVgap(10);
         buttonShortPane.add(inventoryButton,0,0);
-        buttonShortPane.add(buttonShort2,1,0);
+        buttonShortPane.add(mapButton,1,0);
         buttonShortPane.add(buttonShort3,0,1);
         buttonShortPane.add(exitButton,1,1);
         buttonShortPane.setAlignment(Pos.CENTER);
@@ -310,4 +343,20 @@ public class GuiEventWindow extends Application {
 
  }
 
+ public void buttonSetting(Button button){
+
+     ContextMenu contextMenu = new ContextMenu();
+     MenuItem item1 = new MenuItem("example");
+     MenuItem item2 = new MenuItem("example");
+     MenuItem item3 = new MenuItem("example");
+     contextMenu.getItems().addAll(item1, item2, item3);
+     button.setContextMenu(contextMenu);
+
+     button.setOnMouseClicked(new EventHandler<MouseEvent>() {
+         @Override
+         public void handle(MouseEvent mouseEvent) {
+             contextMenu.show(button, Side.LEFT,0,0);
+         }
+     });
+ }
 }
