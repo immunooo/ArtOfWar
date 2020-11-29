@@ -20,7 +20,7 @@ import Capital.Resources;
 public class MapAskar extends Application {
 
 	Army army = new Army();
-	Resources res = new Resources();
+	//Resources res = new Resources();
 	MapGraph mapGraph = new MapGraph();
 	ArrayList<Event> evetnts = new mapGraph.getRandomEvent();
 
@@ -71,7 +71,7 @@ public class MapAskar extends Application {
     	i++;
     	Event currentEvent = events.get(i);
     	
-    	GuiEventWindow eventWindow = new EventWindow(currentEvent);
+    	GuiEventWindow eventWindow = new EventWindow(currentEvent, army);
     	eventWindow.start(primaryStage);
     	
     }

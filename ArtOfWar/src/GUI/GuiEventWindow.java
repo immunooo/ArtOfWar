@@ -27,8 +27,10 @@ public class GuiEventWindow extends Application {
     Scene scene;
     
     /*
-    public GuiEventWindow(Event event)
+    public GuiEventWindow(Event event, Army army)
     {
+    	army.getResources();
+    	event.nextDialoge();
     	
     }
     */
