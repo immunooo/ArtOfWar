@@ -25,6 +25,13 @@ import static GUI.GuiStyle.*;
 public class GuiEventWindow extends Application {
     /** Scene Construction */
     Scene scene;
+    
+    /*
+    public GuiEventWindow(Event event)
+    {
+    	
+    }
+    */
 
     /** Pane Construction */
     GridPane rootPane = new GridPane();
