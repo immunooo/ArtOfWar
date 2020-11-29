@@ -1,8 +1,10 @@
 package Capital;
 
+import Events.Combat;
+
 public class Army {
 	int size, morale, formation;
-	Resources r;
+	Resources r = new Resources(); //Added this because without, the copy constructor 'r' is never initialized and the object is null;
 	
 	
 	/**
@@ -11,23 +13,23 @@ public class Army {
 	public Army() {
 		size = 100;
 		morale = 100;
-		formation = 100;
-		r = new Resources();
+		formation = 0;
+		//r = new Resources(); //is now redundant because of the instance field
 	}
 	/**
 	 * Constructor with set values;
 	 * @param size
 	 * @param morale
-	 * @param formation
 	 * @param gold
 	 * @param food
 	 */
-	public Army(int size, int morale, int formation, int gold, int food) {
+	public Army(int size, int morale, int gold, int food) {
+
 		this.size = size;
 		this.morale = morale;
-		this.formation = formation;
 		r.gold = gold;
 		r.food = food;
+		formation = 0; //Will be handled in the Combat.java class
 	}
 	/**
 	 * This method returns the size of the army
@@ -35,6 +37,14 @@ public class Army {
 	 */
 	
 	public int getApproximateSize() {
+		return size;
+	}
+
+	/**
+	 * Returns the exact size of the army (In case Approximate Size ends up changing)
+	 * @return Exact size of the army
+	 */
+	public int getSize() {
 		return size;
 	}
 	
@@ -54,6 +64,15 @@ public class Army {
 	
 	public int getMorale() {
 		return morale;
+	}
+	
+	/** 
+	 * This method sets a new value for morale
+	 * @param morale 
+	 */
+	public void setMorale(int morale) {
+		this.morale = morale;
+		
 	}
 	
 	/**
