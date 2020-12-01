@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 /**
  * RandomEventList : A class to create a List of Events
@@ -61,7 +62,9 @@ public class RandomEventList {
             }
             //System.out.println("Command: " + command); //For Testing
         }
+        
         EventList.add(currentEvent); //Adds the final event to the EventList
+        
        // System.out.println(currentEvent + "\n"); //For Testing
        // System.out.println(EventList); //For Testing
     }
@@ -193,6 +196,26 @@ public class RandomEventList {
             list[indexTracker++] = resourceString.nextInt();
     	}
     }
+    
+    /**
+     * Returns a random event based on given location
+     * @param location
+     * @return Random Event
+     */
+    public TestEvent getRandomEvent(String location) {
+    	ArrayList<TestEvent> list = new ArrayList<>();
+    	
+    	if(EventList != null) 
+    		for(TestEvent events : EventList) 
+    			if(events.mLocation.equals(location))
+    				list.add(events);
+    	if(list.size() == 0)
+    		return null;
+    	Random rng = new Random();
+    	//Generates a number from 0 - list.size();
+    	int randomIndex = rng.nextInt(list.size());
+    	return list.get(randomIndex);
+    }
 
     @Override
     public String toString() {
@@ -316,7 +339,7 @@ public class RandomEventList {
     public static void main(String[] args) {
         String fileName = "randomevents.txt";
         RandomEventList list = new RandomEventList(fileName);
-
+       
         System.out.println(list);
     }
 }
