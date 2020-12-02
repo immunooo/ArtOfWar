@@ -99,4 +99,23 @@ public class Army {
 	public Resources getResources() {
 		return r;
 	}
+
+	public void setGold(int gold) { //Added to be able to update gold from Combat.java
+		this.r.gold = gold;
+	}
+
+	public void setFood(int food) { //Added to be able to update food from Combat.java
+		this.r.food = food;
+	}
+
+	@Override
+	public String toString() {
+		return "Army [" +
+				"Army Size = " + size +
+				", Morale = " + morale +
+				", Formation = " + formation +
+				", Gold = " + r.gold +
+				", Food = " + r.food +
+				']';
+	}
 }
