@@ -104,8 +104,6 @@ public class Combat {
         if(morale < 5) //Minimum of 5 morale if you win the battle
             morale = 5;
 
-        System.out.println("Morale after: " + morale);
-
         playerArmy.setSize(playerSize);
         playerArmy.setMorale(morale);
 
