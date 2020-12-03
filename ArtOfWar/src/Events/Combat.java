@@ -350,60 +350,66 @@ public class Combat {
         }
         dice = roll();
 
+        //Positive and negative modifiers for player attack style
+        int attackNegModifier = 10, attackPosModifier = 5;
         switch(playerAS) { //Modifies the damage based on the player's attack style compared to the enemies attack style
             case 0: //melee
                 if(enemyAS == 1) //Melee has 'disadvantage' against Archers
-                    modifier -= 10;
+                    modifier -= attackNegModifier;
                 else if(enemyAS == 2) //Melee has 'advantage' against Cavalry
-                    modifier += 5;
+                    modifier += attackPosModifier;
                 break;
             case 1: //archery
                 if(enemyAS == 0) //Archers has 'advantage' against Melee
-                    modifier += 5;
+                    modifier += attackPosModifier;
                 else if(enemyAS == 2) //Archers has 'disadvantage' against Cavalry
-                    modifier -= 10;
+                    modifier -= attackNegModifier;
                 break;
             case 2: //calvary
                 if(enemyAS == 0) //Cavalry has 'disadvantage' against Melee
-                    modifier -= 10;
+                    modifier -= attackNegModifier;
                 else if(enemyAS == 1) //Cavalry has 'advantage' against Archers
-                    modifier += 5;
+                    modifier += attackPosModifier;
                 break;
         }
 
+        //Positive and negative modifiers for terrain
+        int terrainNegModifier = 5, terrainPosModifier = 5;
         switch(terrain) { //Modifies the damage based on the terrain
             case 0: //plains
                 if(playerAS == 0) //Melee have 'disadvantage' on plains
-                    modifier -= 5;
+                    modifier -= terrainNegModifier;
                 else if(playerAS == 2) //Cavalry have 'advantage' on plains
-                    modifier += 5;
+                    modifier += terrainPosModifier;
                 break;
             case 1: //valley
                 if(playerAS == 2) //Cavalry have 'disadvantage' in Valleys
-                    modifier -= 5;
+                    modifier -= terrainNegModifier;
                 else if(playerAS == 1) //Archers have 'advantage' in Valleys
-                    modifier += 5;
+                    modifier += terrainPosModifier;
                 break;
             case 2: //hills
                 if(playerAS == 0) //Melee has 'advantage' on Hills
-                    modifier += 5;
+                    modifier += terrainPosModifier;
                 else if(playerAS == 1) //Archers have 'disadvantage' on Hills
-                    modifier -= 5;
+                    modifier -= terrainNegModifier;
                 break;
         }
 
+        //Positive and negative modifiers for player formation
+        int formationModifier = 5;
         switch(playerFormation) { //Modifies the damage based on the current formation
             case 0: //Melee Formation
                 if(playerAS == 0)
-                    modifier += 5; //Plus 5 to Melee attacks if in Melee Form
+                    modifier += formationModifier; //Plus 5 to Melee attacks if in Melee Form
                 break;
             case 1:
                 if(playerAS == 1)
-                    modifier += 5; //Plus 5 to Archery attacks if in Archery Form
+                    modifier += formationModifier; //Plus 5 to Archery attacks if in Archery Form
                 break;
             case 2:
                 if(playerAS == 2)
-                    modifier += 5; //Plus 5 to Cavalry attacks if in Cavalry Form
+                    modifier += formationModifier; //Plus 5 to Cavalry attacks if in Cavalry Form
                 break;
             case 3:
                 modifier = 0; //If in Defense Stance, No modifier
@@ -413,12 +419,105 @@ public class Combat {
                 break;
         }
 
-        total = dice + modifier; // The final damage being delt
+        total = dice + modifier; // The final damage being dealt
 
         if(enemyAS == 3) { //If enemy uses a 'full block' the damage you do is halved
             total /= 2;
         }
         if(total < 0) //In case the modifier makes the damage a negative number
+            total = 0;
+
+        return total;
+    }
+
+    /**
+     * Method for calculating the enemy attack
+     * @return the damage the enemy will do to the player
+     */
+    public int enemyAttack() {
+        int dice, modifier=0, total;
+
+        if(failedCover) { //Specific for the enemies opening attack if the player fails an ambush. Only for ambush
+            failedCover = false;
+            return roll() * 2;
+        }
+        dice = roll();
+
+        //Positive and negative modifiers for enemy attacks
+        int attackNegModifier = 5, attackPosModifier = 10;
+        switch(enemyAS) { //Calculates the modifier based on the enemies attack style compared to the player's
+            case 0: //melee
+                if(playerAS == 1) //Melee has 'disadvantage' against Archers
+                    modifier -= attackNegModifier;
+                else if(playerAS == 2) //Melee has 'advantage' against Cavalry
+                    modifier += attackPosModifier;
+                break;
+            case 1: //archery
+                if(playerAS == 0) //Archers has 'advantage' against Melee
+                    modifier += attackPosModifier;
+                else if(playerAS == 2) //Archers has 'disadvantage' against Cavalry
+                    modifier -= attackNegModifier;
+                break;
+            case 2: //calvary
+                if(playerAS == 0) //Cavalry has 'disadvantage' against Melee
+                    modifier -= attackNegModifier;
+                else if(playerAS == 1) //Cavalry has 'advantage' against Archers
+                    modifier += attackPosModifier;
+                break;
+            case 3: //full block
+                return 0;
+        }
+
+        //Positive and negative modifiers for terrain
+        int terrainNegModifier = 5, terrainPosModifier = 5;
+        switch(terrain) { //Calculates the enemies modifier based on the terrain
+            case 0: //plains
+                if(enemyAS == 0) //Melee have 'disadvantage' on plains
+                    modifier -= terrainNegModifier;
+                else if(enemyAS == 2) //Cavalry have 'advantage' on plains
+                    modifier += terrainPosModifier;
+                break;
+            case 1: //valley
+                if(enemyAS == 2) //Cavalry have 'disadvantage' in Valleys
+                    modifier -= terrainNegModifier;
+                else if(enemyAS == 1) //Archers have 'advantage' in Valleys
+                    modifier += terrainPosModifier;
+                break;
+            case 2: //hills
+                if(enemyAS == 0) //Melee has 'advantage' on Hills
+                    modifier += terrainPosModifier;
+                else if(enemyAS == 1) //Archers have 'disadvantage' on Hills
+                    modifier -= terrainNegModifier;
+                break;
+        }
+
+        //Positive and negative modifiers for attacking against player formation
+        int formationModifier = 10;
+        switch(playerFormation) { //Calculates the enemy's modifier based on the player's formation
+            case 0: //Melee Formation
+                if(enemyAS == 1)
+                    modifier += formationModifier; //Plus 10 if Player is in Archery Form
+                break;
+            case 1:
+                if(enemyAS == 2)
+                    modifier += formationModifier; //Plus 10 if Player is in Archery Form
+                break;
+            case 2:
+                if(enemyAS == 0)
+                    modifier += formationModifier; //Plus 10 if Player is in Cavalry Form
+                break;
+            case 3:
+                //Half damage if the player is in defensive stance
+                modifier /= 2;
+                dice /= 2;
+                break;
+            default:
+                break;
+        }
+
+        total = dice + modifier;
+
+        if(total < 0) //In case the modifier makes the total negative
             total = 0;
 
         return total;
@@ -471,93 +570,6 @@ public class Combat {
             moraleLevel = "Your troops are becoming discouraged in the battlefield. You can tell that they won't remain loyal if the tide of battle doesn't turn!";
 
         //System.out.println("End of Morale method"); //For testing purposes
-    }
-
-    /**
-     * Method for calculating the enemy attack
-     * @return the damage the enemy will do to the player
-     */
-    public int enemyAttack() {
-        int dice, modifier=0, total;
-
-        if(failedCover) { //Specific for the enemies opening attack if the player fails an ambush. Only for ambush
-            failedCover = false;
-            return roll() * 2;
-        }
-        dice = roll();
-
-        switch(enemyAS) { //Calculates the modifier based on the enemies attack style compared to the player's
-            case 0: //melee
-                if(playerAS == 1) //Melee has 'disadvantage' against Archers
-                    modifier -= 5;
-                else if(playerAS == 2) //Melee has 'advantage' against Cavalry
-                    modifier += 10;
-                break;
-            case 1: //archery
-                if(playerAS == 0) //Archers has 'advantage' against Melee
-                    modifier += 10;
-                else if(playerAS == 2) //Archers has 'disadvantage' against Cavalry
-                    modifier -= 5;
-                break;
-            case 2: //calvary
-                if(playerAS == 0) //Cavalry has 'disadvantage' against Melee
-                    modifier -= 5;
-                else if(playerAS == 1) //Cavalry has 'advantage' against Archers
-                    modifier += 10;
-                break;
-            case 3: //full block
-                return 0;
-        }
-
-        switch(terrain) { //Calculates the enemies modifier based on the terrain
-            case 0: //plains
-                if(enemyAS == 0) //Melee have 'disadvantage' on plains
-                    modifier -= 5;
-                else if(enemyAS == 2) //Cavalry have 'advantage' on plains
-                    modifier += 5;
-                break;
-            case 1: //valley
-                if(enemyAS == 2) //Cavalry have 'disadvantage' in Valleys
-                    modifier -= 5;
-                else if(enemyAS == 1) //Archers have 'advantage' in Valleys
-                    modifier += 5;
-                break;
-            case 2: //hills
-                if(enemyAS == 0) //Melee has 'advantage' on Hills
-                    modifier += 5;
-                else if(enemyAS == 1) //Archers have 'disadvantage' on Hills
-                    modifier -= 5;
-                break;
-        }
-
-        switch(playerFormation) { //Calculates the enemy's modifier based on the player's formation
-            case 0: //Melee Formation
-                if(enemyAS == 1)
-                    modifier += 10; //Plus 10 if Player is in Archery Form
-                break;
-            case 1:
-                if(enemyAS == 2)
-                    modifier += 10; //Plus 10 if Player is in Archery Form
-                break;
-            case 2:
-                if(enemyAS == 0)
-                    modifier += 10; //Plus 10 if Player is in Cavalry Form
-                break;
-            case 3:
-                //Half damage if the player is in defensive stance
-                modifier /= 2;
-                dice /= 2;
-                break;
-            default:
-                break;
-        }
-
-        total = dice + modifier;
-
-        if(total < 0) //In case the modifier makes the total negative
-            total = 0;
-
-        return total;
     }
 
     // Getters&Setters ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
