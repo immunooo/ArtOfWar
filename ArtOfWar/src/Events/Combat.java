@@ -37,7 +37,7 @@ public class Combat {
     private int goldReward;
     private int foodReward;
 
-    public Combat(Army playerArmy, Enemy enemyArmy, int terrain, boolean hasCover, int ambushThreshold, int goldReward, int foodReward) {
+    public Combat(Army playerArmy, Enemy enemyArmy, int terrain, boolean hasCover, int ambushThreshold, int goldReward, int foodReward, int goldCost, int foodCost) {
         this.playerArmy = playerArmy;
         this.enemyArmy = enemyArmy;
         this.terrain = terrain;
@@ -50,6 +50,10 @@ public class Combat {
         this.foodReward = foodReward;
         generalName = "General " + enemyArmy.general;
         playerMorale();
+
+        //Subtracts from gold and food when initiating combat.
+        playerArmy.setGold(playerArmy.getResources().getGold() - goldCost);
+        playerArmy.setFood(playerArmy.getResources().getFood() - foodCost);
     }
 
     /**
@@ -783,7 +787,7 @@ public class Combat {
         Army player = new Army(100, 30, 40, 60);
         Army beforeBattle = new Army(player.getSize(), player.getMorale(), player.getResources().getGold(), player.getResources().getFood());
 
-        Combat combat = new Combat(player, enemy, 1, true, 50, 20, 30);
+        Combat combat = new Combat(player, enemy, 1, true, 50, 20, 30, 5, 10);
         combat.battle();
 
         System.out.println("Before Battle: " + beforeBattle);
