@@ -9,16 +9,27 @@ import org.junit.jupiter.api.Test;
 
 class ArmyTest {
 	
-	// size, morale, gold, food
+	// Army objects to be tested
 	static Army[] ARMIES = {	new Army(10, 11, 12, 13),
 								new Army(100, 0, 100, 0),
 								new Army(-11, -12, -13, -14)};
+	
+	// Sizes of army objects above
 	static int[] SIZES = {10, 100, -11};
+	
+	// Morale of army objects above
 	static int[] MORALE_VALUES = {11, 0, -12};
+	
+	// Gold values of army objects above
 	static int[] GOLD_VALUES = {12, 100, -13};
+	
+	// Food values of army objects above
 	static int[] FOOD_VALUES = {13, 0, -14};
+	
+	// Formations of army objects above
 	static int[] FORMATIONS = {1, 2, 3};
-
+	
+	// Tests default values of army object
 	@Test
 	void testDefaultConstructor() {
 		Army test = new Army();
@@ -28,7 +39,8 @@ class ArmyTest {
 		assertEquals("Default values do not match", 100, test.getResources().getGold());
 		assertEquals("Default values do not match", 100, test.getResources().getFood());
 	}
-
+	
+	// Tests full constructor of army class
 	@Test
 	void testFullConstructor() {
 		for(int i = 0; i < ARMIES.length; i++) {
@@ -38,21 +50,23 @@ class ArmyTest {
 			assertEquals("Food values do not match", FOOD_VALUES[i], ARMIES[i].getResources().getFood());
 		}
 	}
-
+	
+	// Tests for getters/setters below
+	
 	@Test
 	void testGetApproximateSize() {
 		for(int i = 0; i < ARMIES.length; i++) {
 			assertEquals("Size values do not match", SIZES[i], ARMIES[i].getApproximateSize());
 		}
 	}
-
+	
 	@Test
 	void testGetSize() {
 		for(int i = 0; i < ARMIES.length; i++) {
 			assertEquals("Size values do not match", SIZES[i], ARMIES[i].getSize());
 		}
-	}
-
+	}	
+	
 	@Test
 	void testSetSize() {
 		Army test = new Army();
@@ -63,14 +77,14 @@ class ArmyTest {
 			assertEquals("Set gold does not match", expected, test.getSize());
 		}
 	}
-
+	
 	@Test
 	void testGetMorale() {
 		for(int i = 0; i < ARMIES.length; i++) {
 			assertEquals("Size values do not match", MORALE_VALUES[i], ARMIES[i].getMorale());
 		}
 	}
-
+	
 	@Test
 	void testSetMorale() {
 		Army test = new Army();
