@@ -110,7 +110,7 @@ public class Army {
 
 	@Override
 	public String toString() {
-		return "Army [" +
+		return "[" +
 				"Army Size = " + size +
 				", Morale = " + morale +
 				", Formation = " + formation +
