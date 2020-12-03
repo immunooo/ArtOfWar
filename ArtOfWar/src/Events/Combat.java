@@ -784,6 +784,38 @@ public class Combat {
         this.hasFled = hasFled;
     }
 
+    public int getGoldReward() {
+        return goldReward;
+    }
+
+    public void setGoldReward(int goldReward) {
+        this.goldReward = goldReward;
+    }
+
+    public int getFoodReward() {
+        return foodReward;
+    }
+
+    public void setFoodReward(int foodReward) {
+        this.foodReward = foodReward;
+    }
+
+    public int getFoodCost() {
+        return foodCost;
+    }
+
+    public void setFoodCost(int foodCost) {
+        this.foodCost = foodCost;
+    }
+
+    public int getGoldCost() {
+        return goldCost;
+    }
+
+    public void setGoldCost(int goldCost) {
+        this.goldCost = goldCost;
+    }
+
     public static class Enemy {
         private int size;
         private int attackStyle;
@@ -839,6 +871,18 @@ public class Combat {
                     //System.out.println("Enemy uses Melee");
                     return attackStyle; //Returns default attack style if rolls 5, 6, 7, 8, or 9
             }
+        }
+
+        public void setSize(int size) {
+            this.size = size;
+        }
+
+        public void setAttackStyle(int attackStyle) {
+            this.attackStyle = attackStyle;
+        }
+
+        public void setGeneral(String general) {
+            this.general = general;
         }
 
         public int getSize() {
