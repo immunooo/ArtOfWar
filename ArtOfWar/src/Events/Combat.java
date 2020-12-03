@@ -2,6 +2,7 @@ package Events;
 
 import Capital.*;
 
+import java.util.Objects;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -27,7 +28,7 @@ public class Combat {
     private boolean hasCover = false; //True allows army to ambush, False prevents it
     private boolean inCover = false; //True if army is attempting ambush
     private boolean failedCover = false; //True if army fails the ambush
-    private int ambushThreshold; //The number the player army needs to be under in order for a successful
+    private int ambushThreshold; //The number the player army needs to be under in order for a successful ambush
     private Scanner kb = new Scanner(System.in); //Keyboard scanner
     private int userInput = -1; //The current input of the user
     private String generalName; //The name of the General of the Enemy Army
@@ -36,6 +37,8 @@ public class Combat {
     private boolean hasFled = false;
     private int goldReward;
     private int foodReward;
+    private int foodCost;
+    private int goldCost;
 
     public Combat(Army playerArmy, Enemy enemyArmy, int terrain, boolean hasCover, int ambushThreshold, int goldReward, int foodReward, int goldCost, int foodCost) {
         this.playerArmy = playerArmy;
@@ -49,11 +52,30 @@ public class Combat {
         this.goldReward = goldReward;
         this.foodReward = foodReward;
         generalName = "General " + enemyArmy.general;
+        this.foodCost = foodCost;
+        this.goldCost = goldCost;
         playerMorale();
 
         //Subtracts from gold and food when initiating combat.
-        playerArmy.setGold(playerArmy.getResources().getGold() - goldCost);
-        playerArmy.setFood(playerArmy.getResources().getFood() - foodCost);
+        this.playerArmy.setGold(playerArmy.getResources().getGold() - goldCost);
+        this.playerArmy.setFood(playerArmy.getResources().getFood() - foodCost);
+    }
+
+    public Combat(Combat c) {
+        this.playerArmy = new Army(c.playerArmy.getSize(), c.playerArmy.getMorale(), c.playerArmy.getResources().getGold(), c.playerArmy.getResources().getFood());
+        this.enemyArmy = new Enemy(c.enemyArmy.getSize(), c.enemyArmy.getAttackStyle(), c.enemyArmy.getGeneral());
+        this.terrain = c.terrain;
+        this.hasCover = c.hasCover;
+        this.ambushThreshold = c.ambushThreshold;
+        this.playerSize = this.playerArmy.getSize();
+        this.morale = this.playerArmy.getMorale();
+        this.enemySize = this.enemyArmy.size;
+        this.goldReward = c.goldReward;
+        this.foodReward = c.foodReward;
+        this.generalName = "General " + this.enemyArmy.general;
+        this.foodCost = c.foodCost;
+        this.goldCost = c.goldCost;
+        playerMorale();
     }
 
     /**
@@ -572,6 +594,34 @@ public class Combat {
         //System.out.println("End of Morale method"); //For testing purposes
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Combat combat = (Combat) o;
+        return morale == combat.morale &&
+                playerSize == combat.playerSize &&
+                enemySize == combat.enemySize &&
+                playerAS == combat.playerAS &&
+                enemyAS == combat.enemyAS &&
+                playerFormation == combat.playerFormation &&
+                terrain == combat.terrain &&
+                hasCover == combat.hasCover &&
+                inCover == combat.inCover &&
+                failedCover == combat.failedCover &&
+                ambushThreshold == combat.ambushThreshold &&
+                userInput == combat.userInput &&
+                playerAttack == combat.playerAttack &&
+                enemyAttack == combat.enemyAttack &&
+                hasFled == combat.hasFled &&
+                goldReward == combat.goldReward &&
+                foodReward == combat.foodReward &&
+                playerArmy.equals(combat.playerArmy) &&
+                enemyArmy.equals(combat.enemyArmy) &&
+                moraleLevel.equals(combat.moraleLevel) &&
+                generalName.equals(combat.generalName);
+    }
+
     // Getters&Setters ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     public Army getPlayerArmy() {
@@ -789,6 +839,27 @@ public class Combat {
                     //System.out.println("Enemy uses Melee");
                     return attackStyle; //Returns default attack style if rolls 5, 6, 7, 8, or 9
             }
+        }
+
+        public int getSize() {
+            return size;
+        }
+
+        public int getAttackStyle() {
+            return attackStyle;
+        }
+
+        public String getGeneral() {
+            return general;
+        }
+
+        @Override
+        public String toString() {
+            return "[" +
+                    "size=" + size +
+                    ", attackStyle=" + attackStyle +
+                    ", general='" + general + '\'' +
+                    ']';
         }
     }
 
