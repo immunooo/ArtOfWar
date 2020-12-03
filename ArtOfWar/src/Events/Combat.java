@@ -784,38 +784,6 @@ public class Combat {
         this.hasFled = hasFled;
     }
 
-    public int getGoldReward() {
-        return goldReward;
-    }
-
-    public void setGoldReward(int goldReward) {
-        this.goldReward = goldReward;
-    }
-
-    public int getFoodReward() {
-        return foodReward;
-    }
-
-    public void setFoodReward(int foodReward) {
-        this.foodReward = foodReward;
-    }
-
-    public int getFoodCost() {
-        return foodCost;
-    }
-
-    public void setFoodCost(int foodCost) {
-        this.foodCost = foodCost;
-    }
-
-    public int getGoldCost() {
-        return goldCost;
-    }
-
-    public void setGoldCost(int goldCost) {
-        this.goldCost = goldCost;
-    }
-
     public static class Enemy {
         private int size;
         private int attackStyle;
