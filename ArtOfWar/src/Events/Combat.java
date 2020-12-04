@@ -622,6 +622,35 @@ public class Combat {
                 generalName.equals(combat.generalName);
     }
 
+    @Override
+    public String toString() {
+        return "Combat {" +
+                "playerArmy=" + playerArmy +
+                ", enemyArmy=" + enemyArmy +
+                ", morale=" + morale +
+                ", moraleLevel='" + moraleLevel + '\'' +
+                ", playerSize=" + playerSize +
+                ", enemySize=" + enemySize +
+                ", playerAS=" + playerAS +
+                ", enemyAS=" + enemyAS +
+                ", playerFormation=" + playerFormation +
+                ", terrain=" + terrain +
+                ", hasCover=" + hasCover +
+                ", inCover=" + inCover +
+                ", failedCover=" + failedCover +
+                ", ambushThreshold=" + ambushThreshold +
+                ", userInput=" + userInput +
+                ", generalName='" + generalName + '\'' +
+                ", playerAttack=" + playerAttack +
+                ", enemyAttack=" + enemyAttack +
+                ", hasFled=" + hasFled +
+                ", goldReward=" + goldReward +
+                ", foodReward=" + foodReward +
+                ", foodCost=" + foodCost +
+                ", goldCost=" + goldCost +
+                '}';
+    }
+
     // Getters&Setters ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     public Army getPlayerArmy() {
@@ -905,6 +934,16 @@ public class Combat {
                     ", general='" + general + '\'' +
                     ']';
         }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            Enemy enemy = (Enemy) o;
+            return size == enemy.size &&
+                    attackStyle == enemy.attackStyle &&
+                    Objects.equals(general, enemy.general);
+        }
     }
 
     public static void main(String[] args) {
@@ -915,6 +954,13 @@ public class Combat {
         Army beforeBattle = new Army(player.getSize(), player.getMorale(), player.getResources().getGold(), player.getResources().getFood());
 
         Combat combat = new Combat(player, enemy, 1, true, 50, 20, 30, 5, 10);
+
+        Combat copy = new Combat(combat);
+        System.out.println(copy.equals(combat));
+
+        System.out.println("\nOriginal: " + combat);
+        System.out.println("Copy:     " + copy);
+
         combat.battle();
 
         System.out.println("Before Battle: " + beforeBattle);

@@ -2,6 +2,8 @@ package Capital;
 
 import Events.Combat;
 
+import java.util.Objects;
+
 public class Army {
 	int size, morale, formation;
 	Resources r = new Resources(); //Added this because without, the copy constructor 'r' is never initialized and the object is null;
@@ -106,6 +108,17 @@ public class Army {
 
 	public void setFood(int food) { //Added to be able to update food from Combat.java
 		this.r.food = food;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Army army = (Army) o;
+		return size == army.size &&
+				morale == army.morale &&
+				formation == army.formation &&
+				Objects.equals(r, army.r);
 	}
 
 	@Override
