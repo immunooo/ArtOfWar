@@ -16,12 +16,12 @@ import java.util.Scanner;
  * @version 1.0
  */
 public class RandomEventList {
-    private ArrayList<TestEvent> EventList = new ArrayList<>();
+    private ArrayList<Event> EventList = new ArrayList<>();
     private ArrayList<String> textList = new ArrayList<>();
     private ArrayList<String> pictureList = new ArrayList<>();
     private Scanner inputFile;
     private String currentLine;
-    private TestEvent currentEvent = new TestEvent();
+    private Event currentEvent = new Event();
 
     /**
      * Creates an ArrayList of Random Events from a text file
@@ -51,7 +51,7 @@ public class RandomEventList {
 
             if(getCurrentLine().equals("/~/")) { //Checks to see if the end of the Event has been reached
                 EventList.add(currentEvent); //Adds it to the EventList
-                currentEvent = new TestEvent();
+                currentEvent = new Event();
                 //System.out.println(currentEvent); //For Testing
             } else { //Still in the process of creating an Event
                 colonIndex = currentLine.indexOf(':'); //Checks the index of the command colon
@@ -62,9 +62,7 @@ public class RandomEventList {
             }
             //System.out.println("Command: " + command); //For Testing
         }
-        
         EventList.add(currentEvent); //Adds the final event to the EventList
-        
        // System.out.println(currentEvent + "\n"); //For Testing
        // System.out.println(EventList); //For Testing
     }
@@ -76,7 +74,7 @@ public class RandomEventList {
     public boolean hasMoreCommands()  {
         return inputFile.hasNextLine();
     }
-
+    
     /**
      * Returns the line that is currently being parsed
      * @return the Line in the file
@@ -108,12 +106,12 @@ public class RandomEventList {
         //System.out.println("Command: " + command + ", Data: " + data); //For Testing
 
         switch(command) {
-            case "dialog":      	
+            case "dialog":
             	parsingLogic(textList, currentLine, data);
                 break;
             case "picture":
                 parsingLogic(pictureList, currentLine, data);
-                Dialogue dialogue = new Dialogue(textList, pictureList);
+                Dialogue dialogue = new Dialogue(textList,pictureList);
                 currentEvent.setDialogue(dialogue);
                 break;
             case "choices":
@@ -124,21 +122,21 @@ public class RandomEventList {
             case "resource1":
             	Integer[] resources1 = new Integer[4];
             	resourceParsing(resources1,currentLine);
-            	currentEvent.mResources.add(resources1);
+            	currentEvent.getResources().add(resources1);
                 break;
             case "resource2":
             	Integer[] resources2 = new Integer[4];
             	resourceParsing(resources2,currentLine);
-                currentEvent.mResources.add(resources2);
+                currentEvent.getResources().add(resources2);
                 break;
             case "resource3":
             	Integer[] resources3 = new Integer[4];
             	resourceParsing(resources3,currentLine);
-                currentEvent.mResources.add(resources3);
+                currentEvent.getResources().add(resources3);
 
                 break;
             case "difficulty":
-            	currentEvent.setDifficulty(data);
+            	currentEvent.setDifficulty(Integer.parseInt(data));
             	break;
             case "location":
             	currentEvent.setLocation(data);
@@ -196,26 +194,6 @@ public class RandomEventList {
             list[indexTracker++] = resourceString.nextInt();
     	}
     }
-    
-    /**
-     * Returns a random event based on given location
-     * @param location
-     * @return Random Event
-     */
-    public TestEvent getRandomEvent(String location) {
-    	ArrayList<TestEvent> list = new ArrayList<>();
-    	
-    	if(EventList != null) 
-    		for(TestEvent events : EventList) 
-    			if(events.mLocation.equals(location))
-    				list.add(events);
-    	if(list.size() == 0)
-    		return null;
-    	Random rng = new Random();
-    	//Generates a number from 0 - list.size();
-    	int randomIndex = rng.nextInt(list.size());
-    	return list.get(randomIndex);
-    }
 
     @Override
     public String toString() {
@@ -230,118 +208,32 @@ public class RandomEventList {
     }
 
     /**
-     * Purely for Testing purposes and getting inputting a file working. Not at all part of the
-     * final product
+     * Returns a random event based on given location
+     * @param location
+     * @return Random Event
      */
-    public class TestEvent {
-        private Dialogue mDialogue;
-        private ArrayList<String> mChoices;
-        private ArrayList<Integer[]> mResources;
-        private String mDifficulty;
-        private String mLocation;
+    public Event getRandomEvent(String location) {
+        ArrayList<Event> list = new ArrayList<>();
 
-        public TestEvent( Dialogue dialogue,  ArrayList<String> choices, ArrayList<Integer[]> resources, String difficulty, String location) {
-            mDialogue = dialogue;
-            
-            mChoices = choices;
-            mResources = resources;
-            mDifficulty = difficulty;
-            mLocation = location;
-        }
-        public TestEvent() {
-            this(null, null, new ArrayList<>(), null, null);
-        }
-
-        public  Dialogue getDialogue() {
-            return mDialogue;
-        }
-
-        public void setDialogue( Dialogue dialogue) {
-            mDialogue = dialogue;
-        }
-
-        
-
-
-        public ArrayList<String> getChoices() {
-            return mChoices;
-        }
-
-        public void setChoices(ArrayList<String> choices) {
-            mChoices = choices;
-        }
-
-
-        public ArrayList<Integer[]> getResources() {
-            return mResources;
-        }
-
-        public void setResources(ArrayList<Integer[]> resources) {
-            mResources = resources;
-        }
-        
-        public String getDifficulty() {
-        	return mDifficulty;
-        }
-        
-        public void setDifficulty(String difficulty) {
-        	mDifficulty = difficulty;
-        }
-        
-        public String getLocation() {
-        	return mDifficulty;
-        }
-        
-        public void setLocation(String location) {
-        	mLocation = location;
-        }
-
-        
-
-        @Override
-        public String toString() {
-        	//Making mResouces[][] into a String
-        	String resources = "{[";
-        	for(int i = 0; i < mResources.size(); i++) {
-        	    resources += mResources.get(i)[0];
-                for (int j = 1; j < 4; j++) {
-                    resources += ", " + mResources.get(i)[j];
-                }
-                if(i != 2)
-                    resources += "], [";
-            }
-        	resources += "]}";
-        	
-        	//Making mDialogue into a String
-        	String dialogue = "[";
-        	for(String s : mDialogue.getText()) {
-        		dialogue += s + ", ";
-        	}
-        	for(int i = 0; i < mDialogue.getPicture().size(); i++) {
-        		if(i == mDialogue.getPicture().size() - 1)
-        			dialogue += mDialogue.getPicture().get(i) + "]";
-        		else 
-        			dialogue += mDialogue.getPicture().get(i) + ", ";
-        	}
-        		
-        	
-            return "{" +
-                    dialogue +
-                    
-                    ", " + mChoices.toString() +
-                    ", " + resources +
-                    ", " + mDifficulty +
-                    ", " + mLocation +
-                    "}";
-        }
+        if(EventList != null) 
+            for(Event events : EventList) 
+                if(events.getLocation().equals(location))
+                    list.add(events);
+        if(list.size() == 0)
+            return null;
+        Random rng = new Random();
+        //Generates a number from 0 - list.size();
+        int randomIndex = rng.nextInt(list.size());
+        return list.get(randomIndex);
     }
-    //For testing the object builder
+
+   
     public static void main(String[] args) {
         String fileName = "randomevents.txt";
         RandomEventList list = new RandomEventList(fileName);
-       
+
         System.out.println(list);
     }
-}
 
+}
 
