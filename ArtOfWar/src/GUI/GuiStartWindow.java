@@ -45,7 +45,7 @@ public class GuiStartWindow extends Application{
         start.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                GuiEventWindow eventWindow= new GuiEventWindow();
+                GuiEventWindow eventWindow = new GuiEventWindow();
                 try {
                     eventWindow.start(primaryStage);
                 }

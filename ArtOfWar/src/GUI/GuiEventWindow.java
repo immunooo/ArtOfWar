@@ -15,6 +15,12 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import static GUI.GuiStyle.*;
 
+import java.util.ArrayList;
+
+import Capital.Army;
+import Events.Dialogue;
+import Events.Event;
+
 /**
  * the event window for user
  *
@@ -23,6 +29,33 @@ import static GUI.GuiStyle.*;
  * @version 1.3.1
  */
 public class GuiEventWindow extends Application {
+	
+	Event event = new Event();
+	Army armyS = new Army();
+	String[] dialogue = new String[2];
+	ArrayList<String> pagesOfDialogue = new ArrayList<String>();
+	int pageCount = 0;
+	int currentPage = 0;
+	
+	public GuiEventWindow(Event event, Army army)
+	{
+		this.armyS=army;
+		this.event=event;
+		this.dialogue = event.getNextDialogue();
+		int i=0;
+		while (!event.DialogueIsEmpty())
+		{
+			pagesOfDialogue.set(i, event.getNextDialogue()[0]);
+			pageCount++;
+			i++;
+		}
+	}
+	
+	public GuiEventWindow()
+	{
+		
+	}
+	
     /** Scene Construction */
     Scene scene;
 
@@ -68,21 +101,30 @@ public class GuiEventWindow extends Application {
         // Special Function Test
 
         // Component Initialize
-        eventImage = new ImageView(new Image("Assets/Scenery-From-Old-Concept.png"));
+        eventImage = new ImageView(new Image(eventImageLocation()));
 
-        morale = new ImageView(new Image("Assets/Chill.png"));
-        army = new ImageView(new Image("Assets/Army-Size-4.png"));
-        gold = new ImageView(new Image("Assets/Half-Full-Chest-4.png"));
-        food  = new ImageView(new Image("Assets/HalfBasket-4.png"));
+        morale = new ImageView(new Image(moraleImageLocation()));
+        army = new ImageView(new Image(armyImageLocation()));
+        gold = new ImageView(new Image(goldImageLocation()));
+        food  = new ImageView(new Image(foodImageLocation()));
 
         // Button Long Setting
         final int BUTTON_LONG_SIZE[] = new int[]{120,25};
-        combatButton= new Button("Combat");
+        
+        
+        
+        
+        
+        //Askar
+        ArrayList<String> choices = event.getChoices();
+        //check 12/7
+        combatButton= new Button(choices.get(0));
         combatButton.setMaxSize(BUTTON_LONG_SIZE[0],BUTTON_LONG_SIZE[1]);
         combatButton.setMinSize(BUTTON_LONG_SIZE[0],BUTTON_LONG_SIZE[1]);
         buttonSetting(combatButton);
 
-        actionButton = new Button("Action");
+        //also check 12/7
+        actionButton = new Button(choices.get(1));
         actionButton.setMaxSize(BUTTON_LONG_SIZE[0],BUTTON_LONG_SIZE[1]);
         actionButton.setMinSize(BUTTON_LONG_SIZE[0],BUTTON_LONG_SIZE[1]);
         buttonSetting(actionButton);
@@ -142,18 +184,50 @@ public class GuiEventWindow extends Application {
         nextPageButton.setMinSize(25,25);
         nextPageButton.setBackground(new Background(new BackgroundImage(new Image("Assets/Icons/RightArrow.png"),
                 null,null,null,null)));
+        
+        
+        
+        
+        //changed
+        nextPageButton.setOnAction(new EventHandler<ActionEvent>() {
+        	@Override
+            public void handle(ActionEvent actionEvent) {
+        		if (currentPage<pageCount)
+        		{
+        			currentPage++;
+        		}
+        		eventNarrative.setText(pagesOfDialogue.get(currentPage));
+            }
+        });
 
         prevPageButton = new Button();
         prevPageButton.setMaxSize(25,25);
         prevPageButton.setMinSize(25,25);
         prevPageButton.setBackground(new Background(new BackgroundImage(new Image("Assets/Icons/LeftArrow.png"),
                 null,null,null,null)));
-
+        prevPageButton.setOnAction(new EventHandler<ActionEvent>() {
+        	@Override
+            public void handle(ActionEvent actionEvent) {
+        		if (currentPage>0)
+        		{
+        			currentPage--;
+        		}
+        		eventNarrative.setText(pagesOfDialogue.get(currentPage));
+            }
+        });
+        
+        
         // Narrative Text Setting
         eventNarrative = new Label();
-        eventNarrative.setText("Test Text, Long Sentence "
-        		+ "Testing ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-        		+ "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n~\n~\n~\n~\n~\n~\n~\n~\n~\n~\n~\n~\n~");
+        
+        
+        
+        
+        
+        
+        //Askar 12/7
+        //check with backend
+        eventNarrative.setText(this.pagesOfDialogue.get(currentPage));
         eventNarrative.setFont(Font.font("Verdana",12));
         eventNarrative.setTextFill(Color.BLACK);
         eventNarrative.setWrapText(true);
@@ -346,6 +420,7 @@ public class GuiEventWindow extends Application {
  public void buttonSetting(Button button){
 
      ContextMenu contextMenu = new ContextMenu();
+     //need to connect to the back end choices
      MenuItem item1 = new MenuItem("example");
      MenuItem item2 = new MenuItem("example");
      MenuItem item3 = new MenuItem("example");
@@ -359,4 +434,35 @@ public class GuiEventWindow extends Application {
          }
      });
  }
+ 
+ public String moraleImageLocation()
+ {
+	 //should return the right picture location according to resources
+	 return "Assets/Chill.png";
+ }
+ 
+ public String armyImageLocation()
+ {
+	 //need work
+	 return "Assets/Army-Size-4.png";
+ }
+ 
+ public String foodImageLocation()
+ {
+	 //need work
+	 return "Assets/HalfBasket-4.png";
+ }
+ 
+ public String goldImageLocation()
+ {
+	 //need work
+	 return "Assets/Half-Full-Chest-4.png";
+ }
+ 
+ public String eventImageLocation()
+ {
+	 //need work
+	 return "Assets/Scenery-From-Old-Concept.png";
+ }
+ 
 }

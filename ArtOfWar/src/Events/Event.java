@@ -52,6 +52,11 @@ public class Event {
 		
 	}
 	
+	public Event()
+	{
+		
+	}
+	
 	/**
 	 * Returns the choices of the event.
 	 * @return choices for the event.
@@ -82,6 +87,11 @@ public class Event {
 	 */
 	public String[] getNextDialogue() {
 		return d.poll();
+	}
+	
+	public boolean DialogueIsEmpty()
+	{
+		return d.isEmpty();
 	}
 	
 	/**
