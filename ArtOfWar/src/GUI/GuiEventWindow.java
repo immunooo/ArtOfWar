@@ -85,15 +85,75 @@ public class GuiEventWindow extends Application {
         food  = new ImageView(new Image("Assets/HalfBasket-4.png"));
 
         // Button Long Setting
-        final int BUTTON_LONG_SIZE[] = new int[]{120,25};
-        combatButton= new Button("Combat");
+        final int BUTTON_LONG_SIZE[] = new int[]{121,21};
+        combatButton= new Button("");
         combatButton.setMaxSize(BUTTON_LONG_SIZE[0],BUTTON_LONG_SIZE[1]);
         combatButton.setMinSize(BUTTON_LONG_SIZE[0],BUTTON_LONG_SIZE[1]);
+        combatButton.setBackground(new Background(new BackgroundImage(
+                new Image("Assets/Icons/Button/Idle/combat.png"), null,null,null,null)));
+        combatButton.addEventFilter(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                combatButton.setBackground(new Background(new BackgroundImage(
+                        new Image("Assets/Icons/Button/hoveredOver/combat.png"),null,null,null, null)));
+            }
+        });
+        combatButton.addEventFilter(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                combatButton.setBackground(new Background(new BackgroundImage(
+                        new Image("Assets/Icons/Button/Idle/combat.png"),null,null,null,null)));
+            }
+        });
+        combatButton.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                combatButton.setBackground(new Background(new BackgroundImage(
+                        new Image("Assets/Icons/Button/Clicked/combat.png"),null,null,null,null)));
+            }
+        });
+        combatButton.addEventFilter(MouseEvent.MOUSE_RELEASED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                combatButton.setBackground(new Background(new BackgroundImage(
+                        new Image("Assets/Icons/Button/hoveredOver/combat.png"),null,null,null, null)));
+            }
+        });
         buttonSetting(combatButton);
 
-        actionButton = new Button("Action");
+        actionButton = new Button("");
         actionButton.setMaxSize(BUTTON_LONG_SIZE[0],BUTTON_LONG_SIZE[1]);
         actionButton.setMinSize(BUTTON_LONG_SIZE[0],BUTTON_LONG_SIZE[1]);
+        actionButton.setBackground(new Background(new BackgroundImage(
+                new Image("Assets/Icons/Button/Idle/action.png"), null,null,null,null)));
+        actionButton.addEventFilter(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                actionButton.setBackground(new Background(new BackgroundImage(
+                        new Image("Assets/Icons/Button/hoveredOver/action.png"),null,null,null, null)));
+            }
+        });
+        actionButton.addEventFilter(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                actionButton.setBackground(new Background(new BackgroundImage(
+                        new Image("Assets/Icons/Button/Idle/action.png"),null,null,null,null)));
+            }
+        });
+        actionButton.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                actionButton.setBackground(new Background(new BackgroundImage(
+                        new Image("Assets/Icons/Button/Clicked/action.png"),null,null,null,null)));
+            }
+        });
+        actionButton.addEventFilter(MouseEvent.MOUSE_RELEASED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                actionButton.setBackground(new Background(new BackgroundImage(
+                        new Image("Assets/Icons/Button/hoveredOver/action.png"),null,null,null, null)));
+            }
+        });
         buttonSetting(actionButton);
 
         // Button Short Setting
@@ -129,9 +189,11 @@ public class GuiEventWindow extends Application {
         mapButton.setBackground(new Background(new BackgroundImage(new Image("Assets/Icons/Map.png"),
                 null,null,null,null)));
 
+        /**
         buttonShort3 = new Button("");
         buttonShort3.setMinSize(BUTTON_SHORT_SIZE[0],BUTTON_SHORT_SIZE[1]);
         buttonShort3.setMaxSize(BUTTON_SHORT_SIZE[0],BUTTON_SHORT_SIZE[1]);
+        */
 
         exitButton = new Button("");
         exitButton.setBackground(new Background(new BackgroundImage(new Image("Assets/Icons/Door.png"),
@@ -221,7 +283,7 @@ public class GuiEventWindow extends Application {
         buttonShortPane.setVgap(10);
         buttonShortPane.add(inventoryButton,0,0);
         buttonShortPane.add(mapButton,1,0);
-        buttonShortPane.add(buttonShort3,0,1);
+        //buttonShortPane.add(buttonShort3,0,1);
         buttonShortPane.add(exitButton,1,1);
         buttonShortPane.setAlignment(Pos.CENTER);
         buttonShortPane.setMinSize(100,100);
