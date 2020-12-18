@@ -35,6 +35,7 @@ public class GuiEventWindow extends Application {
 	String[] dialogue = new String[2];
 	ArrayList<String> pagesOfDialogue = new ArrayList<String>();
 	int pageCount = 0;
+	ArrayList<String> choices = new ArrayList<String>();
 	int currentPage = 0;
 	
 	public GuiEventWindow(Event event, Army army)
@@ -42,6 +43,7 @@ public class GuiEventWindow extends Application {
 		this.armyS=army;
 		this.event=event;
 		this.dialogue = event.getNextDialogue();
+		this.choices = event.getChoices();
 		int i=0;
 		while (!event.DialogueIsEmpty())
 		{
@@ -421,9 +423,9 @@ public class GuiEventWindow extends Application {
 
      ContextMenu contextMenu = new ContextMenu();
      //need to connect to the back end choices
-     MenuItem item1 = new MenuItem("example");
-     MenuItem item2 = new MenuItem("example");
-     MenuItem item3 = new MenuItem("example");
+     MenuItem item1 = new MenuItem(choices.get(0));
+     MenuItem item2 = new MenuItem(choices.get(1));
+     MenuItem item3 = new MenuItem(choices.get(2));
      contextMenu.getItems().addAll(item1, item2, item3);
      button.setContextMenu(contextMenu);
 
@@ -444,6 +446,15 @@ public class GuiEventWindow extends Application {
  public String armyImageLocation()
  {
 	 //need work
+	 if (armyS.getSize()<10)
+		 return "Assets/Army-Size-0.png";
+	 else if (armyS.getSize()<30)
+		 return "Assets/Army-Size-1.png";
+	 else if (armyS.getSize()<50)
+		 return "Assets/Army-Size-2.png";
+	 else if (armyS.getSize()<70)
+		 return "Assets/Army-Size-3.png";
+	 
 	 return "Assets/Army-Size-4.png";
  }
  
