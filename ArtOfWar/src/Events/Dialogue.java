@@ -65,6 +65,16 @@ public class Dialogue {
 		
 		return dialogue;
 	}
+
+	public Dialogue clone() {
+        Dialogue newD = new Dialogue();
+        for(int i = 0; i < text.size(); i++) {
+            newD.Offer(text.get(i).toString(), picture.get(i).toString());
+        }
+        return newD;
+
+     }
+
 	
 	/**
 	 * Returns the top most element with deletion
@@ -97,5 +107,11 @@ public class Dialogue {
 			picture.remove(0);
 		}
 	}
+
+	
+	public String toString() {
+		return text.toString() + picture.toString();
+	}
+
 
 }

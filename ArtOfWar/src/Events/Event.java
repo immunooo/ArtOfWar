@@ -14,10 +14,13 @@ public class Event {
 	private Dialogue d;
 	private HashMap<String, Integer[]> choicesMap;
 	private ArrayList<String> choices;
- 	
+
+ 	private ArrayList<String> mPicture = new ArrayList<>();
 	private int difficulty;
 	private String location;
-	
+	private ArrayList<Integer[]> mResources; 
+	private boolean eventComplete;
+
 	/**
 	 * Constructor method of the Events class
 	 * 
@@ -29,12 +32,17 @@ public class Event {
 	 * 
 	 * @throws Error if choices and resource modifier have different lengths or resource modifiers has incorrect amount of values
 	 */
-	public Event(Dialogue d, ArrayList<String> choices, ArrayList<Integer[]> resourceModifiers, int difficulty, String location) {
+
+	public Event(Dialogue d, ArrayList<String> choices,ArrayList<String> mPicture, ArrayList<Integer[]> resourceModifiers, int difficulty, String location ) {
 		this.d = d;
 		this.choices= choices;
+		this.mResources = resourceModifiers;
 		this.difficulty = difficulty;
 		this.location = location;
 		this.choicesMap = new HashMap<String, Integer[]>();
+		this.eventComplete = false;
+		
+
 		
 		if(choices.size() != resourceModifiers.size()) {
 			throw new Error("Choices and resource modifier have different lengths.");
@@ -51,49 +59,99 @@ public class Event {
 		}
 		
 	}
-	
-	public Event()
-	{
+
+	  public Event() {
+          this(null, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), -1, null);
+      }
+
+	public Event clone() {
+		Dialogue dialogueClone =  d.clone();
+		
+		ArrayList<String> choicesClone = new ArrayList<>();
+		ArrayList<Integer[]> resourceModifiersClone = new ArrayList<>();
+		for(String s: choices) {
+			choices.add(s.toString());
+			resourceModifiersClone.add(choicesMap.get(s));
+		}
+		
+		return new Event(dialogueClone, choicesClone, null,resourceModifiersClone, difficulty, location.toString());
+		
+		
 		
 	}
-	
-	/**
-	 * Returns the choices of the event.
-	 * @return choices for the event.
-	 */
-	public ArrayList<String> getChoices() {
-		return choices;
-	}
-	
-	/**
-	 * Returns the difficulty of the event.
-	 * @return difficulty of the event.
-	 */
-	public int getDifficulty() {
-		return difficulty;
-	}
-	
-	/**
-	 * This method returns the location of the event.
-	 * @return location of the event.
-	 */
-	public String getLocation() {
-		return location;
-	}
-	
-	/**
-	 * This method returns the next dialogue prompt
-	 * @return a array of size 2 where 0 = text and 1 = picture location
-	 */
-	public String[] getNextDialogue() {
+
+	 public Dialogue getDialogue() {
+         return d;
+     }
+		/**
+		 * This method returns the next dialogue prompt
+		 * @return a array of size 2 where 0 = text and 1 = picture location
+		 */
+		
+     public void setDialogue(Dialogue dialog) {
+         d = dialog;
+     }
+
+     public ArrayList<String> getPicture() {
+         return mPicture;
+     }
+
+     public void setPicture(ArrayList<String> picture) {
+         mPicture = picture;
+     }
+
+ 	/**
+ 	 * Returns the choices of the event.
+ 	 * @return choices for the event.
+ 	 */
+     public ArrayList<String> getChoices() {
+         return choices;
+     }
+
+     public void setChoices(ArrayList<String> choices) {
+        this.choices = choices;
+     }
+
+
+     public ArrayList<Integer[]> getResources() {
+         return mResources;
+     }
+
+     public void setResources(ArrayList<Integer[]> resources) {
+         mResources = resources;
+     }
+ 	/**
+ 	 * Returns the difficulty of the event.
+ 	 * @return difficulty of the event.
+ 	 */
+     public int getDifficulty() {
+     	return difficulty;
+     }
+     
+     public void setDifficulty(int difficulty) {
+    	 this.difficulty = difficulty;
+     }
+
+ 	/**
+ 	 * This method returns the location of the event.
+ 	 * @return location of the event.
+ 	 */
+     public String getLocation() {
+     	return location;
+     }
+     
+     public void setLocation(String location) {
+    	 this.location = location;
+     }
+
+ 	public String[] getNextDialogue() {
 		return d.poll();
 	}
+
 	
-	public boolean DialogueIsEmpty()
-	{
-		return d.isEmpty();
-	}
-	
+
+
+
 	/**
 	 * This method updates an army class with the resource modifiers of the given choice.
 	 * @param army of the user
@@ -114,10 +172,39 @@ public class Event {
 		army.setMorale(army.getMorale() + modifiers[1]);
 		army.getResources().setFood(army.getResources().getFood() +  modifiers[2]);
 		army.getResources().setGold(army.getResources().getGold() +  modifiers[3]);
-		
+
+		eventComplete = true;
+
 		return true;
 		
 	}
 	
-	
-}
+
+	public boolean isEventComplete() {
+		return eventComplete;
+	}
+	  public String toString() {
+      	//Making mResouces[][] into a String
+      	String resources = "{[";
+      	for(int i = 0; i < mResources.size(); i++) {
+      	    resources += mResources.get(i)[0];
+              for (int j = 1; j < 4; j++) {
+                  resources += ", " + mResources.get(i)[j];
+              }
+              if(i != 2)
+                  resources += "], [";
+          }
+      	resources += "]}";
+      		
+      	
+          return "{" +
+                  d.toString() +
+                  
+                  ", " + choices.toString() +
+                  ", " + resources +
+                  ", " + difficulty +
+                  ", " + location +
+                  "}";
+      }
+  }
+
