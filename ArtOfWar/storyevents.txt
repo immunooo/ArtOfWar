@@ -1,0 +1,13 @@
+Template: //Data goes in between the quotations. Dialog/Choices/choicesMap may have more, may have less
+/~/
+dialog: "dialog1", "dialog2", "dialog3", ...
+picture: "picture1", "picture2", "picture3", ...
+choices: "choice1", "choice2", "choice3", ...
+difficulty: "difficulty"
+location: "location"
+====================================================================================
+dialog: "“After the battle of Hima, you and the army travel south.While traveling through the mountain pass, you spot a particularly funny looking man sitting on top of a rock. The sight of him brings many questions. As you approach him, you notice a freakishly large grin behind his mask.”,“Merchant - Well if it isn’t everyone's favorite new up and comer, Commander Kazuo.”,“Kazuo - You should get to safety, strange merchant, aren't you aware there's a war going on right now?”,“Merchant - That's ‘Mysterious Merchant’ to you young commander, a family title not to be lightly mistreated. War can be a very prosperous time for certain kinds of business. ”,Kazuo - “And what type of business is that?”,Merchant - ”Certain odds and ends. Food for coin, battle hardened men for supplies, trinkets that improve troop temperament for resources, you know the usual.”,“Kazuo - You’re selling large quantities of men, trained and battle hardened?”,“Merchant - Yup!”,“Kazuo - Care to tell me where they come from?”,“Merchant - Nope!”,“Kazuo grins to himself. This man is mysterious, but he has a certain charm to him. Without a goodbye, he vanishes into a ball of smoke. You chuckle to yourself, then continue south through the mountain passage.”"
+picture: "pic", "picture2", "picture3", "pic4", "pic5"
+choices: "next"
+difficulty: "1"
+location: "s2"

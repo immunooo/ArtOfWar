@@ -9,7 +9,7 @@ import java.util.HashMap;
  * @author Joseph Berlucchi
  * @version 1.0
  */
-public class StoryEvent {
+public class Event {
 	
 	private Dialogue d;
 	private HashMap<String, Integer[]> choicesMap;
@@ -17,6 +17,7 @@ public class StoryEvent {
  	private ArrayList<String> mPicture = new ArrayList<>();
 	private int difficulty;
 	private String location;
+	private ArrayList<Integer[]> mResources; 
 	private boolean eventComplete;
 	/**
 	 * Constructor method of the Events class
@@ -29,28 +30,46 @@ public class StoryEvent {
 	 * 
 	 * @throws Error if choices and resource modifier have different lengths or resource modifiers has incorrect amount of values
 	 */
-	public StoryEvent(Dialogue d, ArrayList<String> choices,ArrayList<String> mPicture, int difficulty, String location ) {
+	public Event(Dialogue d, ArrayList<String> choices,ArrayList<String> mPicture, ArrayList<Integer[]> resourceModifiers, int difficulty, String location ) {
 		this.d = d;
 		this.choices= choices;
+		this.mResources = resourceModifiers;
 		this.difficulty = difficulty;
 		this.location = location;
 		this.choicesMap = new HashMap<String, Integer[]>();
 		this.eventComplete = false;
+		
+		
+		if(choices.size() != resourceModifiers.size()) {
+			throw new Error("Choices and resource modifier have different lengths.");
+		}
+		
+		//Loads the hash map with choice text as key and the resource modifiers as the value
+		for(int i = 0; i < choices.size(); i++) {
+			//Throws error if resource modifiers doesnt have a size of 4
+			if(resourceModifiers.get(i).length != 4) {
+				throw new Error("Resources modifiers has incorrect amount of values.");
+			}
+			
+			choicesMap.put(choices.get(i), resourceModifiers.get(i));
+		}
+		
 	}
-	
-	  public StoryEvent() {
-          this(null, new ArrayList<>(), new ArrayList<>(), -1, null);
+	  public Event() {
+          this(null, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), -1, null);
       }
 
-	public StoryEvent clone() {
+	public Event clone() {
 		Dialogue dialogueClone =  d.clone();
 		
 		ArrayList<String> choicesClone = new ArrayList<>();
+		ArrayList<Integer[]> resourceModifiersClone = new ArrayList<>();
 		for(String s: choices) {
 			choices.add(s.toString());
+			resourceModifiersClone.add(choicesMap.get(s));
 		}
 		
-		return new StoryEvent(dialogueClone, choicesClone, null, difficulty, location.toString());
+		return new Event(dialogueClone, choicesClone, null,resourceModifiersClone, difficulty, location.toString());
 		
 		
 		
@@ -88,6 +107,14 @@ public class StoryEvent {
         this.choices = choices;
      }
 
+
+     public ArrayList<Integer[]> getResources() {
+         return mResources;
+     }
+
+     public void setResources(ArrayList<Integer[]> resources) {
+         mResources = resources;
+     }
  	/**
  	 * Returns the difficulty of the event.
  	 * @return difficulty of the event.
@@ -126,14 +153,46 @@ public class StoryEvent {
 	 * 
 	 * @return true if resources are updated, otherwise false.
 	 */
+	public boolean updateResources(Army army, String choice) {
+		
+		//Gets resource modifieres from the hash map
+		Integer[] modifiers = choicesMap.get(choice);
+		
+		if(modifiers == null) {
+			return false;
+		}
+		//0 = size, 1 = morale, 2 = food, 3 = gold
+		army.setSize(army.getApproximateSize() + modifiers[0]);
+		army.setMorale(army.getMorale() + modifiers[1]);
+		army.getResources().setFood(army.getResources().getFood() +  modifiers[2]);
+		army.getResources().setGold(army.getResources().getGold() +  modifiers[3]);
+		eventComplete = true;
+		return true;
+		
+	}
 	
 	public boolean isEventComplete() {
 		return eventComplete;
 	}
 	  public String toString() {
+      	//Making mResouces[][] into a String
+      	String resources = "{[";
+      	for(int i = 0; i < mResources.size(); i++) {
+      	    resources += mResources.get(i)[0];
+              for (int j = 1; j < 4; j++) {
+                  resources += ", " + mResources.get(i)[j];
+              }
+              if(i != 2)
+                  resources += "], [";
+          }
+      	resources += "]}";
+      		
+      	
           return "{" +
                   d.toString() +
+                  
                   ", " + choices.toString() +
+                  ", " + resources +
                   ", " + difficulty +
                   ", " + location +
                   "}";

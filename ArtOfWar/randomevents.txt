@@ -1,0 +1,19 @@
+Template: //Data goes in between the quotations. Dialog/Choices/choicesMap may have more, may have less
+/~/
+dialog: "dialog1", "dialog2", "dialog3", ...
+picture: "picture1", "picture2", "picture3", ...
+choices: "choice1", "choice2", "choice3", ...
+resource1: Army Size, Morale, Food, Gold
+resource2: Army Size, Morale, Food, Gold
+resource3: Army Size, Morale, Food, Gold
+difficulty: "difficulty"
+location: "location"
+====================================================================================
+dialog: "You and a small caravan find an abandoned-looking building as you travel down to Kaiski, Would you like to send troops to explore it?", "Your army enters the building first. It was a booby trap. An explosion happens, killing off some of your army. You lost 20 soldiers -20 army", "Kazou and his army continues on.", "The scout triggers a booby trap. An explosion happens, killing off your scout", "The children enter the building first. It was booby trapped. An explosion happens, killing off the children"
+picture: "picture1", "picture2", "picture3", "pic4", "pic5"
+choices: "Yes", "No", "Send Scouts", "Send in Children First"
+resource1: -1, 0, 0, 0
+resource2: 0, -10, 0, 0
+resource3: 0, 0, 0, 0
+difficulty: "2"
+location: "Kaiski"

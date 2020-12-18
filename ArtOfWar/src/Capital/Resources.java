@@ -1,5 +1,7 @@
 package Capital;
 
+import java.util.Objects;
+
 public class Resources {
 int gold, food;
 	
@@ -47,5 +49,13 @@ int gold, food;
 	public void setFood(int newFoodValue) {
 		food = newFoodValue;
 	}
-	
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Resources resources = (Resources) o;
+		return gold == resources.gold &&
+				food == resources.food;
+	}
 }
