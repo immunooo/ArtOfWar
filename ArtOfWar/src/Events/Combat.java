@@ -2,7 +2,9 @@ package Events;
 
 import Capital.*;
 
+
 import java.util.Objects;
+
 import java.util.Random;
 import java.util.Scanner;
 
@@ -21,26 +23,32 @@ public class Combat {
     private String moraleLevel;
     private int playerSize; //The number of troops in the player army
     private int enemySize; // The number of troops in the enemy army
+
     private int playerAS; //Player's current attack style. 0: Melee, 1: Archery, 2: Cavalry
+
     private int enemyAS; //The enemies current attack style
     private int playerFormation; //0: Melee Attack, 1: Archer Attack, 2: Calvery Attack 3: Defence Stance
     private int terrain; //0: Plains, 1: Valley, 2: Hill, 3: Wetlands (avoid the word swamp)
     private boolean hasCover = false; //True allows army to ambush, False prevents it
     private boolean inCover = false; //True if army is attempting ambush
     private boolean failedCover = false; //True if army fails the ambush
+
     private int ambushThreshold; //The number the player army needs to be under in order for a successful ambush
+
     private Scanner kb = new Scanner(System.in); //Keyboard scanner
     private int userInput = -1; //The current input of the user
     private String generalName; //The name of the General of the Enemy Army
     private int playerAttack = 0; //Damage player will do
     private int enemyAttack = 0; //Damage enemy will do
     private boolean hasFled = false;
+
     private int goldReward;
     private int foodReward;
     private int foodCost;
     private int goldCost;
 
     public Combat(Army playerArmy, Enemy enemyArmy, int terrain, boolean hasCover, int ambushThreshold, int goldReward, int foodReward, int goldCost, int foodCost) {
+
         this.playerArmy = playerArmy;
         this.enemyArmy = enemyArmy;
         this.terrain = terrain;
@@ -49,6 +57,7 @@ public class Combat {
         playerSize = playerArmy.getSize();
         morale = playerArmy.getMorale();
         enemySize = enemyArmy.size;
+
         this.goldReward = goldReward;
         this.foodReward = foodReward;
         generalName = "General " + enemyArmy.general;
@@ -87,6 +96,7 @@ public class Combat {
         int initialArmySize = playerSize;
 
         switch(terrain) { //Outputs a description of the terrain
+
             case 0:
                 System.out.println("Your army arrives to the plains. The ground is very leveled, with hardly any " +
                         "changes to elevation. ");
@@ -101,14 +111,17 @@ public class Combat {
                 break;
         }
 
+
         ambush(); //Calls the ambush method
 
         System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 
         //While both armies have troops remaining, and the player hasn't chosen to flee, rounds keep playing.
+
         while(playerSize > 0 && enemySize > 0 && !hasFled) {
             playRound();
         }
+
 
         if(hasFled)  //If the player has fled, the combat is ended and the players resources is updated.
             return false;
@@ -130,8 +143,10 @@ public class Combat {
         if(morale < 5) //Minimum of 5 morale if you win the battle
             morale = 5;
 
+
         playerArmy.setSize(playerSize);
         playerArmy.setMorale(morale);
+
 
         if(playerSize <= 0 && enemySize <= 0) //Both army = 0. Tie goes to player
             System.out.println("Your army is lost, but you miraculously live by the skin of your teeth!");
@@ -171,6 +186,7 @@ public class Combat {
      */
     public void ambush() {
         if(hasCover) { //If the battlefield has foliage to be able to set up an ambush
+
             System.out.println("You see bushes and trees throughout the region, perfect for a small army to prepare" +
                     " an ambush. ");
             System.out.println("\nWhat would you like to do?");
@@ -180,6 +196,7 @@ public class Combat {
             System.out.print(">>> ");
 
             userInput = kb.nextInt();
+
 
             if(userInput == 1) { //If the user chooses to attempt to set up an ambush
                 System.out.println("You order your troops to take cover in the bushes and wait to strike the enemy " +
@@ -194,9 +211,11 @@ public class Combat {
             }
 
         } else //Ambush is not available for this battle
+
             System.out.println("The area is pretty barren and open. Looks like you'll have to attack the enemy head on! ");
 
         System.out.println("You see " + generalName + "'s army approaching. Prepare for battle!");
+
 
         if(userInput == 1) { //If player has chosen to ambush
             if (failedCover) { //Ambush has failed, so the Enemy gets a free attack.
@@ -216,14 +235,17 @@ public class Combat {
                 enemySize -= playerAttack;
                 playerMorale(); //Updates the morale based on attack
 
+
                 System.out.println("Your troops take out " + playerAttack + " in the ambush!");
             }
         }
     }
 
+
     /**
      * Represents one 'round' of combat
      */
+
     public void playRound() {
         do {
             System.out.println("\n==================================");
@@ -241,6 +263,7 @@ public class Combat {
 
             switch (userInput) {
                 case 1:
+
                     chooseAttack(); //User chooses to attack
                     break;
                 case 2: //Formation Menu
@@ -264,10 +287,12 @@ public class Combat {
         //Checks to see if either army will kill more troops than the opposing army has
         //Will set the player attack and/or the enemy attack to the size of the opposite army
         //This is to avoid either army sizes having negative numbers.
+
         if(playerAttack > enemySize)
             playerAttack = enemySize;
         if(enemyAttack > playerSize)
             enemyAttack = playerSize;
+
 
         playerMorale(); //Updates the army morale based on both attacks.
 
@@ -285,6 +310,7 @@ public class Combat {
     /**
      * Method to choose an attack style
      */
+
     public void chooseAttack() {
         System.out.println("\nWhat attack would you like to do?");
         System.out.println("1. Melee");
@@ -293,12 +319,14 @@ public class Combat {
         System.out.println("\n5. Go Back");
         System.out.print(">>> ");
         playerAS = kb.nextInt() - 1;
+
         //-1 in order to align with the int values of each attack. Melee: 0, Archery: 1, Cavalry: 2
     }
 
     /**
      * Method to change player army formation
      */
+
     public void changeFormation() {
         System.out.println("What formation would you like your troops to take?");
         System.out.println("1. Melee Attack Formation");
@@ -309,7 +337,9 @@ public class Combat {
         System.out.print(">>> ");
         userInput = kb.nextInt();
 
+
         //Sets the player's army formation
+
         switch(userInput) {
             case 1:
                 System.out.println("Your troops are now in the Melee Attack Formation!");
@@ -337,14 +367,17 @@ public class Combat {
         }
     }
 
+
     /**
      * Method to flee and end combat
      */
+
     public void flee() {
         System.out.println("You have cowardly fled from battle!");
         userInput = 3; //To ensure that the playRound() method is stopped if the player flees
         hasFled = true;
         playerArmy.setSize(playerSize);
+
         playerArmy.setMorale(morale);
     }
 
@@ -352,12 +385,14 @@ public class Combat {
      * Rolls a dice for damage
      * @return the dice roll
      */
+
     public int roll() {
         int diceRoll;
         Random rand = new Random();
         diceRoll = rand.nextInt(20) + 1; //'Rolls' a d20
         return diceRoll;
     }
+
 
     /**
      * Calculates the damage of the player based on their attack style, terrain, and formation
@@ -432,6 +467,7 @@ public class Combat {
             case 2:
                 if(playerAS == 2)
                     modifier += formationModifier; //Plus 5 to Cavalry attacks if in Cavalry Form
+
                 break;
             case 3:
                 modifier = 0; //If in Defense Stance, No modifier
@@ -441,12 +477,16 @@ public class Combat {
                 break;
         }
 
+
         total = dice + modifier; // The final damage being dealt
+
 
         if(enemyAS == 3) { //If enemy uses a 'full block' the damage you do is halved
             total /= 2;
         }
+
         if(total < 0) //In case the modifier makes the damage a negative number
+
             total = 0;
 
         return total;
@@ -460,6 +500,7 @@ public class Combat {
         int dice, modifier=0, total;
 
         if(failedCover) { //Specific for the enemies opening attack if the player fails an ambush. Only for ambush
+
             failedCover = false;
             return roll() * 2;
         }
@@ -485,6 +526,7 @@ public class Combat {
                     modifier -= attackNegModifier;
                 else if(playerAS == 1) //Cavalry has 'advantage' against Archers
                     modifier += attackPosModifier;
+
                 break;
             case 3: //full block
                 return 0;
@@ -527,6 +569,7 @@ public class Combat {
             case 2:
                 if(enemyAS == 0)
                     modifier += formationModifier; //Plus 10 if Player is in Cavalry Form
+
                 break;
             case 3:
                 //Half damage if the player is in defensive stance
@@ -540,6 +583,7 @@ public class Combat {
         total = dice + modifier;
 
         if(total < 0) //In case the modifier makes the total negative
+
             total = 0;
 
         return total;
@@ -701,6 +745,7 @@ public class Combat {
         this.enemySize = enemySize;
     }
 
+
     public int getPlayerAS() {
         return playerAS;
     }
@@ -846,6 +891,7 @@ public class Combat {
     }
 
     public static class Enemy {
+
         private int size;
         private int attackStyle;
         private String general;
@@ -902,6 +948,7 @@ public class Combat {
             }
         }
 
+
         public void setSize(int size) {
             this.size = size;
         }
@@ -944,11 +991,13 @@ public class Combat {
                     attackStyle == enemy.attackStyle &&
                     Objects.equals(general, enemy.general);
         }
+
     }
 
     public static void main(String[] args) {
         //0: Flat, 1: Valley, 2: Hills, 3: Wetlands
         // 0: Melee, 1: Archery, 2: Cavalry, 3: Full Block
+
         Enemy enemy = new Enemy(10, 0, "Kenobi");
         Army player = new Army(100, 30, 40, 60);
         Army beforeBattle = new Army(player.getSize(), player.getMorale(), player.getResources().getGold(), player.getResources().getFood());
@@ -965,6 +1014,7 @@ public class Combat {
 
         System.out.println("Before Battle: " + beforeBattle);
         System.out.println("After Battle: " + player);
+
 
     }
 }

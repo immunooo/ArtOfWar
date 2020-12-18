@@ -14,11 +14,13 @@ public class Event {
 	private Dialogue d;
 	private HashMap<String, Integer[]> choicesMap;
 	private ArrayList<String> choices;
+
  	private ArrayList<String> mPicture = new ArrayList<>();
 	private int difficulty;
 	private String location;
 	private ArrayList<Integer[]> mResources; 
 	private boolean eventComplete;
+
 	/**
 	 * Constructor method of the Events class
 	 * 
@@ -30,6 +32,7 @@ public class Event {
 	 * 
 	 * @throws Error if choices and resource modifier have different lengths or resource modifiers has incorrect amount of values
 	 */
+
 	public Event(Dialogue d, ArrayList<String> choices,ArrayList<String> mPicture, ArrayList<Integer[]> resourceModifiers, int difficulty, String location ) {
 		this.d = d;
 		this.choices= choices;
@@ -39,6 +42,7 @@ public class Event {
 		this.choicesMap = new HashMap<String, Integer[]>();
 		this.eventComplete = false;
 		
+
 		
 		if(choices.size() != resourceModifiers.size()) {
 			throw new Error("Choices and resource modifier have different lengths.");
@@ -55,6 +59,7 @@ public class Event {
 		}
 		
 	}
+
 	  public Event() {
           this(null, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), -1, null);
       }
@@ -146,6 +151,7 @@ public class Event {
 	
 
 
+
 	/**
 	 * This method updates an army class with the resource modifiers of the given choice.
 	 * @param army of the user
@@ -166,11 +172,14 @@ public class Event {
 		army.setMorale(army.getMorale() + modifiers[1]);
 		army.getResources().setFood(army.getResources().getFood() +  modifiers[2]);
 		army.getResources().setGold(army.getResources().getGold() +  modifiers[3]);
+
 		eventComplete = true;
+
 		return true;
 		
 	}
 	
+
 	public boolean isEventComplete() {
 		return eventComplete;
 	}
@@ -198,3 +207,4 @@ public class Event {
                   "}";
       }
   }
+
