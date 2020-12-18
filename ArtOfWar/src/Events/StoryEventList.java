@@ -1,11 +1,8 @@
 package Events;
 
-import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.Scanner;
 /**
  * RandomEventList : A class to create a List of Events
@@ -15,21 +12,21 @@ import java.util.Scanner;
  * @author Nathan Potraz, Elijah Pichler
  * @version 1.0
  */
-public class RandomEventList {
-    private ArrayList<Event> EventList = new ArrayList<>();
+public class StoryEventList {
+    private ArrayList<StoryEvent> EventList = new ArrayList<>();
     private ArrayList<String> textList = new ArrayList<>();
     private ArrayList<String> pictureList = new ArrayList<>();
     private Scanner inputFile;
     private String currentLine;
-    private Event currentEvent = new Event();
+    private StoryEvent currentEvent = new StoryEvent();
 
     /**
      * Creates an ArrayList of Random Events from a text file
      * @param fileName The name of the text file
      */
-    public RandomEventList(String fileName) {
+    public StoryEventList(String fileName) {
         try { //Makes sure that the file exists.
-            if (!fileName.equals("randomevents.txt")) {
+            if (!fileName.equals("storyevents.txt")) {
                 throw new FileNotFoundException();
             }
 
@@ -38,7 +35,7 @@ public class RandomEventList {
         } catch(FileNotFoundException e) { //Throws FileNotFound if the file cannot be found
             System.out.println("File does not Exist!");
         }
-        for(int i = 0; i < 11; i++)
+        for(int i = 0; i < 8; i++)
             nextLine(); //Skips the template of the text file
 
         int lineNumber = 0; //For testing
@@ -51,7 +48,7 @@ public class RandomEventList {
 
             if(getCurrentLine().equals("/~/")) { //Checks to see if the end of the Event has been reached
                 EventList.add(currentEvent); //Adds it to the EventList
-                currentEvent = new Event();
+                currentEvent = new StoryEvent();
                 //System.out.println(currentEvent); //For Testing
             } else { //Still in the process of creating an Event
                 colonIndex = currentLine.indexOf(':'); //Checks the index of the command colon
@@ -119,22 +116,6 @@ public class RandomEventList {
                 parsingLogic(choiceList, currentLine, data);
                 currentEvent.setChoices(choiceList);
                 break;
-            case "resource1":
-            	Integer[] resources1 = new Integer[4];
-            	resourceParsing(resources1,currentLine);
-            	currentEvent.getResources().add(resources1);
-                break;
-            case "resource2":
-            	Integer[] resources2 = new Integer[4];
-            	resourceParsing(resources2,currentLine);
-                currentEvent.getResources().add(resources2);
-                break;
-            case "resource3":
-            	Integer[] resources3 = new Integer[4];
-            	resourceParsing(resources3,currentLine);
-                currentEvent.getResources().add(resources3);
-
-                break;
             case "difficulty":
             	currentEvent.setDifficulty(Integer.parseInt(data));
             	break;
@@ -184,16 +165,6 @@ public class RandomEventList {
     	
     }
     
-    public void resourceParsing(Integer[] list, String currentLine) {
-    	int indexTracker = 0;
-    	Scanner resourceString;
-    	String word = currentLine.substring(currentLine.indexOf(":")+2).replaceAll(",", ""); //word = hi, hello, bye;
-        resourceString = new Scanner(word);
-        
-    	while(resourceString.hasNextInt()) {
-            list[indexTracker++] = resourceString.nextInt();
-    	}
-    }
 
     @Override
     public String toString() {
@@ -212,25 +183,11 @@ public class RandomEventList {
      * @param location
      * @return Random Event
      */
-    public Event getRandomEvent(String location) {
-        ArrayList<Event> list = new ArrayList<>();
-
-        if(EventList != null) 
-            for(Event events : EventList) 
-                if(events.getLocation().equals(location))
-                    list.add(events);
-        if(list.size() == 0)
-            return null;
-        Random rng = new Random();
-        //Generates a number from 0 - list.size();
-        int randomIndex = rng.nextInt(list.size());
-        return list.get(randomIndex);
-    }
 
    
     public static void main(String[] args) {
-        String fileName = "randomevents.txt";
-        RandomEventList list = new RandomEventList(fileName);
+        String fileName = "storyevents.txt";
+        StoryEventList list = new StoryEventList(fileName);
 
         System.out.println(list);
     }
