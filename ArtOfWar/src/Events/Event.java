@@ -111,7 +111,11 @@ public class Event {
      public void setChoices(ArrayList<String> choices) {
         this.choices = choices;
      }
-
+     
+     public boolean DialogueIsEmpty()
+     {
+    	 return d.isEmpty();
+     }
 
      public ArrayList<Integer[]> getResources() {
          return mResources;

@@ -2,6 +2,8 @@ package GUI;
 
 import static GUI.GuiStyle.backgroundColor;
 
+import java.util.ArrayList;
+
 import GUI.GuiStyle.COLOR;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -16,13 +18,14 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import Capital.Army;
 import Capital.Resources;
+import Events.Event;
 
 public class MapAskar extends Application {
 
 	Army army = new Army();
 	//Resources res = new Resources();
 	MapGraph mapGraph = new MapGraph();
-	ArrayList<Event> evetnts = new mapGraph.getRandomEvent();
+	ArrayList<Event> events = mapGraph.getRandomEvents();
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -71,7 +74,7 @@ public class MapAskar extends Application {
     	i++;
     	Event currentEvent = events.get(i);
     	
-    	GuiEventWindow eventWindow = new EventWindow(currentEvent, army);
+    	GuiEventWindow eventWindow = new GuiEventWindow(currentEvent, army);
     	eventWindow.start(primaryStage);
     	
     }

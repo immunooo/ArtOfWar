@@ -49,8 +49,8 @@ public class GuiStartWindow extends Application{
                 new Image("Assets/Icons/Button/Idle/start.png"), null,null,null,null)));
         start.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
-            public void handle(ActionEvent actionEvent) {
-                GuiEventWindow eventWindow = new GuiEventWindow();
+            public void handle(MouseEvent mouseEvent) {
+                GuiEventWindow eventWindow= new GuiEventWindow();
 
                 try {
                     eventWindow.start(primaryStage);
