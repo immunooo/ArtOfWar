@@ -59,10 +59,13 @@ public class GuiStartWindow extends Application{
             	Army amry = new Army();
                 GuiEventWindow eventWindow = new GuiEventWindow(event, amry);
 
+
                 try {
                     eventWindow.start(primaryStage);
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-                catch(Exception e){ System.out.println("Initial Failed");}
+
             }
         });
         start.addEventFilter(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
