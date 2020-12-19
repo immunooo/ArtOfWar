@@ -14,13 +14,12 @@ public class Event {
 	private Dialogue d;
 	private HashMap<String, Integer[]> choicesMap;
 	private ArrayList<String> choices;
-
  	private ArrayList<String> mPicture = new ArrayList<>();
 	private int difficulty;
 	private String location;
 	private ArrayList<Integer[]> mResources; 
 	private boolean eventComplete;
-
+	private String[] choiceDialog;
 	/**
 	 * Constructor method of the Events class
 	 * 
@@ -32,8 +31,7 @@ public class Event {
 	 * 
 	 * @throws Error if choices and resource modifier have different lengths or resource modifiers has incorrect amount of values
 	 */
-
-	public Event(Dialogue d, ArrayList<String> choices, ArrayList<String> mPicture, ArrayList<Integer[]> resourceModifiers, int difficulty, String location ) {
+	public Event(Dialogue d, ArrayList<String> choices,ArrayList<String> mPicture, ArrayList<Integer[]> resourceModifiers, int difficulty, String location,String[] choiceDialog) {
 		this.d = d;
 		this.choices= choices;
 		this.mResources = resourceModifiers;
@@ -41,8 +39,7 @@ public class Event {
 		this.location = location;
 		this.choicesMap = new HashMap<String, Integer[]>();
 		this.eventComplete = false;
-		
-
+		this.choiceDialog = choiceDialog;
 		
 		if(choices.size() != resourceModifiers.size()) {
 			throw new Error("Choices and resource modifier have different lengths.");
@@ -59,9 +56,8 @@ public class Event {
 		}
 		
 	}
-
 	  public Event() {
-          this(null, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), -1, null);
+          this(null, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), -1, null,null);
       }
 
 	public Event clone() {
@@ -74,7 +70,7 @@ public class Event {
 			resourceModifiersClone.add(choicesMap.get(s));
 		}
 		
-		return new Event(dialogueClone, choicesClone, null,resourceModifiersClone, difficulty, location.toString());
+		return new Event(dialogueClone, choicesClone, null,resourceModifiersClone, difficulty, location.toString(),choiceDialog);
 		
 		
 		
@@ -99,6 +95,11 @@ public class Event {
      public void setPicture(ArrayList<String> picture) {
          mPicture = picture;
      }
+     
+     public boolean DialogueIsEmpty()
+     {
+    	 return d.isEmpty();
+     }
 
  	/**
  	 * Returns the choices of the event.
@@ -112,9 +113,12 @@ public class Event {
         this.choices = choices;
      }
      
-     public boolean DialogueIsEmpty()
-     {
-    	 return d.isEmpty();
+     public void setChoiceDialog(String[] arr) {
+    	choiceDialog = arr;
+     }
+     
+     public String[] getChoiceDialog() {
+    	 return choiceDialog;
      }
 
      public ArrayList<Integer[]> getResources() {
@@ -155,7 +159,6 @@ public class Event {
 	
 
 
-
 	/**
 	 * This method updates an army class with the resource modifiers of the given choice.
 	 * @param army of the user
@@ -176,19 +179,27 @@ public class Event {
 		army.setMorale(army.getMorale() + modifiers[1]);
 		army.getResources().setFood(army.getResources().getFood() +  modifiers[2]);
 		army.getResources().setGold(army.getResources().getGold() +  modifiers[3]);
-
 		eventComplete = true;
-
 		return true;
 		
 	}
 	
-
 	public boolean isEventComplete() {
 		return eventComplete;
 	}
 	  public String toString() {
       	//Making mResouces[][] into a String
+		  StringBuilder sb = new StringBuilder();
+		  sb.append("[");
+		  for(int i = 0; i<choiceDialog.length; i++) {
+			  sb.append(choiceDialog[i] + ", ");
+		  }
+		  sb.deleteCharAt(sb.length() -1);//Deletes the last comma in the Stringbuilder
+		  sb.append("]");
+		  
+		  
+		  
+		  
       	String resources = "{[";
       	for(int i = 0; i < mResources.size(); i++) {
       	    resources += mResources.get(i)[0];
@@ -205,10 +216,12 @@ public class Event {
                   d.toString() +
                   
                   ", " + choices.toString() +
+                  ", " + sb.toString() +
                   ", " + resources +
                   ", " + difficulty +
                   ", " + location +
                   "}";
       }
   }
+
 
