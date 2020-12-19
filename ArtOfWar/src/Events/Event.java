@@ -33,7 +33,7 @@ public class Event {
 	 */
 	public Event(Dialogue d, ArrayList<String> choices,ArrayList<String> mPicture, ArrayList<Integer[]> resourceModifiers, int difficulty, String location,String[] choiceDialog) {
 		this.d = d;
-		this.choices= choices;
+		this.choices = choices;
 		this.mResources = resourceModifiers;
 		this.difficulty = difficulty;
 		this.location = location;
@@ -155,7 +155,7 @@ public class Event {
  	public String[] getNextDialogue() {
 		return d.poll();
 	}
-
+ 	
 	
 
 

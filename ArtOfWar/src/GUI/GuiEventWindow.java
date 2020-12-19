@@ -45,17 +45,19 @@ public class GuiEventWindow extends Application {
 		this.dialogue = event.getNextDialogue();
 		this.choices = event.getChoices();
 		int i=0;
+		
+		
 		while (!event.DialogueIsEmpty())
 		{
-			pagesOfDialogue.set(i, event.getNextDialogue()[0]);
+			pagesOfDialogue.add(event.getNextDialogue()[0]);
 			pageCount++;
-			i++;
 		}
+		pagesOfDialogue.add("hello");
 	}
 	
 	public GuiEventWindow()
 	{
-		
+	
 	}
 	
     /** Scene Construction */
@@ -121,7 +123,7 @@ public class GuiEventWindow extends Application {
         //Askar
         ArrayList<String> choices = event.getChoices();
         //check 12/7
-        combatButton= new Button(choices.get(0));
+        combatButton= new Button("new");
 
         combatButton.setMaxSize(BUTTON_LONG_SIZE[0],BUTTON_LONG_SIZE[1]);
         combatButton.setMinSize(BUTTON_LONG_SIZE[0],BUTTON_LONG_SIZE[1]);
@@ -158,7 +160,7 @@ public class GuiEventWindow extends Application {
         buttonSetting(combatButton);
 
         //also check 12/7
-        actionButton = new Button(choices.get(1));
+        actionButton = new Button("2");
 
         actionButton.setMaxSize(BUTTON_LONG_SIZE[0],BUTTON_LONG_SIZE[1]);
         actionButton.setMinSize(BUTTON_LONG_SIZE[0],BUTTON_LONG_SIZE[1]);
@@ -294,7 +296,7 @@ public class GuiEventWindow extends Application {
         
         //Askar 12/7
         //check with backend
-        eventNarrative.setText(this.pagesOfDialogue.get(currentPage));
+        eventNarrative.setText(pagesOfDialogue.get(currentPage));
         eventNarrative.setFont(Font.font("Verdana",12));
         eventNarrative.setTextFill(Color.BLACK);
         eventNarrative.setWrapText(true);
@@ -488,9 +490,9 @@ public class GuiEventWindow extends Application {
 
      ContextMenu contextMenu = new ContextMenu();
      //need to connect to the back end choices
-     MenuItem item1 = new MenuItem(choices.get(0));
-     MenuItem item2 = new MenuItem(choices.get(1));
-     MenuItem item3 = new MenuItem(choices.get(2));
+     MenuItem item1 = new MenuItem("1");
+     MenuItem item2 = new MenuItem("2");
+     MenuItem item3 = new MenuItem("3");
      contextMenu.getItems().addAll(item1, item2, item3);
      button.setContextMenu(contextMenu);
 

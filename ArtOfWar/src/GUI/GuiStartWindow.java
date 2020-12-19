@@ -14,6 +14,10 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import static GUI.GuiStyle.*;
+
+import Capital.Army;
+import Events.Event;
+import Events.RandomEventList;
 /**
  * The window for title menu
  *
@@ -50,7 +54,10 @@ public class GuiStartWindow extends Application{
         start.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                GuiEventWindow eventWindow = new GuiEventWindow();
+            	RandomEventList events = new RandomEventList("randomevents.txt");
+            	Event event = events.getRandomEvent("Kaiski");
+            	Army amry = new Army();
+                GuiEventWindow eventWindow = new GuiEventWindow(event, amry);
 
                 try {
                     eventWindow.start(primaryStage);
