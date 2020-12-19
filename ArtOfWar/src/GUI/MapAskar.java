@@ -22,10 +22,10 @@ import Events.Event;
 
 public class MapAskar extends Application {
 
-	Army army = new Army();
-	//Resources res = new Resources();
-	MapGraph mapGraph = new MapGraph();
-	ArrayList<Event> events = mapGraph.getRandomEvents();
+    Army army = new Army();
+    //Resources res = new Resources();
+    MapGraph mapGraph = new MapGraph();
+    ArrayList<Event> events = mapGraph.getRandomEvents();
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -37,11 +37,11 @@ public class MapAskar extends Application {
         start.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                
+
                 try {
-                    newEvent();
+                    newEvent(primaryStage);
                 }
-                
+
                 catch(Exception e){ System.out.println("Initial Failed");}
             }
         });
@@ -67,16 +67,18 @@ public class MapAskar extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
     }
-    
-    public void newEvent()
+
+    public void newEvent(Stage primaryStage) throws Exception
     {
-    	int i=-1;
-    	i++;
-    	Event currentEvent = events.get(i);
-    	
-    	GuiEventWindow eventWindow = new GuiEventWindow(currentEvent, army);
-    	eventWindow.start(primaryStage);
-    	
+        int i=-1;
+        i++;
+        Event currentEvent = events.get(i);
+
+        GuiEventWindow eventWindow = new GuiEventWindow(currentEvent, army);
+        try {
+            eventWindow.start(primaryStage);
+        }catch(Exception e){}
+
     }
-    
+
 }

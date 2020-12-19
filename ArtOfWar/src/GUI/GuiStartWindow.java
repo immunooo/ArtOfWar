@@ -52,10 +52,13 @@ public class GuiStartWindow extends Application{
             public void handle(MouseEvent mouseEvent) {
                 GuiEventWindow eventWindow = new GuiEventWindow();
 
+
                 try {
                     eventWindow.start(primaryStage);
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-                catch(Exception e){ System.out.println("Initial Failed");}
+
             }
         });
         start.addEventFilter(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
