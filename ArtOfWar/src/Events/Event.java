@@ -33,7 +33,7 @@ public class Event {
 	 * @throws Error if choices and resource modifier have different lengths or resource modifiers has incorrect amount of values
 	 */
 
-	public Event(Dialogue d, ArrayList<String> choices,ArrayList<String> mPicture, ArrayList<Integer[]> resourceModifiers, int difficulty, String location ) {
+	public Event(Dialogue d, ArrayList<String> choices, ArrayList<String> mPicture, ArrayList<Integer[]> resourceModifiers, int difficulty, String location ) {
 		this.d = d;
 		this.choices= choices;
 		this.mResources = resourceModifiers;
