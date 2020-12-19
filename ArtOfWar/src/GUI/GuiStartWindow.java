@@ -50,7 +50,7 @@ public class GuiStartWindow extends Application{
         start.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                GuiEventWindow eventWindow= new GuiEventWindow();
+                GuiEventWindow eventWindow = new GuiEventWindow();
 
                 try {
                     eventWindow.start(primaryStage);

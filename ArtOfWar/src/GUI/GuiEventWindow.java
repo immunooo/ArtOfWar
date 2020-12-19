@@ -61,14 +61,6 @@ public class GuiEventWindow extends Application {
     /** Scene Construction */
     Scene scene;
     
-    /*
-    public GuiEventWindow(Event event, Army army)
-    {
-    	army.getResources();
-    	event.nextDialoge();
-    	
-    }
-    */
 
     /** Pane Construction */
     GridPane rootPane = new GridPane();
