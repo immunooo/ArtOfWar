@@ -44,7 +44,6 @@ public class GuiEventWindow extends Application {
 		this.event=event;
 		this.dialogue = event.getNextDialogue();
 		this.choices = event.getChoices();
-		int i=0;
 		
 		
 		while (!event.DialogueIsEmpty())
@@ -52,8 +51,12 @@ public class GuiEventWindow extends Application {
 			pagesOfDialogue.add(event.getNextDialogue()[0]);
 			pageCount++;
 		}
-		pagesOfDialogue.add("hello");
-	}
+		pagesOfDialogue.add("Hello");
+		pagesOfDialogue.add("R.I.P");
+		pagesOfDialogue.add("Team 1 Final Project Fall 2020");
+		pagesOfDialogue.add("September 2020-December 2020");
+		pagesOfDialogue.add("He was a good boy");
+		}
 	
 	public GuiEventWindow()
 	{
@@ -123,7 +126,7 @@ public class GuiEventWindow extends Application {
         //Askar
         ArrayList<String> choices = event.getChoices();
         //check 12/7
-        combatButton= new Button("new");
+        combatButton= new Button("");
 
         combatButton.setMaxSize(BUTTON_LONG_SIZE[0],BUTTON_LONG_SIZE[1]);
         combatButton.setMinSize(BUTTON_LONG_SIZE[0],BUTTON_LONG_SIZE[1]);
@@ -160,7 +163,7 @@ public class GuiEventWindow extends Application {
         buttonSetting(combatButton);
 
         //also check 12/7
-        actionButton = new Button("2");
+        actionButton = new Button("");
 
         actionButton.setMaxSize(BUTTON_LONG_SIZE[0],BUTTON_LONG_SIZE[1]);
         actionButton.setMinSize(BUTTON_LONG_SIZE[0],BUTTON_LONG_SIZE[1]);
@@ -296,7 +299,11 @@ public class GuiEventWindow extends Application {
         
         //Askar 12/7
         //check with backend
-        eventNarrative.setText(pagesOfDialogue.get(currentPage));
+        eventNarrative.setText(pagesOfDialogue.get(currentPage)+
+        		"\n"+pagesOfDialogue.get(currentPage+1)+
+        		"\n"+pagesOfDialogue.get(currentPage+2)+
+        		"\n"+pagesOfDialogue.get(currentPage+3)+
+        		"\n"+pagesOfDialogue.get(currentPage+4));
         eventNarrative.setFont(Font.font("Verdana",12));
         eventNarrative.setTextFill(Color.BLACK);
         eventNarrative.setWrapText(true);
